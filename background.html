@@ -1,0 +1,93 @@
+<html>
+<head>
+<script>
+
+var isSomeInQueue = false;
+
+
+
+function getGroovesharkUrl() {
+  return "http://grooveshark.com/";
+}
+
+function isGroovesharkUrl(url) {
+  var grooveshark = getGroovesharkUrl();
+  if (url.indexOf(grooveshark) != 0)
+    return false;
+  return true;
+}
+
+
+
+function init() {
+  chrome.browserAction.setIcon({path: "grooveshark_disabled.png"});
+
+  checkPlaying();
+}
+
+function checkPlaying() {
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGroovesharkUrl(tab.url)) {
+        chrome.tabs.executeScript(tab.id, {file: "checkState.js"});
+        return;
+      }
+    }
+    setIcon('grooveshark_disabled');
+  });
+  
+  scheduleRequest();
+}
+
+function setIcon(icon) {
+  chrome.browserAction.setIcon({path: icon+".png"});
+}
+
+function scheduleRequest() {
+  var delay = 1000;
+  window.setTimeout(checkPlaying, delay);
+}
+
+
+
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+    isSomeInQueue = request.isSomeInQueue;
+    
+    if (request.isSomeInQueue) {
+      if (request.isPlaying) icon = 'grooveshark_pause';
+      else icon = 'grooveshark_play';
+    } else icon = 'grooveshark_disabled';
+    setIcon(icon);
+  }
+);
+
+
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+  userBrowserAction();
+});
+
+function userBrowserAction() {
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGroovesharkUrl(tab.url)) {
+        if (isSomeInQueue) {
+          chrome.tabs.update(tab.id, {selected: true});
+        } else {
+          chrome.tabs.executeScript(tab.id, {code: "document.getElementById('player_play_pause').click()"});
+        }
+        return;
+      }
+    }
+    chrome.tabs.create({url: getGroovesharkUrl()});
+  });
+}
+
+</script>
+</head>
+<body onload="init()">
+<canvas id="canvas" width="19" height="19">
+</body>
+</html>
+

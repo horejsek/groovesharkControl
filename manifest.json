@@ -1,0 +1,15 @@
+{
+  "background_page": "background.html",
+  "browser_action": {
+    "default_title": ""
+  },
+  "description": "Grooveshark control.",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "name": "Grooveshark Control",
+  "permissions": [
+    "tabs", "http://*/*"
+   ],
+  "version": "0.1"
+}
