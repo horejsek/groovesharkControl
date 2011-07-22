@@ -73,9 +73,9 @@ function userBrowserAction() {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
         if (isSomeInQueue) {
-          chrome.tabs.update(tab.id, {selected: true});
-        } else {
           chrome.tabs.executeScript(tab.id, {code: "document.getElementById('player_play_pause').click()"});
+        } else {
+          chrome.tabs.update(tab.id, {selected: true});
         }
         return;
       }
