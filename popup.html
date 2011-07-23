@@ -81,7 +81,10 @@ chrome.extension.onRequest.addListener(
     } else icon = 'grooveshark_disabled';
     setIcon(icon);
     
-    document.getElementById("nowPlaying").innerHTML = request.nowPlaying.artist + ' - ' + request.nowPlaying.song + ' (album: ' + request.nowPlaying.album + ')';
+    document.getElementById("song").innerHTML = request.nowPlaying.song;
+    document.getElementById("artist").innerHTML = request.nowPlaying.artist;
+    document.getElementById("album").innerHTML = request.nowPlaying.album;
+    
     document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
     document.getElementById("timeElapsed").innerHTML = request.nowPlaying.times.elapsed;
     document.getElementById("timeDuration").innerHTML = request.nowPlaying.times.duration;
@@ -94,7 +97,7 @@ chrome.extension.onRequest.addListener(
 
 </script>
 
-<body onload="init()" style="width: 200px;">
+<body onload="init()" style="width: 300px;">
 <button onclick="userBrowserAction('playOrPause');">Play/pause</button>
 <button onclick="userBrowserAction('previous');">|<</button>
 <button onclick="userBrowserAction('next');">>|</button>
@@ -102,10 +105,14 @@ chrome.extension.onRequest.addListener(
 <button onclick="userBrowserAction('shuffle');">Shuffle</button>
 <button onclick="userBrowserAction('loop');">Loop</button>
 <button onclick="userBrowserAction('crossfade');">Crossfade</button>
-<br />
-<div>Now playing: <span id="nowPlaying"></span></div>
+<hr />
+<div>Song: <span id="song"></span></div>
+<div>Artist: <span id="artist"></span></div>
+<div>Album: <span id="album"></span></div>
+<hr />
 <div>Position: <span id="position"></span></div>
 <div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
+<hr />
 <div>shuffle: <span id="shuffle"></span></div>
 <div>loop: <span id="loop"></span></div>
 <div>crossfade: <span id="crossfade"></span></div>
