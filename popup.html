@@ -72,7 +72,10 @@ chrome.extension.onRequest.addListener(
     } else icon = 'grooveshark_disabled';
     setIcon(icon);
     
-    document.getElementById("nowPlaying").innerHTML = request.artist + ' - ' + request.song;
+    document.getElementById("nowPlaying").innerHTML = request.nowPlaying.artist + ' - ' + request.nowPlaying.song + ' (album: ' + request.nowPlaying.album + ')';
+    document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
+    document.getElementById("timeElapsed").innerHTML = request.nowPlaying.times.elapsed;
+    document.getElementById("timeDuration").innerHTML = request.nowPlaying.times.duration;
   }
 );
 
@@ -81,5 +84,7 @@ chrome.extension.onRequest.addListener(
 <body onload="init()" style="width: 200px;">
 <button onclick="playOrPause();">Play/pause</button>
 <div>Now playing: <span id="nowPlaying"></span></div>
+<div>Position: <span id="position"></span></div>
+<div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
 </body>
 
