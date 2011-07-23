@@ -7,7 +7,7 @@ data = {
   playerOptions: {}
 }
 
-if (data['isPlaying']) {
+if (data['isSomeInQueue']) {
   data['nowPlaying'] = {
     song: $('#playerDetails_nowPlaying a.song').text(),
     artist: $('#playerDetails_nowPlaying a.artist').text(),
