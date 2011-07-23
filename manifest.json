@@ -11,5 +11,15 @@
   "permissions": [
     "tabs", "http://*/*"
    ],
-  "version": "0.1"
+  "version": "0.1",
+  
+  "content_scripts": [{ 
+    "matches": ["http://grooveshark.com/*"], 
+    "js": ["jquery-1.6.2.min.js"]
+  }],
+  "browser_action": {
+    "default_icon": "grooveshark.png",
+    "default_title": "Grooveshark Control",
+    "default_popup": "popup.html"
+  }
 }

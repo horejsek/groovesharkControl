@@ -1,10 +1,7 @@
-<html>
-<head>
+
 <script>
 
 var isSomeInQueue = false;
-
-
 
 function getGroovesharkUrl() {
   return "http://grooveshark.com/";
@@ -17,58 +14,7 @@ function isGroovesharkUrl(url) {
   return true;
 }
 
-
-
-function init() {
-  chrome.browserAction.setIcon({path: "grooveshark_disabled.png"});
-
-  checkPlaying();
-}
-
-function checkPlaying() {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "getData.js"});
-        return;
-      }
-    }
-    setIcon('grooveshark_disabled');
-  });
-  
-  scheduleRequest();
-}
-
-function setIcon(icon) {
-  chrome.browserAction.setIcon({path: icon+".png"});
-}
-
-function scheduleRequest() {
-  var delay = 1000;
-  window.setTimeout(checkPlaying, delay);
-}
-
-
-
-chrome.extension.onRequest.addListener(
-  function(request, sender, sendResponse) {
-    isSomeInQueue = request.isSomeInQueue;
-    
-    if (request.isSomeInQueue) {
-      if (request.isPlaying) icon = 'grooveshark_pause';
-      else icon = 'grooveshark_play';
-    } else icon = 'grooveshark_disabled';
-    setIcon(icon);
-  }
-);
-
-
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-  userBrowserAction();
-});
-
-function userBrowserAction() {
+function playOrPause() {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
@@ -84,10 +30,56 @@ function userBrowserAction() {
   });
 }
 
+
+
+function init() {
+  setIcon("grooveshark_disabled.png");
+  getData();
+}
+
+function setIcon(icon) {
+  chrome.browserAction.setIcon({path: icon+".png"});
+}
+
+function getData() {
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGroovesharkUrl(tab.url)) {
+        chrome.tabs.executeScript(tab.id, {file: "getData.js"});
+        return;
+      }
+    }
+    setIcon('grooveshark_disabled');
+  });
+  
+  scheduleRequest();
+}
+
+function scheduleRequest() {
+  var delay = 1000;
+  window.setTimeout(getData, delay);
+}
+
+
+
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+    isSomeInQueue = request.isSomeInQueue;
+    
+    if (request.isSomeInQueue) {
+      if (request.isPlaying) icon = 'grooveshark_pause';
+      else icon = 'grooveshark_play';
+    } else icon = 'grooveshark_disabled';
+    setIcon(icon);
+    
+    document.getElementById("nowPlaying").innerHTML = request.artist + ' - ' + request.song;
+  }
+);
+
 </script>
-</head>
-<body onload="init()">
-<canvas id="canvas" width="19" height="19">
+
+<body onload="init()" style="width: 200px;">
+<button onclick="playOrPause();">Play/pause</button>
+<div>Now playing: <span id="nowPlaying"></span></div>
 </body>
-</html>
 
