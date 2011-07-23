@@ -3,6 +3,15 @@
 
 var isSomeInQueue = false;
 
+var actions = {
+  'playOrPause': "$('#player_play_pause').click()",
+  'shuffle': "$('#player_shuffle').click()",
+  'loop': "$('#player_loop').click()",
+  'crossfade': "$('#player_crossfade').click()",
+  'previous': "$('#player_previous').click()",
+  'next': "$('#player_next').click()"
+}
+
 function getGroovesharkUrl() {
   return "http://grooveshark.com/";
 }
@@ -14,12 +23,12 @@ function isGroovesharkUrl(url) {
   return true;
 }
 
-function playOrPause() {
+function userBrowserAction(action) {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
         if (isSomeInQueue) {
-          chrome.tabs.executeScript(tab.id, {code: "document.getElementById('player_play_pause').click()"});
+          chrome.tabs.executeScript(tab.id, {code: actions[action]});
         } else {
           chrome.tabs.update(tab.id, {selected: true});
         }
@@ -86,7 +95,14 @@ chrome.extension.onRequest.addListener(
 </script>
 
 <body onload="init()" style="width: 200px;">
-<button onclick="playOrPause();">Play/pause</button>
+<button onclick="userBrowserAction('playOrPause');">Play/pause</button>
+<button onclick="userBrowserAction('previous');">|<</button>
+<button onclick="userBrowserAction('next');">>|</button>
+<br />
+<button onclick="userBrowserAction('shuffle');">Shuffle</button>
+<button onclick="userBrowserAction('loop');">Loop</button>
+<button onclick="userBrowserAction('crossfade');">Crossfade</button>
+<br />
 <div>Now playing: <span id="nowPlaying"></span></div>
 <div>Position: <span id="position"></span></div>
 <div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
