@@ -76,6 +76,10 @@ chrome.extension.onRequest.addListener(
     document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
     document.getElementById("timeElapsed").innerHTML = request.nowPlaying.times.elapsed;
     document.getElementById("timeDuration").innerHTML = request.nowPlaying.times.duration;
+    
+    document.getElementById("shuffle").innerHTML = request.playerOptions.shuffle;
+    document.getElementById("loop").innerHTML = request.playerOptions.loop;
+    document.getElementById("crossfade").innerHTML = request.playerOptions.crossfade;
   }
 );
 
@@ -86,5 +90,8 @@ chrome.extension.onRequest.addListener(
 <div>Now playing: <span id="nowPlaying"></span></div>
 <div>Position: <span id="position"></span></div>
 <div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
+<div>shuffle: <span id="shuffle"></span></div>
+<div>loop: <span id="loop"></span></div>
+<div>crossfade: <span id="crossfade"></span></div>
 </body>
 

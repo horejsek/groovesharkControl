@@ -1,12 +1,14 @@
 
+
 data = {
   isSomeInQueue: !$('#player_play_pause').hasClass('disabled'),
   isPlaying: $('#player_play_pause').hasClass('pause'),
-  nowPlaying: {}
+  nowPlaying: {},
+  playerOptions: {}
 }
 
 if (data['isPlaying']) {
-  nowPlaying = {
+  data['nowPlaying'] = {
     song: $('#playerDetails_nowPlaying a.song').text(),
     artist: $('#playerDetails_nowPlaying a.artist').text(),
     album: $('#playerDetails_nowPlaying a.album').text(),
@@ -16,8 +18,14 @@ if (data['isPlaying']) {
       duration: $('#player_times #player_duration').text()
     }
   }
-  data['nowPlaying'] = nowPlaying;
+  
+  data['playerOptions'] = {
+    shuffle: $('#player_shuffle').hasClass('active'),
+    loop: $('#player_loop').hasClass('one') ? 'one' : ($('#player_loop').hasClass('all') ? 'all' : 'none'),
+    crossfade: $('#player_crossfade').hasClass('active')
+  }
 }
+
 
 chrome.extension.sendRequest(data);
 
