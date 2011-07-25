@@ -1,5 +1,4 @@
 
-
 data = {
   isSomeInQueue: !$('#player_play_pause').hasClass('disabled'),
   isPlaying: $('#player_play_pause').hasClass('pause'),

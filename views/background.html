@@ -20,7 +20,7 @@ function isGroovesharkUrl(url) {
 
 
 function init() {
-  chrome.browserAction.setIcon({path: "grooveshark_disabled.png"});
+  chrome.browserAction.setIcon({path: "../images/grooveshark_disabled.png"});
 
   checkPlaying();
 }
@@ -29,7 +29,7 @@ function checkPlaying() {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "getData.js"});
+        chrome.tabs.executeScript(tab.id, {file: "../javascript/getData.js"});
         return;
       }
     }
@@ -40,7 +40,7 @@ function checkPlaying() {
 }
 
 function setIcon(icon) {
-  chrome.browserAction.setIcon({path: icon+".png"});
+  chrome.browserAction.setIcon({path: "../images/"+icon+".png"});
 }
 
 function scheduleRequest() {

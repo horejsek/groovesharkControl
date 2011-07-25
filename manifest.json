@@ -1,25 +1,21 @@
 {
-  "background_page": "background.html",
+  "background_page": "views/background.html",
   "browser_action": {
-    "default_title": ""
+    "default_icon": "images/grooveshark.png",
+    "default_title": "Grooveshark Control",
+    "default_popup": "views/popup.html"
   },
+  "content_scripts": [{ 
+    "matches": ["http://grooveshark.com/*"], 
+    "js": ["javascript/jquery-1.6.2.min.js"]
+  }],
   "description": "Grooveshark control.",
   "icons": {
-    "128": "icon_128.png"
+    "128": "images/icon_128.png"
   },
   "name": "Grooveshark Control",
   "permissions": [
     "tabs", "http://*/*"
    ],
-  "version": "0.1",
-  
-  "content_scripts": [{ 
-    "matches": ["http://grooveshark.com/*"], 
-    "js": ["jquery-1.6.2.min.js"]
-  }],
-  "browser_action": {
-    "default_icon": "grooveshark.png",
-    "default_title": "Grooveshark Control",
-    "default_popup": "popup.html"
-  }
+  "version": "0.1"
 }

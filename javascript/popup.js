@@ -1,7 +1,4 @@
 
-<script src="jquery-1.6.2.min.js"></script>
-<script>
-
 var isSomeInQueue = false;
 
 var actions = {
@@ -67,25 +64,19 @@ function goToGroovesharkTab() {
 
 
 function init() {
-  setIcon("grooveshark_disabled.png");
   getData();
   
   window.setTimeout(function() { if (!isSomeInQueue) goToGroovesharkTab(); }, 100);
-}
-
-function setIcon(icon) {
-  chrome.browserAction.setIcon({path: icon+".png"});
 }
 
 function getData() {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "getData.js"});
+        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
         return;
       }
     }
-    setIcon('grooveshark_disabled');
   });
   
   scheduleRequest();
@@ -101,12 +92,6 @@ function scheduleRequest() {
 chrome.extension.onRequest.addListener(
   function(request, sender, sendResponse) {
     isSomeInQueue = request.isSomeInQueue;
-    
-    if (request.isSomeInQueue) {
-      if (request.isPlaying) icon = 'grooveshark_pause';
-      else icon = 'grooveshark_play';
-    } else icon = 'grooveshark_disabled';
-    setIcon(icon);
     
     document.getElementById("song").innerHTML = request.nowPlaying.song;
     document.getElementById("artist").innerHTML = request.nowPlaying.artist;
@@ -137,33 +122,4 @@ chrome.extension.onRequest.addListener(
     });
   }
 );
-
-</script>
-
-<body onload="init()" style="width: 300px;">
-<button onclick="goToGroovesharkTab();">gs</button>
-<button onclick="userBrowserAction('previous');">|<</button>
-<button onclick="userBrowserAction('playOrPause');">Play/pause</button>
-<button onclick="userBrowserAction('next');">>|</button>
-<br />
-<button onclick="userBrowserAction('shuffle');">Shuffle</button>
-<button onclick="userBrowserAction('loop');">Loop</button>
-<button onclick="userBrowserAction('crossfade');">Crossfade</button>
-<hr />
-<div>Song: <span id="song"></span></div>
-<div>Artist: <span id="artist"></span></div>
-<div>Album: <span id="album"></span></div>
-<hr />
-<div>In my music: <span id="inMyMusic"></span></div>
-<div>Is favorite: <span id="isFavorite"></span></div>
-<hr />
-<div>Position: <span id="position"></span></div>
-<div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
-<hr />
-<div>shuffle: <span id="shuffle"></span></div>
-<div>loop: <span id="loop"></span></div>
-<div>crossfade: <span id="crossfade"></span></div>
-<hr />
-<div id="playlist"></div>
-</body>
 

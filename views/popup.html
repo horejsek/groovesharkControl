@@ -1,0 +1,36 @@
+<html>
+	<script type="text/javascript" src="../javascript/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="../javascript/popup.js"></script>
+	
+	<link rel="stylesheet" href="../styles/popup.css" type="text/css">
+	
+	<body onload="init()">
+		<div id="player">
+			<button onclick="userBrowserAction('previous');" title="Previous song" id="previous"></button>
+			<button onclick="userBrowserAction('playOrPause');" title="Play" id="play"></button>
+			<button onclick="userBrowserAction('next');" title="Next song" id="next"></button>
+		</div>
+		
+		<hr />
+		<button onclick="goToGroovesharkTab();">gs</button>
+		<button onclick="userBrowserAction('shuffle');">Shuffle</button>
+		<button onclick="userBrowserAction('loop');">Loop</button>
+		<button onclick="userBrowserAction('crossfade');">Crossfade</button>
+		<hr />
+		<div>Song: <span id="song"></span></div>
+		<div>Artist: <span id="artist"></span></div>
+		<div>Album: <span id="album"></span></div>
+		<hr />
+		<div>In my music: <span id="inMyMusic"></span></div>
+		<div>Is favorite: <span id="isFavorite"></span></div>
+		<hr />
+		<div>Position: <span id="position"></span></div>
+		<div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
+		<hr />
+		<div>shuffle: <span id="shuffle"></span></div>
+		<div>loop: <span id="loop"></span></div>
+		<div>crossfade: <span id="crossfade"></span></div>
+		<hr />
+		<div id="playlist"></div>
+	</body>
+</html>

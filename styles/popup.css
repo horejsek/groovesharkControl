@@ -1,0 +1,23 @@
+
+body {
+  width: 300px;
+  background: #252525;
+  color: #CCC;
+}
+
+strong {
+  color: #EEE;
+}
+
+#player button {
+  width: 40px;
+  height: 40px;
+  background: url('../images/controls.png');
+  border: none;
+  cursor: pointer;
+}
+
+#play { background-position: -40px -40px !important; }
+#previous { background-position: -40px -80px !important; }
+#next { background-position: -40px -120px !important; }
+
