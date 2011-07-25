@@ -23,6 +23,19 @@ if (data['isSomeInQueue']) {
     }
   }
   
+  playlist = []
+  
+  $('#queue_list li.queue-item').each(function(index) {
+    queueItem = {
+      song: $(this).find('a.queueSong_name').text(),
+      artist: $(this).find('a.queueSong_artist').text(),
+      isActive: $(this).hasClass('queue-item-active')
+    }
+    playlist.push(queueItem);
+  });
+  
+  data['playlist'] = playlist;
+  
   data['playerOptions'] = {
     shuffle: $('#player_shuffle').hasClass('active'),
     loop: $('#player_loop').hasClass('one') ? 'one' : ($('#player_loop').hasClass('all') ? 'all' : 'none'),

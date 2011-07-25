@@ -1,4 +1,5 @@
 
+<script src="jquery-1.6.2.min.js"></script>
 <script>
 
 var isSomeInQueue = false;
@@ -39,11 +40,37 @@ function userBrowserAction(action) {
   });
 }
 
+function playSongInQueue(index) {
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGroovesharkUrl(tab.url)) {
+        chrome.tabs.executeScript(tab.id, {code: "$('#queue_list li.queue-item[rel="+index+"] a.play').click()"});
+        return;
+      }
+    }
+    chrome.tabs.create({url: getGroovesharkUrl()});
+  });
+}
+
+function goToGroovesharkTab() {
+  chrome.tabs.getAllInWindow(undefined, function(tabs) {
+    for (var i = 0, tab; tab = tabs[i]; i++) {
+      if (tab.url && isGroovesharkUrl(tab.url)) {
+        chrome.tabs.update(tab.id, {selected: true});
+        return;
+      }
+    }
+    chrome.tabs.create({url: getGroovesharkUrl()});
+  });
+}
+
 
 
 function init() {
   setIcon("grooveshark_disabled.png");
   getData();
+  
+  window.setTimeout(function() { if (!isSomeInQueue) goToGroovesharkTab(); }, 100);
 }
 
 function setIcon(icon) {
@@ -95,12 +122,26 @@ chrome.extension.onRequest.addListener(
     document.getElementById("shuffle").innerHTML = request.playerOptions.shuffle;
     document.getElementById("loop").innerHTML = request.playerOptions.loop;
     document.getElementById("crossfade").innerHTML = request.playerOptions.crossfade;
+    
+    $('#playlist').text('');
+    $.each(request.playlist, function(i, val) {
+      var text = '#'+(i+1)+': '+val.artist+' - '+val.song;
+      
+      text = "<a onclick='playSongInQueue("+i+")'>" + text + "</a>";
+      
+      if(val.isActive)
+        text = '<strong>'+text+'</strong>';
+      text = '<div>'+text+'</div>';
+      
+      $('#playlist').append(text);
+    });
   }
 );
 
 </script>
 
 <body onload="init()" style="width: 300px;">
+<button onclick="goToGroovesharkTab();">gs</button>
 <button onclick="userBrowserAction('previous');">|<</button>
 <button onclick="userBrowserAction('playOrPause');">Play/pause</button>
 <button onclick="userBrowserAction('next');">>|</button>
@@ -122,5 +163,7 @@ chrome.extension.onRequest.addListener(
 <div>shuffle: <span id="shuffle"></span></div>
 <div>loop: <span id="loop"></span></div>
 <div>crossfade: <span id="crossfade"></span></div>
+<hr />
+<div id="playlist"></div>
 </body>
 
