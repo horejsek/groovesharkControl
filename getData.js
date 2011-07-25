@@ -12,6 +12,10 @@ if (data['isSomeInQueue']) {
     song: $('#playerDetails_nowPlaying a.song').text(),
     artist: $('#playerDetails_nowPlaying a.artist').text(),
     album: $('#playerDetails_nowPlaying a.album').text(),
+    
+    inMyMusic: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
+    isFavorite: $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
+    
     positionInQueue: $('#queue_list li.queue-item-active span.position').text(),
     times: {
       elapsed: $('#player_times #player_elapsed').text(),

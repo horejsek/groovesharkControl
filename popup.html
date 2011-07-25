@@ -85,6 +85,9 @@ chrome.extension.onRequest.addListener(
     document.getElementById("artist").innerHTML = request.nowPlaying.artist;
     document.getElementById("album").innerHTML = request.nowPlaying.album;
     
+    document.getElementById("inMyMusic").innerHTML = request.nowPlaying.inMyMusic;
+    document.getElementById("isFavorite").innerHTML = request.nowPlaying.isFavorite;
+    
     document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
     document.getElementById("timeElapsed").innerHTML = request.nowPlaying.times.elapsed;
     document.getElementById("timeDuration").innerHTML = request.nowPlaying.times.duration;
@@ -98,8 +101,8 @@ chrome.extension.onRequest.addListener(
 </script>
 
 <body onload="init()" style="width: 300px;">
-<button onclick="userBrowserAction('playOrPause');">Play/pause</button>
 <button onclick="userBrowserAction('previous');">|<</button>
+<button onclick="userBrowserAction('playOrPause');">Play/pause</button>
 <button onclick="userBrowserAction('next');">>|</button>
 <br />
 <button onclick="userBrowserAction('shuffle');">Shuffle</button>
@@ -109,6 +112,9 @@ chrome.extension.onRequest.addListener(
 <div>Song: <span id="song"></span></div>
 <div>Artist: <span id="artist"></span></div>
 <div>Album: <span id="album"></span></div>
+<hr />
+<div>In my music: <span id="inMyMusic"></span></div>
+<div>Is favorite: <span id="isFavorite"></span></div>
 <hr />
 <div>Position: <span id="position"></span></div>
 <div>Time: <span id="timeElapsed"></span> of <span id="timeDuration"></span></div>
