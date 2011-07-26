@@ -1,5 +1,6 @@
 
 var isSomeInQueue = false;
+var activeSongIndex = 0;
 
 var actions = {
   'playOrPause': "$('#player_play_pause').click()",
@@ -42,7 +43,13 @@ function playSongInQueue(index) {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {code: "$('#queue_list li.queue-item[rel="+index+"] a.play').click()"});
+        var move = index - activeSongIndex;
+        if (move <= 0) move--;
+        action = actions[move<0 ? 'previous' : 'next'];
+        
+        for (var x = 0; x < Math.abs(move); x++) {
+          chrome.tabs.executeScript(tab.id, {code: action});
+        }
         return;
       }
     }
@@ -119,12 +126,14 @@ chrome.extension.onRequest.addListener(
     $('#statusbar .elapsed').css('width', request.nowPlaying.times.percent);
     
     $('#playlist').text('');
-    $.each(request.playlist, function(i, val) {
+    $.each(request.playlist, function(index, val) {
       var text = val.artist+' - '+val.song;
       
-      if(val.isActive)
+      if(val.isActive) {
+        activeSongIndex = index;
         text = '<strong>'+text+'</strong>';
-      text = "<div onclick='playSongInQueue("+i+")'>"+text+"</div>";
+      }
+      text = "<div onclick='playSongInQueue("+index+")' class='item'>"+text+"</div>";
       
       $('#playlist').append(text);
     });

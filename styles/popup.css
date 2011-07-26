@@ -67,10 +67,14 @@ strong {
   height: 300px;
   overflow: auto;
 }
-#playlist div {
+#playlist .item {
   margin: 2px;
   padding: 2px;
   background: #202020;
+  cursor: pointer;
+}
+#playlist .item:hover {
+  background: #1C1C1C;
 }
 
 
