@@ -9,15 +9,40 @@ strong {
   color: #EEE;
 }
 
+#player { text-align: center; }
+
 #player button {
-  width: 40px;
-  height: 40px;
-  background: url('../images/controls.png');
+  width: 35px;
+  height: 35px;
+  background: url('../images/controls.png') no-repeat;
   border: none;
   cursor: pointer;
 }
 
-#play { background-position: -40px -40px !important; }
+#playpause.play { background-position: -40px 0px !important; }
+#playpause.pause { background-position: -40px -40px !important; }
 #previous { background-position: -40px -80px !important; }
 #next { background-position: -40px -120px !important; }
+
+#shuffle.false { background-position: -40px -160px !important; }
+#shuffle.true { background-position: -160px -160px !important; }
+
+#loop.none { background-position: -40px -200px !important; }
+#loop.all { background-position: -160px -200px !important; }
+#loop.one { background-position: -280px -200px !important; }
+
+#crossfade.false { background-position: -40px -240px !important; }
+#crossfade.true { background-position: -160px -240px !important; }
+
+#playpause:hover, #previous:hover, #next:hover { background-position-x: -120px !important; }
+#shuffle.false:hover, #loop.none:hover, #crossfade.false:hover { background-position-x: -80px !important; }
+#shuffle.true:hover, #loop.all:hover, #crossfade.true:hover { background-position-x: -200px !important; }
+#loop.one:hover { background-position-x: -320px !important; }
+
+#gotogrooveshark { background: url('../images/goto.png') no-repeat 5px !important; }
+
+#nowPlaying { margin-top: 5px; }
+
+#statusbar { background: #3B3B3B; width: 99%; height: 5px; }
+#statusbar .elapsed { background: #B4D724; width: 50%; height: 5px; }
 

@@ -92,21 +92,29 @@ function scheduleRequest() {
 chrome.extension.onRequest.addListener(
   function(request, sender, sendResponse) {
     isSomeInQueue = request.isSomeInQueue;
+    isPlaying = request.isPlaying;
     
-    document.getElementById("song").innerHTML = request.nowPlaying.song;
-    document.getElementById("artist").innerHTML = request.nowPlaying.artist;
-    document.getElementById("album").innerHTML = request.nowPlaying.album;
+    $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
+    
+    $('#shuffle').attr('class', request.playerOptions.shuffle);
+    $('#loop').attr('class', request.playerOptions.loop);
+    $('#crossfade').attr('class', request.playerOptions.crossfade);
+    
+    $('#statusbar .elapsed').css('width', request.nowPlaying.times.percent);
+    
+    $('#nowPlaying .song').text(request.nowPlaying.song);
+    $('#nowPlaying .artist').text(request.nowPlaying.artist);
+    $('#nowPlaying .album').text(request.nowPlaying.album);
+    
+    $('#nowPlaying .timeElapsed').text(request.nowPlaying.times.elapsed);
+    $('#nowPlaying .timeDuration').text(request.nowPlaying.times.duration);
+    
+    
     
     document.getElementById("inMyMusic").innerHTML = request.nowPlaying.inMyMusic;
     document.getElementById("isFavorite").innerHTML = request.nowPlaying.isFavorite;
     
     document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
-    document.getElementById("timeElapsed").innerHTML = request.nowPlaying.times.elapsed;
-    document.getElementById("timeDuration").innerHTML = request.nowPlaying.times.duration;
-    
-    document.getElementById("shuffle").innerHTML = request.playerOptions.shuffle;
-    document.getElementById("loop").innerHTML = request.playerOptions.loop;
-    document.getElementById("crossfade").innerHTML = request.playerOptions.crossfade;
     
     $('#playlist').text('');
     $.each(request.playlist, function(i, val) {

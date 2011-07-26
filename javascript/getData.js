@@ -7,6 +7,10 @@ data = {
 }
 
 if (data['isSomeInQueue']) {
+  
+  var progressBar = $('#player_controls_seeking div.progress');
+  var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width')) + '%';
+
   data['nowPlaying'] = {
     song: $('#playerDetails_nowPlaying a.song').text(),
     artist: $('#playerDetails_nowPlaying a.artist').text(),
@@ -18,7 +22,8 @@ if (data['isSomeInQueue']) {
     positionInQueue: $('#queue_list li.queue-item-active span.position').text(),
     times: {
       elapsed: $('#player_times #player_elapsed').text(),
-      duration: $('#player_times #player_duration').text()
+      duration: $('#player_times #player_duration').text(),
+      percent: percent
     }
   }
   
