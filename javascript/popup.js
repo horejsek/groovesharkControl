@@ -35,6 +35,7 @@ function userBrowserAction(action) {
     }
     chrome.tabs.create({url: getGroovesharkUrl()});
   });
+  getData(true);
 }
 
 function playSongInQueue(index) {
@@ -66,10 +67,10 @@ function goToGroovesharkTab() {
 function init() {
   getData();
   
-  window.setTimeout(function() { if (!isSomeInQueue) goToGroovesharkTab(); }, 100);
+  window.setTimeout(function() { if (!isSomeInQueue) goToGroovesharkTab(); }, 50);
 }
 
-function getData() {
+function getData(oneTime) {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
@@ -78,8 +79,7 @@ function getData() {
       }
     }
   });
-  
-  scheduleRequest();
+  if (!oneTime) scheduleRequest();
 }
 
 function scheduleRequest() {
