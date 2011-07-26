@@ -103,7 +103,7 @@ chrome.extension.onRequest.addListener(
     $('#nowPlaying .song').text(request.nowPlaying.song);
     $('#nowPlaying .artist').text(request.nowPlaying.artist);
     $('#nowPlaying .album').text(request.nowPlaying.album);
-    $('#nowPlaying .image').css('background', 'url('+request.nowPlaying.image+')');
+    $('#nowPlaying .image').attr('src', request.nowPlaying.image);
     
     $('#nowPlaying .timeElapsed').text(request.nowPlaying.times.elapsed);
     $('#nowPlaying .timeDuration').text(request.nowPlaying.times.duration);
