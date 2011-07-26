@@ -29,7 +29,7 @@ function checkPlaying() {
   chrome.tabs.getAllInWindow(undefined, function(tabs) {
     for (var i = 0, tab; tab = tabs[i]; i++) {
       if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "../javascript/getData.js"});
+        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
         return;
       }
     }
