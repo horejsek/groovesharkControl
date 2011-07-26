@@ -15,6 +15,7 @@ if (data['isSomeInQueue']) {
     song: $('#playerDetails_nowPlaying a.song').text(),
     artist: $('#playerDetails_nowPlaying a.artist').text(),
     album: $('#playerDetails_nowPlaying a.album').text(),
+    image: $('#queue_list li.queue-item-active img').attr('src'),
     
     inMyMusic: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
     isFavorite: $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),

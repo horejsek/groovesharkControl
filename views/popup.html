@@ -9,28 +9,24 @@
 			<button id="shuffle" class="false" onclick="userBrowserAction('shuffle');"></button>
 			<button id="loop" class="none" onclick="userBrowserAction('loop');"></button>
 			<button id="crossfade" class="false" onclick="userBrowserAction('crossfade');"></button>
-			
 			<button id="gotogrooveshark" onclick="goToGroovesharkTab();"></button>
-			
 			<button id="previous" onclick="userBrowserAction('previous');" title="Previous song"></button>
 			<button id="playpause" class="play" onclick="userBrowserAction('playOrPause');" title="Play/pause"></button>
 			<button id="next" onclick="userBrowserAction('next');" title="Next song"></button>
 		</div>
 		
 		<div id="nowPlaying">
+			<div class="image"></div>
 			<div class="song"></div>
 			<div class="artist"></div>
 			<div class="album"></div>
-			<div><span class="timeElapsed"></span> of <span class="timeDuration"></span></div>
+			<div class="time"><span class="timeElapsed"></span> of <span class="timeDuration"></span></div>
+			<div class="position"></div>
+			<div class="inmusic"></div>
+			<div class="favorite"></div>
 			<div id="statusbar"><div class="elapsed"></div></div>
 		</div>
 		
-		<hr />
-		<div>In my music: <span id="inMyMusic"></span></div>
-		<div>Is favorite: <span id="isFavorite"></span></div>
-		<hr />
-		<div>Position: <span id="position"></span></div>
-		<hr />
 		<div id="playlist"></div>
 	</body>
 </html>

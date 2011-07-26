@@ -100,31 +100,31 @@ chrome.extension.onRequest.addListener(
     $('#loop').attr('class', request.playerOptions.loop);
     $('#crossfade').attr('class', request.playerOptions.crossfade);
     
-    $('#statusbar .elapsed').css('width', request.nowPlaying.times.percent);
-    
     $('#nowPlaying .song').text(request.nowPlaying.song);
     $('#nowPlaying .artist').text(request.nowPlaying.artist);
     $('#nowPlaying .album').text(request.nowPlaying.album);
+    $('#nowPlaying .image').css('background', 'url('+request.nowPlaying.image+')');
     
     $('#nowPlaying .timeElapsed').text(request.nowPlaying.times.elapsed);
     $('#nowPlaying .timeDuration').text(request.nowPlaying.times.duration);
     
+    if (request.nowPlaying.inMyMusic) $('#nowPlaying .inmusic').removeClass('disable');
+    else $('#nowPlaying .inmusic').addClass('disable');
     
+    if (request.nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
+    else $('#nowPlaying .favorite').addClass('disable');
     
-    document.getElementById("inMyMusic").innerHTML = request.nowPlaying.inMyMusic;
-    document.getElementById("isFavorite").innerHTML = request.nowPlaying.isFavorite;
+    $('#nowPlaying .position').text(request.nowPlaying.positionInQueue);
     
-    document.getElementById("position").innerHTML = request.nowPlaying.positionInQueue;
+    $('#statusbar .elapsed').css('width', request.nowPlaying.times.percent);
     
     $('#playlist').text('');
     $.each(request.playlist, function(i, val) {
-      var text = '#'+(i+1)+': '+val.artist+' - '+val.song;
-      
-      text = "<a onclick='playSongInQueue("+i+")'>" + text + "</a>";
+      var text = val.artist+' - '+val.song;
       
       if(val.isActive)
         text = '<strong>'+text+'</strong>';
-      text = '<div>'+text+'</div>';
+      text = "<div onclick='playSongInQueue("+i+")'>"+text+"</div>";
       
       $('#playlist').append(text);
     });
