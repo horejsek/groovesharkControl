@@ -1,142 +1,79 @@
 
-var isSomeInQueue = false;
-var activeSongIndex = 0;
+var indexOfActiveSong = 0;
 
-var actions = {
-  'playOrPause': "$('#player_play_pause').click()",
-  'shuffle': "$('#player_shuffle').click()",
-  'loop': "$('#player_loop').click()",
-  'crossfade': "$('#player_crossfade').click()",
-  'previous': "$('#player_previous').click()",
-  'next': "$('#player_next').click()"
+function init () {
+    getData(callbackIfGroovesharkIsNotOpen=goToGroovesharkTab);
 }
 
-function getGroovesharkUrl() {
-  return "http://grooveshark.com/";
+function userAction (action) {
+    callWithGroovesharkTabId(function (tabId) {
+        chrome.tabs.executeScript(tabId, {code: actions[action]});
+    });
+    getData();
 }
 
-function isGroovesharkUrl(url) {
-  var grooveshark = getGroovesharkUrl();
-  if (url.indexOf(grooveshark) != 0)
-    return false;
-  return true;
-}
+function moveInPlaylistToIndex (index) {
+    callWithGroovesharkTabId(function (tabId) {
+        var moves = index - indexOfActiveSong;
+        if (moves <= 0) moves--;
+        action = actions[moves<0 ? 'previous' : 'next'];
 
-function userBrowserAction(action) {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        if (isSomeInQueue) {
-          chrome.tabs.executeScript(tab.id, {code: actions[action]});
-        } else {
-          chrome.tabs.update(tab.id, {selected: true});
+        for (var move = 0; move < Math.abs(moves); move++) {
+          chrome.tabs.executeScript(tabId, {code: action});
         }
-        return;
-      }
-    }
-    chrome.tabs.create({url: getGroovesharkUrl()});
-  });
-  getData(true);
+    });
+    getData();
 }
-
-function playSongInQueue(index) {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        var move = index - activeSongIndex;
-        if (move <= 0) move--;
-        action = actions[move<0 ? 'previous' : 'next'];
-        
-        for (var x = 0; x < Math.abs(move); x++) {
-          chrome.tabs.executeScript(tab.id, {code: action});
-        }
-        return;
-      }
-    }
-    chrome.tabs.create({url: getGroovesharkUrl()});
-  });
-}
-
-function goToGroovesharkTab() {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.update(tab.id, {selected: true});
-        return;
-      }
-    }
-    chrome.tabs.create({url: getGroovesharkUrl()});
-  });
-}
-
-
-
-function init() {
-  getData();
-  
-  window.setTimeout(function() { if (!isSomeInQueue) goToGroovesharkTab(); }, 50);
-}
-
-function getData(oneTime) {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
-        return;
-      }
-    }
-  });
-  if (!oneTime) scheduleRequest();
-}
-
-function scheduleRequest() {
-  var delay = 1000;
-  window.setTimeout(getData, delay);
-}
-
-
 
 chrome.extension.onRequest.addListener(
-  function(request, sender, sendResponse) {
-    isSomeInQueue = request.isSomeInQueue;
-    isPlaying = request.isPlaying;
+    function (request, sender, sendResponse) {
+        setPlayerOptions(request.playerOptions);
+        setNowPlaying(request.nowPlaying);
+        setPlaylist(request.playlist);
+
+        $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
+    }
+);
+
+
+function setPlayerOptions (options) {
+    $('#shuffle').attr('class', options.shuffle);
+    $('#loop').attr('class', options.loop);
+    $('#crossfade').attr('class', options.crossfade);
+}
+
+function setNowPlaying (nowPlaying) {
+    $('#nowPlaying .song').text(nowPlaying.song);
+    $('#nowPlaying .artist').text(nowPlaying.artist);
+    $('#nowPlaying .album').text(nowPlaying.album);
+    $('#nowPlaying .image').attr('src', nowPlaying.image);
     
-    $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
+    $('#nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
+    $('#nowPlaying .timeDuration').text(nowPlaying.times.duration);
     
-    $('#shuffle').attr('class', request.playerOptions.shuffle);
-    $('#loop').attr('class', request.playerOptions.loop);
-    $('#crossfade').attr('class', request.playerOptions.crossfade);
-    
-    $('#nowPlaying .song').text(request.nowPlaying.song);
-    $('#nowPlaying .artist').text(request.nowPlaying.artist);
-    $('#nowPlaying .album').text(request.nowPlaying.album);
-    $('#nowPlaying .image').attr('src', request.nowPlaying.image);
-    
-    $('#nowPlaying .timeElapsed').text(request.nowPlaying.times.elapsed);
-    $('#nowPlaying .timeDuration').text(request.nowPlaying.times.duration);
-    
-    if (request.nowPlaying.inMyMusic) $('#nowPlaying .inmusic').removeClass('disable');
+    if (nowPlaying.inMyMusic) $('#nowPlaying .inmusic').removeClass('disable');
     else $('#nowPlaying .inmusic').addClass('disable');
     
-    if (request.nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
+    if (nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
     else $('#nowPlaying .favorite').addClass('disable');
     
-    $('#nowPlaying .position').text(request.nowPlaying.positionInQueue);
+    $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
-    $('#statusbar .elapsed').css('width', request.nowPlaying.times.percent);
-    
+    $('#statusbar .elapsed').css('width', nowPlaying.times.percent);
+}
+
+function setPlaylist (playlist) {
     $('#playlist').text('');
-    $.each(request.playlist, function(index, val) {
-      var text = val.artist+' - '+val.song;
-      
-      if(val.isActive) {
-        activeSongIndex = index;
-        text = '<strong>'+text+'</strong>';
-      }
-      text = "<div onclick='playSongInQueue("+index+")' class='item'>"+text+"</div>";
-      
-      $('#playlist').append(text);
+    $.each(playlist, function (index, item) {
+        var htmlOfItem = item.artist + ' - ' + item.song;
+
+        if (item.isActive) {
+            indexOfActiveSong = index;
+            htmlOfItem = '<strong>' + htmlOfItem + '</strong>';
+        }
+        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' class='item'>" + htmlOfItem + "</div>";
+
+        $('#playlist').append(htmlOfItem);
     });
-  }
-);
+}
 

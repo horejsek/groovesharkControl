@@ -1,93 +1,10 @@
 <html>
-<head>
-<script>
-
-var isSomeInQueue = false;
-
-
-
-function getGroovesharkUrl() {
-  return "http://grooveshark.com/";
-}
-
-function isGroovesharkUrl(url) {
-  var grooveshark = getGroovesharkUrl();
-  if (url.indexOf(grooveshark) != 0)
-    return false;
-  return true;
-}
-
-
-
-function init() {
-  chrome.browserAction.setIcon({path: "../images/grooveshark_disabled.png"});
-
-  checkPlaying();
-}
-
-function checkPlaying() {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
-        return;
-      }
-    }
-    setIcon('grooveshark_disabled');
-  });
-  
-  scheduleRequest();
-}
-
-function setIcon(icon) {
-  chrome.browserAction.setIcon({path: "../images/"+icon+".png"});
-}
-
-function scheduleRequest() {
-  var delay = 1000;
-  window.setTimeout(checkPlaying, delay);
-}
-
-
-
-chrome.extension.onRequest.addListener(
-  function(request, sender, sendResponse) {
-    isSomeInQueue = request.isSomeInQueue;
-    
-    if (request.isSomeInQueue) {
-      if (request.isPlaying) icon = 'grooveshark_pause';
-      else icon = 'grooveshark_play';
-    } else icon = 'grooveshark_disabled';
-    setIcon(icon);
-  }
-);
-
-
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-  userBrowserAction();
-});
-
-function userBrowserAction() {
-  chrome.tabs.getAllInWindow(undefined, function(tabs) {
-    for (var i = 0, tab; tab = tabs[i]; i++) {
-      if (tab.url && isGroovesharkUrl(tab.url)) {
-        if (isSomeInQueue) {
-          chrome.tabs.executeScript(tab.id, {code: "document.getElementById('player_play_pause').click()"});
-        } else {
-          chrome.tabs.update(tab.id, {selected: true});
-        }
-        return;
-      }
-    }
-    chrome.tabs.create({url: getGroovesharkUrl()});
-  });
-}
-
-</script>
-</head>
-<body onload="init()">
-<canvas id="canvas" width="19" height="19">
-</body>
+	<head>
+		<script type="text/javascript" src="../javascript/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="../javascript/groovesharkControl.js"></script>
+		<script type="text/javascript" src="../javascript/background.js"></script>
+	</head>
+	<body onload="init()">
+		<canvas id="canvas" width="19" height="19">
+	</body>
 </html>
-

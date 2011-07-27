@@ -1,24 +1,26 @@
 
 body {
-  width: 350px;
-  background: #252525;
-  color: #CCC;
+    color: #CCC;
+    background: #252525;
+    width: 350px;
 }
 
 strong {
-  color: #EEE;
+    color: #EEE;
 }
 
+/* PLAYER OPTIONS */
 
-
-#player { text-align: center; }
+#player {
+    text-align: center;
+}
 
 #player button {
-  width: 35px;
-  height: 35px;
-  background: url('../images/controls.png') no-repeat;
-  border: none;
-  cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background: url('../images/controls.png') no-repeat;
+    border: none;
+    cursor: pointer;
 }
 
 #playpause.play { background-position: -40px 0px !important; }
@@ -26,55 +28,129 @@ strong {
 #previous { background-position: -40px -80px !important; }
 #next { background-position: -40px -120px !important; }
 
-#shuffle.false { background-position: -40px -160px !important; }
-#shuffle.true { background-position: -160px -160px !important; }
-
 #loop.none { background-position: -40px -200px !important; }
 #loop.all { background-position: -160px -200px !important; }
 #loop.one { background-position: -280px -200px !important; }
 
+#shuffle.false { background-position: -40px -160px !important; }
+#shuffle.true { background-position: -160px -160px !important; }
+
 #crossfade.false { background-position: -40px -240px !important; }
 #crossfade.true { background-position: -160px -240px !important; }
 
-#playpause:hover, #previous:hover, #next:hover { background-position-x: -120px !important; }
-#shuffle.false:hover, #loop.none:hover, #crossfade.false:hover { background-position-x: -80px !important; }
-#shuffle.true:hover, #loop.all:hover, #crossfade.true:hover { background-position-x: -200px !important; }
-#loop.one:hover { background-position-x: -320px !important; }
+#playpause:hover,
+#previous:hover,
+#next:hover {
+    background-position-x: -120px !important;
+}
 
-#gotogrooveshark { background: url('../images/goto.png') no-repeat 5px !important; }
+#loop.none:hover,
+#shuffle.false:hover,
+#crossfade.false:hover {
+    background-position-x: -80px !important;
+}
+
+#loop.all:hover,
+#shuffle.true:hover,
+#crossfade.true:hover {
+    background-position-x: -200px !important;
+}
+
+#loop.one:hover {
+    background-position-x: -320px !important;
+}
+
+#gotogrooveshark {
+    background: url('../images/goto.png') no-repeat 5px !important;
+}
+
+/* NOW PLAYING */
+
+#nowPlaying {
+    height: 115px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+#nowPlaying .song {
+    color: #EEE;
+    font-size: 1.2em;
+}
+
+#nowPlaying .image {
+    float: right;
+    width: 100px;
+    height: 100px;
+}
+
+#nowPlaying .time {
+    position: absolute;
+    bottom: 15px;
+}
+
+#nowPlaying .position {
+    position: absolute;
+    bottom: 15px;
+    right: 155px;
+}
+
+#nowPlaying .inmusic,
+#nowPlaying .favorite {
+    width: 19px;
+    height: 18px;
+    position: absolute;
+    bottom: 17px;
+}
+
+#nowPlaying .inmusic {
+    background: url('../images/inmusic.png');
+    right: 128px;
+}
+
+#nowPlaying .favorite {
+    background: url('../images/favorite.png');
+    right: 105px;
+}
+
+#nowPlaying .inmusic.disable {
+    background: url('../images/inmusic_disabled.png');
+}
+
+#nowPlaying .favorite.disable {
+    background: url('../images/favorite_disabled.png');
+}
 
 
+#statusbar {
+    background: #3B3B3B;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    bottom: 5px;
+}
 
-#nowPlaying { margin-top: 5px; margin-bottom: 10px; height: 115px; position: relative; }
+#statusbar .elapsed {
+    background: #B4D724;
+    width: 50%;
+    height: 5px;
+}
 
-#nowPlaying .song { color: #EEE; font-size: 1.2em; }
-#nowPlaying .image { float: right; width: 100px; height: 100px; }
-#nowPlaying .time { bottom: 15px; position: absolute; }
-#nowPlaying .position { bottom: 15px; right: 155px; position: absolute; }
-
-#nowPlaying .inmusic, #nowPlaying .favorite { width: 19px; height: 18px; bottom: 17px; position: absolute; }
-#nowPlaying .inmusic { background: url('../images/inmusic.png'); right: 128px; }
-#nowPlaying .favorite { background: url('../images/favorite.png'); right: 105px; }
-#nowPlaying .inmusic.disable { background: url('../images/inmusic_disabled.png'); }
-#nowPlaying .favorite.disable { background: url('../images/favorite_disabled.png'); }
-
-#statusbar { background: #3B3B3B; bottom: 5px; width: 100%; height: 5px; position: absolute; }
-#statusbar .elapsed { background: #B4D724; width: 50%; height: 5px; }
-
-
+/* PLAYLIST */
 
 #playlist {
-  height: 300px;
-  overflow: auto;
-}
-#playlist .item {
-  margin: 2px;
-  padding: 2px;
-  background: #202020;
-  cursor: pointer;
-}
-#playlist .item:hover {
-  background: #1C1C1C;
+    height: 300px;
+    overflow: auto;
 }
 
+#playlist .item {
+    background: #202020;
+    margin: 2px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+#playlist .item:hover {
+    background: #1C1C1C;
+}
 
