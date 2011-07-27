@@ -1,8 +1,15 @@
 
+var isSomePlaylist = false;
 var indexOfActiveSong = 0;
 
 function init () {
-    getData(callbackIfGroovesharkIsNotOpen=goToGroovesharkTab);
+    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+    
+    // if playlist is empty we now after response of calling getData
+    // and it need some time, we say - 50 ms is good choise
+    window.setTimeout(function () {
+        if (!isSomePlaylist) goToGroovesharkTab();
+    }, 50);
 }
 
 function userAction (action) {
@@ -27,6 +34,8 @@ function moveInPlaylistToIndex (index) {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
+        isSomePlaylist = request.isSomePlaylist;
+        
         setPlayerOptions(request.playerOptions);
         setNowPlaying(request.nowPlaying);
         setPlaylist(request.playlist);
