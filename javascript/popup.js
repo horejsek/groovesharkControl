@@ -5,15 +5,24 @@ var indexOfActiveSong = 0;
 function hidePopup () { $('body').css('display', 'none'); }
 function showPopup () { $('body').css('display', 'block'); }
 
+function scrollPlaylistToActiveSong () {
+    var index = indexOfActiveSong - 2;
+    $('#playlist').scrollTo('#playlistItem_' + index, 800);
+}
+
 function init () {
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     
-    // if playlist is empty we now after response of calling getData
+    // if playlist is (not) empty we now after response of calling getData
     // and it need some time, we say - 500 ms is good choise
     window.setTimeout(function () {
-        if (!isSomePlaylist) goToGroovesharkTab();
-        else showPopup();
+        if (!isSomePlaylist) {
+            goToGroovesharkTab();
+        } else {
+            showPopup();
+            scrollPlaylistToActiveSong();
+        }
     }, 500);
 }
 
@@ -48,7 +57,6 @@ chrome.extension.onRequest.addListener(
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
 );
-
 
 function setPlayerOptions (options) {
     $('#shuffle').attr('class', options.shuffle);
@@ -88,7 +96,7 @@ function setPlaylist (playlist) {
         if (item.isActive) {
             indexOfActiveSong = index;
         }
-        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
+        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
 
         $('#playlist').append(htmlOfItem);
     });
