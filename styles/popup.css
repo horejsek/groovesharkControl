@@ -3,16 +3,17 @@ body {
     color: #CCC;
     background: #252525;
     width: 350px;
-}
-
-strong {
-    color: #EEE;
+    font-family: verdana, arial, sans-serif;
+    font-size: 0.8em;
 }
 
 /* PLAYER OPTIONS */
 
 #player {
     text-align: center;
+    background: url('../images/background_player.png') repeat-x;
+    height: 40px;
+    margin: -6px -6px;
 }
 
 #player button {
@@ -61,21 +62,22 @@ strong {
 }
 
 #gotogrooveshark {
-    background: url('../images/goto.png') no-repeat 5px !important;
+    background: url('../images/icon_30.png') no-repeat 5px !important;
 }
 
 /* NOW PLAYING */
 
 #nowPlaying {
-    height: 115px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    background: url('../images/background_nowPlaying.png') repeat-x;
+    height: 120px;
+    margin: 5px -6px 0px -6px;
+    padding: 5px;
     position: relative;
 }
 
 #nowPlaying .song {
-    color: #EEE;
-    font-size: 1.2em;
+    color: #FFF;
+    font-size: 1.4em;
 }
 
 #nowPlaying .image {
@@ -85,14 +87,16 @@ strong {
 }
 
 #nowPlaying .time {
+    font: 0.5em;
     position: absolute;
-    bottom: 15px;
+    bottom: 25px;
 }
 
 #nowPlaying .position {
+    font: 0.5em;
     position: absolute;
-    bottom: 15px;
-    right: 155px;
+    bottom: 25px;
+    right: 112px;
 }
 
 #nowPlaying .inmusic,
@@ -100,40 +104,68 @@ strong {
     width: 19px;
     height: 18px;
     position: absolute;
-    bottom: 17px;
+    bottom: 25px;
 }
 
 #nowPlaying .inmusic {
     background: url('../images/inmusic.png');
-    right: 128px;
+    right: 86px;
 }
 
 #nowPlaying .favorite {
     background: url('../images/favorite.png');
-    right: 105px;
+    right: 67px;
 }
 
-#nowPlaying .inmusic.disable {
-    background: url('../images/inmusic_disabled.png');
-}
-
+#nowPlaying .inmusic.disable,
 #nowPlaying .favorite.disable {
-    background: url('../images/favorite_disabled.png');
+    background: none;
 }
 
+/* PROGRESS BAR */
 
-#statusbar {
-    background: #3B3B3B;
-    width: 100%;
-    height: 5px;
+#progressbar {
+    background: url('../images/progressBar_background.png') repeat-x;
+    width: 98%;
+    height: 9px;
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
 }
 
-#statusbar .elapsed {
-    background: #B4D724;
+#progressbar .left {
+    background: url('../images/progressBar_left.png') no-repeat;
+    height: 9px;
+    width: 4px;
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+}
+
+#progressbar .right {
+    background: url('../images/progressBar_right.png') no-repeat;
+    height: 9px;
+    width: 4px;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    top: 0px;
+}
+
+#progressbar .elapsed {
+    background: url('../images/progressBar_foreground.png') repeat-x;
     width: 50%;
-    height: 5px;
+    height: 9px;
+}
+
+#progressbar .scrubber {
+    background: url('../images/progressBar_scrubber.png') no-repeat;
+    height: 16px;
+    width: 15px;
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: -3px;
 }
 
 /* PLAYLIST */
@@ -141,16 +173,29 @@ strong {
 #playlist {
     height: 300px;
     overflow: auto;
+    margin: 0px -6px;
+    background: #FFFFFF;
+    color: #000000;
 }
 
 #playlist .item {
-    background: #202020;
     margin: 2px;
     padding: 2px;
     cursor: pointer;
+
+}
+
+#playlist .item.odd {
+    background: #F3F7FB;
+}
+
+#playlist .item.active,
+#playlist .item.active:hover {
+    background: #E1F7BD;
+    color: #415C15;
 }
 
 #playlist .item:hover {
-    background: #1C1C1C;
+    background: #BDCEE0;
 }
 

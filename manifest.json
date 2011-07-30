@@ -1,7 +1,6 @@
 {
-    "background_page": "views/background.html",
     "browser_action": {
-        "default_icon": "images/grooveshark.png",
+        "default_icon": "images/icon_19.png",
         "default_title": "Grooveshark Control",
         "default_popup": "views/popup.html"
     },
@@ -17,5 +16,5 @@
     "permissions": [
         "tabs", "http://*/*"
     ],
-    "version": "0.3"
+    "version": "0.4"
 }

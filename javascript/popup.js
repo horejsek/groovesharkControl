@@ -3,7 +3,7 @@ var isSomePlaylist = false;
 var indexOfActiveSong = 0;
 
 function init () {
-    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+    periodicDataGetter(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     
     // if playlist is empty we now after response of calling getData
     // and it need some time, we say - 50 ms is good choise
@@ -69,18 +69,18 @@ function setNowPlaying (nowPlaying) {
     $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
     $('#statusbar .elapsed').css('width', nowPlaying.times.percent);
+    $('#statusbar .scrubber').css('left', nowPlaying.times.percent);
 }
 
 function setPlaylist (playlist) {
     $('#playlist').text('');
     $.each(playlist, function (index, item) {
-        var htmlOfItem = item.artist + ' - ' + item.song;
+        var text = item.artist + ' - ' + item.song;
 
         if (item.isActive) {
             indexOfActiveSong = index;
-            htmlOfItem = '<strong>' + htmlOfItem + '</strong>';
         }
-        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' class='item'>" + htmlOfItem + "</div>";
+        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
 
         $('#playlist').append(htmlOfItem);
     });
