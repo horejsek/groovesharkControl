@@ -20,11 +20,6 @@ function createGroovesharkTab () {
     chrome.tabs.create({url: getGroovesharkUrl()});
 }
 
-function setIcon (iconName) {
-    var iconPath = '../images/' + iconName + '.png';
-    chrome.browserAction.setIcon({path: iconPath});
-}
-
 function callWithGroovesharkTabId (callback, callbackIfGroovesharkIsNotOpen) {
     chrome.tabs.getAllInWindow(undefined, function (tabs) {
         for (var i = 0, tab; tab = tabs[i]; i++) {

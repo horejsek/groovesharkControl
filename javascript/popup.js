@@ -3,7 +3,7 @@ var isSomePlaylist = false;
 var indexOfActiveSong = 0;
 
 function init () {
-    periodicDataGetter(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     
     // if playlist is empty we now after response of calling getData
     // and it need some time, we say - 50 ms is good choise
