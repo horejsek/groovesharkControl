@@ -90,15 +90,16 @@ function setNowPlaying (nowPlaying) {
 
 function setPlaylist (playlist) {
     $('#playlist').text('');
-    $.each(playlist, function (index, item) {
+    $.each(playlist.items, function (index, item) {
         var text = item.artist + ' - ' + item.song;
-
-        if (item.isActive) {
-            indexOfActiveSong = index;
-        }
         htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
 
         $('#playlist').append(htmlOfItem);
     });
+    
+    if (playlist.active != indexOfActiveSong) {
+        indexOfActiveSong = playlist.active;
+        scrollPlaylistToActiveSong();
+    }
 }
 

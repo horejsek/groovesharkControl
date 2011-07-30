@@ -47,7 +47,10 @@ function getNowPlaying () {
 }
 
 function getPlaylist() {
-    playlist = []
+    playlist = {
+        items: [],
+        active: 0
+    }
 
     $('#queue_list li.queue-item').each( function(index) {
         queueItem = {
@@ -55,7 +58,8 @@ function getPlaylist() {
             artist: $(this).find('a.queueSong_artist').text(),
             isActive: $(this).hasClass('queue-item-active')
         }
-        playlist.push(queueItem);
+        if (queueItem.isActive) playlist.active = index;
+        playlist.items.push(queueItem);
     });
 
     return playlist;
