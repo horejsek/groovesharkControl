@@ -17,7 +17,7 @@ function getPlayerOptions () {
 
 function getNowPlaying () {
     var progressBar = $('#player_controls_seeking div.progress');
-    var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width')) + '%';
+    var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width'));
 
     return {
         song: {

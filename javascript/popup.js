@@ -84,8 +84,9 @@ function setNowPlaying (nowPlaying) {
     
     $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
-    $('#progressbar .elapsed').css('width', nowPlaying.times.percent);
-    $('#progressbar .scrubber').css('left', nowPlaying.times.percent);
+    var percent = (nowPlaying.times.percent * 0.95 + 1) + '%';
+    $('#progressbar .elapsed').css('width', percent);
+    $('#progressbar .scrubber').css('left', percent);
 }
 
 function setPlaylist (playlist) {
