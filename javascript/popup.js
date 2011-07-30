@@ -52,9 +52,12 @@ function setPlayerOptions (options) {
 }
 
 function setNowPlaying (nowPlaying) {
-    $('#nowPlaying .song').text(nowPlaying.song);
-    $('#nowPlaying .artist').text(nowPlaying.artist);
-    $('#nowPlaying .album').text(nowPlaying.album);
+    $('#nowPlaying .song').text(nowPlaying.song.short);
+    $('#nowPlaying .song').attr('title', nowPlaying.song.long);
+    $('#nowPlaying .artist').text(nowPlaying.artist.short);
+    $('#nowPlaying .artist').attr('title', nowPlaying.artist.long);
+    $('#nowPlaying .album').text(nowPlaying.album.short);
+    $('#nowPlaying .album').attr('title', nowPlaying.album.long);
     $('#nowPlaying .image').attr('src', nowPlaying.image);
     
     $('#nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);

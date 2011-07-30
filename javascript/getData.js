@@ -20,9 +20,18 @@ function getNowPlaying () {
     var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width')) + '%';
 
     return {
-        song: $('#playerDetails_nowPlaying a.song').text(),
-        artist: $('#playerDetails_nowPlaying a.artist').text(),
-        album: $('#playerDetails_nowPlaying a.album').text(),
+        song: {
+            short: $('#playerDetails_nowPlaying a.song').text(),
+            long: $('#playerDetails_nowPlaying a.song').attr('title')
+        },
+        artist: {
+            short: $('#playerDetails_nowPlaying a.artist').text(),
+            long: $('#playerDetails_nowPlaying a.artist').attr('title')
+        },
+        album: {
+            short: $('#playerDetails_nowPlaying a.album').text(),
+            long: $('#playerDetails_nowPlaying a.album').attr('title')
+        },
         image: $('#queue_list li.queue-item-active img').attr('src'),
 
         inMyMusic: $('#playerDetails_nowPlaying a.add').hasClass('selected'),

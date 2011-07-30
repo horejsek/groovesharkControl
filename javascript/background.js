@@ -36,7 +36,7 @@ chrome.extension.onRequest.addListener(
         setIcon(icon);
         
         if (request.isSomePlaylist) {
-	    var title = request.nowPlaying.artist + ' - ' + request.nowPlaying.song;
+	    var title = request.nowPlaying.artist.short + ' - ' + request.nowPlaying.song.short;
 	    setTitle(title);
 	} else {
 	    resetTitle();
