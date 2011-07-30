@@ -2,14 +2,19 @@
 var isSomePlaylist = false;
 var indexOfActiveSong = 0;
 
+function hidePopup () { $('body').css('display', 'none'); }
+function showPopup () { $('body').css('display', 'block'); }
+
 function init () {
+    hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     
     // if playlist is empty we now after response of calling getData
-    // and it need some time, we say - 50 ms is good choise
+    // and it need some time, we say - 500 ms is good choise
     window.setTimeout(function () {
         if (!isSomePlaylist) goToGroovesharkTab();
-    }, 50);
+        else showPopup();
+    }, 500);
 }
 
 function userAction (action) {
