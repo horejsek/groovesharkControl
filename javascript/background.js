@@ -32,10 +32,10 @@ chrome.extension.onRequest.addListener(
         setIcon(icons[request.isSomePlaylist ? 'enabled' : 'disabled']);
         
         if (request.isSomePlaylist) {
-	    setTitle(request.nowPlaying.artist.short + ' - ' + request.nowPlaying.song.short);
-	} else {
-	    resetTitle();
-	}
+            setTitle(request.nowPlaying.artist.short + ' - ' + request.nowPlaying.song.short);
+        } else {
+            resetTitle();
+        }
     }
 );
 

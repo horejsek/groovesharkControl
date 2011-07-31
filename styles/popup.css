@@ -173,7 +173,7 @@ body {
 #playlist {
     height: 300px;
     overflow: auto;
-    margin: 0px -6px -6px -6px;
+    margin: 0px -6px;
     background: #FFFFFF;
     color: #000000;
 }
@@ -197,5 +197,16 @@ body {
 
 #playlist .item:hover {
     background: #BDCEE0;
+}
+
+/* RADIO */
+
+#radio {
+    margin: 0px -6px -6px -6px;
+    padding: 5px;
+}
+
+#radio.active {
+    font-weight: bold;
 }
 

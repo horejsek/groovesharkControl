@@ -10,20 +10,20 @@ function init () {
 }
 
 function userAction (action) {
-    callWithGroovesharkTabId(function (tabId) {
-        chrome.tabs.executeScript(tabId, {code: actions[action]});
+    callWithGroovesharkTab(function (tab) {
+        chrome.tabs.executeScript(tab.id, {code: actions[action]});
     });
     getData();
 }
 
 function moveInPlaylistToIndex (index) {
-    callWithGroovesharkTabId(function (tabId) {
+    callWithGroovesharkTab(function (tab) {
         var moves = index - indexOfActiveSong;
         if (moves <= 0) moves--;
         action = actions[moves<0 ? 'previous' : 'next'];
 
         for (var move = 0; move < Math.abs(moves); move++) {
-          chrome.tabs.executeScript(tabId, {code: action});
+          chrome.tabs.executeScript(tab.id, {code: action});
         }
     });
     getData();
@@ -46,6 +46,7 @@ chrome.extension.onRequest.addListener(
         setPlayerOptions(request.playerOptions);
         setNowPlaying(request.nowPlaying);
         setPlaylist(request.playlist);
+        setRadio(request.radio);
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
@@ -95,6 +96,16 @@ function setPlaylist (playlist) {
     if (playlist.active != indexOfActiveSong) {
         indexOfActiveSong = playlist.active;
         scrollPlaylistToActiveSong();
+    }
+}
+
+function setRadio (radio) {
+    if (radio.active) {
+        $('#radio').addClass('active');
+        $('#radio .station').text(radio.station);
+    } else {
+        $('#radio').removeClass('active');
+        $('#radio .station').text('Off');
     }
 }
 

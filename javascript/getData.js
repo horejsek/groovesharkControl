@@ -65,18 +65,27 @@ function getPlaylist() {
     return playlist;
 }
 
+function getRadio () {
+    return {
+        active: $('#queue_radio_button').hasClass('active'),
+        station: $('#playerDetails_queue a').text()
+    }
+}
+
 data = {
     isSomePlaylist: isSomePlaylist(),
     isPlaying: isPlaying(),
     playerOptions: {},
     nowPlaying: {},
-    playlist: []
+    playlist: {},
+    radio: {}
 }
 
-if (data['isSomePlaylist']) {
-    data['playerOptions'] = getPlayerOptions();
-    data['nowPlaying'] = getNowPlaying();
-    data['playlist'] = getPlaylist();
+if (data.isSomePlaylist) {
+    data.playerOptions = getPlayerOptions();
+    data.nowPlaying = getNowPlaying();
+    data.playlist = getPlaylist();
+    data.radio = getRadio();
 }
 
 chrome.extension.sendRequest(data);

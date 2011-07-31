@@ -1,11 +1,11 @@
 
 var actions = {
     'playOrPause': "$('#player_play_pause').click()",
+    'previous': "$('#player_previous').click()",
+    'next': "$('#player_next').click()",
     'shuffle': "$('#player_shuffle').click()",
     'loop': "$('#player_loop').click()",
-    'crossfade': "$('#player_crossfade').click()",
-    'previous': "$('#player_previous').click()",
-    'next': "$('#player_next').click()"
+    'crossfade': "$('#player_crossfade').click()"
 }
 
 function getGroovesharkUrl () {
@@ -20,11 +20,11 @@ function createGroovesharkTab () {
     chrome.tabs.create({url: getGroovesharkUrl()});
 }
 
-function callWithGroovesharkTabId (callback, callbackIfGroovesharkIsNotOpen) {
+function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
     chrome.tabs.getAllInWindow(undefined, function (tabs) {
         for (var i = 0, tab; tab = tabs[i]; i++) {
             if (tab.url && isGroovesharkUrl(tab.url)) {
-                callback(tab.id);
+                callback(tab);
                 return;
             }
         }
@@ -33,14 +33,14 @@ function callWithGroovesharkTabId (callback, callbackIfGroovesharkIsNotOpen) {
 }
 
 function goToGroovesharkTab () {
-    callWithGroovesharkTabId(function (tabId) {
-        chrome.tabs.update(tabId, {selected: true});
+    callWithGroovesharkTab(function (tab) {
+        chrome.tabs.update(tab.id, {selected: true});
     }, createGroovesharkTab);
 }
 
 function getData (callbackIfGroovesharkIsNotOpen) {
-    callWithGroovesharkTabId(function (tabId) {
-        chrome.tabs.executeScript(tabId, {file: "javascript/getData.js"});
+    callWithGroovesharkTab(function (tab) {
+        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
     }, callbackIfGroovesharkIsNotOpen);
 }
 
