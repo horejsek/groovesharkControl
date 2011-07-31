@@ -1,29 +1,12 @@
 
-var isSomePlaylist = false;
-var indexOfActiveSong = 0;
+var indexOfActiveSong = -1;
 
 function hidePopup () { $('body').css('display', 'none'); }
 function showPopup () { $('body').css('display', 'block'); }
 
-function scrollPlaylistToActiveSong () {
-    var index = indexOfActiveSong - 2;
-    $('#playlist').scrollTo('#playlistItem_' + index, 800);
-}
-
 function init () {
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
-    
-    // if playlist is (not) empty we now after response of calling getData
-    // and it need some time, we say - 500 ms is good choise
-    window.setTimeout(function () {
-        if (!isSomePlaylist) {
-            goToGroovesharkTab();
-        } else {
-            showPopup();
-            scrollPlaylistToActiveSong();
-        }
-    }, 500);
 }
 
 function userAction (action) {
@@ -46,9 +29,19 @@ function moveInPlaylistToIndex (index) {
     getData();
 }
 
+function scrollPlaylistToActiveSong () {
+    var index = indexOfActiveSong - 2;
+    $('#playlist').scrollTo('#playlistItem_' + index, 800);
+}
+
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        isSomePlaylist = request.isSomePlaylist;
+        if (!request.isSomePlaylist) {
+            goToGroovesharkTab();
+            return;
+        }
+        
+        showPopup();
         
         setPlayerOptions(request.playerOptions);
         setNowPlaying(request.nowPlaying);
@@ -90,12 +83,13 @@ function setNowPlaying (nowPlaying) {
 }
 
 function setPlaylist (playlist) {
-    $('#playlist').text('');
+    var playlistItems = $('#playlist');
+    playlistItems.text('');
     $.each(playlist.items, function (index, item) {
         var text = item.artist + ' - ' + item.song;
         htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
 
-        $('#playlist').append(htmlOfItem);
+        playlistItems.append(htmlOfItem);
     });
     
     if (playlist.active != indexOfActiveSong) {
