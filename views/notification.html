@@ -5,10 +5,16 @@
 		<script type="text/javascript" src="../javascript/groovesharkControl.js"></script>
 		<script type="text/javascript" src="../javascript/notification.js"></script>
 	</head>
-	<body onload="init()">
+	<body onload="init()" onmouseover="turnOffCloseOfWindow()">
 	    <img id="image" />
 	    <div id="song"></div>
 	    <div id="artist"></div>
 	    <div id="album"></div>
+	    <div id="player">
+			<button id="previous" onclick="userAction('previous');" title="Previous song"></button>
+			<button id="playpause" class="play" onclick="userAction('playOrPause');" title="Play/pause"></button>
+			<button id="next" onclick="userAction('next');" title="Next song"></button>
+	    </div>
+	    <div id="countDown"></div>
 	</body>
 </html>

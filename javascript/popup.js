@@ -9,13 +9,6 @@ function init () {
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
 }
 
-function userAction (action) {
-    callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {code: actions[action]});
-    });
-    getData();
-}
-
 function moveInPlaylistToIndex (index) {
     callWithGroovesharkTab(function (tab) {
         var moves = index - indexOfActiveSong;
