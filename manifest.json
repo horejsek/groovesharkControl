@@ -1,7 +1,7 @@
 {
     "background_page": "views/background.html",
     "browser_action": {
-        "default_icon": "images/icon_19.png",
+        "default_icon": "images/backgroundIcons/disabled.png",
         "default_title": "Grooveshark Control",
         "default_popup": "views/popup.html"
     },

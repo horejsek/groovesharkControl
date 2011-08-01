@@ -1,7 +1,8 @@
 
 var icons = {
-    'enabled': 'icon_19',
-    'disabled': 'icon_19_disabled',
+    'disabled': 'backgroundIcons/disabled',
+    'playing': 'backgroundIcons/playing',
+    'pause': 'backgroundIcons/pause',
 }
 
 function setIcon (iconName) {
@@ -29,7 +30,14 @@ function init() {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        setIcon(icons[request.isSomePlaylist ? 'enabled' : 'disabled']);
+        var icon = 'disabled';
+        
+        if (request.isSomePlaylist) {
+            icon = 'playing';
+            if (!request.isPlaying) icon = 'pause';
+        }
+        
+        setIcon(icons[icon]);
         
         if (request.isSomePlaylist) {
             setTitle(request.nowPlaying.artist.short + ' - ' + request.nowPlaying.song.short);
