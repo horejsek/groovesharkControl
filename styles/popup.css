@@ -125,7 +125,7 @@ body {
 /* PROGRESS BAR */
 
 #progressbar {
-    background: url('../images/progressBar_background.png') repeat-x;
+    background: url('../images/progressBar/background.png') repeat-x;
     width: 98%;
     height: 9px;
     position: absolute;
@@ -133,7 +133,7 @@ body {
 }
 
 #progressbar .left {
-    background: url('../images/progressBar_left.png') no-repeat;
+    background: url('../images/progressBar/left.png') no-repeat;
     height: 9px;
     width: 4px;
     position: absolute;
@@ -143,7 +143,7 @@ body {
 }
 
 #progressbar .right {
-    background: url('../images/progressBar_right.png') no-repeat;
+    background: url('../images/progressBar/right.png') no-repeat;
     height: 9px;
     width: 4px;
     position: absolute;
@@ -153,13 +153,13 @@ body {
 }
 
 #progressbar .elapsed {
-    background: url('../images/progressBar_foreground.png') repeat-x;
+    background: url('../images/progressBar/foreground.png') repeat-x;
     width: 50%;
     height: 9px;
 }
 
 #progressbar .scrubber {
-    background: url('../images/progressBar_scrubber.png') no-repeat;
+    background: url('../images/progressBar/scrubber.png') no-repeat;
     height: 16px;
     width: 15px;
     position: absolute;
