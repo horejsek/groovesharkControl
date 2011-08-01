@@ -1,0 +1,20 @@
+
+body {
+    color: #CCC;
+    background: url('../images/background_nowPlaying.png') repeat-x -50px;
+    font-family: verdana, arial, sans-serif;
+    font-size: 0.8em;
+}
+
+#image {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+#song {
+    color: #FFF;
+    font-size: 1.4em;
+}
+

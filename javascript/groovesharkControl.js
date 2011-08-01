@@ -50,4 +50,11 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
     window.setTimeout("periodicDataGetter("+callbackIfGroovesharkIsNotOpen+")", delayInMiliseconds);
 }
 
+function showNotification () {
+    var notification = webkitNotifications.createHTMLNotification(
+        '../views/notification.html'
+    );
+    notification.show();
+}
+
 

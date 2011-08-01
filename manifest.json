@@ -15,7 +15,7 @@
     },
     "name": "Grooveshark Control",
     "permissions": [
-        "tabs", "http://grooveshark.com/*"
+        "tabs", "notifications", "http://grooveshark.com/*"
     ],
     "version": "0.5"
 }
