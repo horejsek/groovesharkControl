@@ -7,28 +7,36 @@ var icons = {
     'pause': 'backgroundIcons/pause'
 }
 
-function setIcon (iconName) {
-    var iconPath = '../images/' + iconName + '.png';
-    chrome.browserAction.setIcon({path: iconPath});
+function init() {
+    resetIcon();
+    resetTitle();
+    periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
 }
 
 function resetIcon () {
     setIcon(icons['disabled']);
 }
 
-function setTitle (title) {
-    chrome.browserAction.setTitle({title: title});
+function setIcon (iconName) {
+    var iconPath = '../images/' + iconName + '.png';
+    chrome.browserAction.setIcon({path: iconPath});
 }
 
 function resetTitle () {
     setTitle('Grooveshark Control');
 }
 
-function init() {
-    resetIcon();
-    resetTitle();
-    periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
+function setTitle (title) {
+    chrome.browserAction.setTitle({title: title});
 }
+
+chrome.extension.onRequest.addListener(
+    function (request, sender, sendResponse) {
+        setIconByRequest(request);
+        setTitleByRequst(request);
+        setIndexOfActiveSongByRequest(request);
+    }
+);
 
 function setIconByRequest (request) {
     if (request.isSomePlaylist) {
@@ -62,12 +70,4 @@ function setIndexOfActiveSongByRequest (request) {
         indexOfActiveSong = -1;
     }
 }
-
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-        setIconByRequest(request);
-        setTitleByRequst(request);
-        setIndexOfActiveSongByRequest(request);
-    }
-);
 
