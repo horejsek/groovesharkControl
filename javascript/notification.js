@@ -1,6 +1,6 @@
 
 var shouldClose = true;
-var closeAfterMiliseconds = 4000;
+var closeAfterMiliseconds = 5000;
 
 function closeNotification () {
     setTimeout(function() {
