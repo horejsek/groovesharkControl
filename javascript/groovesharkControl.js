@@ -58,6 +58,9 @@ function userAction (action) {
 }
 
 function showNotification () {
+    if (localStorage['showNotification'] == 'false')
+        return;
+    
     var notification = webkitNotifications.createHTMLNotification(
         '../views/notification.html'
     );
