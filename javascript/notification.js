@@ -9,15 +9,15 @@ function closeNotification () {
 }
 
 function countDown () {
-    var delay = 50;
+    var step = 50;
     var totalTime = 0;
     
     function _countDown () {
         if (shouldClose) {
-            totalTime += delay;
+            totalTime += step;
             var percent = totalTime / (closeAfterMiliseconds / 100);
             $('#countDown').css('width', (100-percent) + '%');
-            setTimeout(_countDown, delay);
+            setTimeout(_countDown, step);
         }
     }
     _countDown();
@@ -40,6 +40,12 @@ chrome.extension.onRequest.addListener(
         $('#artist').text(request.nowPlaying.artist.short);
         $('#album').text(request.nowPlaying.album.short);
         $('#image').attr('src', request.nowPlaying.image);
+    
+        if (request.nowPlaying.inMyMusic) $('#inmusic').removeClass('disable');
+        else $('#inmusic').addClass('disable');
+        
+        if (request.nowPlaying.isFavorite) $('#favorite').removeClass('disable');
+        else $('#favorite').addClass('disable');
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
