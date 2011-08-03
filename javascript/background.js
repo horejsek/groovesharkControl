@@ -7,10 +7,15 @@ var icons = {
     'pause': 'backgroundIcons/pause'
 }
 
-function init() {
+function init () {
     resetIcon();
     resetTitle();
     periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
+    
+    /*function _dbg () {
+        chrome.browserAction.setBadgeText({text: ''+indexOfActiveSong});
+        window.setTimeout(_dbg, 1000);
+    } _dbg();/**/
 }
 
 function resetIcon () {

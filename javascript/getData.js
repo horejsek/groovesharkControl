@@ -1,6 +1,6 @@
 
 function isSomePlaylist () {
-    return !$('#player_play_pause').hasClass('disabled');
+    return $('#queue_list').text() != '';
 }
 
 function isPlaying () {
