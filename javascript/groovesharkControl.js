@@ -18,6 +18,7 @@ function isGroovesharkUrl (url) {
 
 function goToGroovesharkTab () {
     callWithGroovesharkTab(function (tab) {
+        chrome.windows.update(tab.windowId, {focused: true});
         chrome.tabs.update(tab.id, {selected: true});
     }, createGroovesharkTab);
 }
@@ -27,11 +28,13 @@ function createGroovesharkTab () {
 }
 
 function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
-    chrome.tabs.getAllInWindow(undefined, function (tabs) {
-        for (var i = 0, tab; tab = tabs[i]; i++) {
-            if (tab.url && isGroovesharkUrl(tab.url)) {
-                callback(tab);
-                return;
+    chrome.windows.getAll({'populate': true}, function (windows) {
+        for (var i = 0, win; win = windows[i]; i++) {
+            for (var j = 0, tab; tab = win.tabs[j]; j++) {
+                if (tab.url && isGroovesharkUrl(tab.url)) {
+                    callback(tab);
+                    return;
+                }
             }
         }
         callbackIfGroovesharkIsNotOpen();
