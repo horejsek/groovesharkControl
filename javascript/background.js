@@ -66,8 +66,7 @@ function setTitleByRequst (request) {
 
 function setIndexOfActiveSongByRequest (request) {
     if (request.isSomePlaylist) {
-        // is active next song in queue?
-        if (indexOfActiveSong + 1 == request.playlist.active) {
+        if (indexOfActiveSong != request.playlist.active) {
             showNotification();
         }
         indexOfActiveSong = request.playlist.active;
