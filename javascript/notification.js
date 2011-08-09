@@ -40,6 +40,8 @@ chrome.extension.onRequest.addListener(
         $('#artist').text(request.nowPlaying.artist.short);
         $('#album').text(request.nowPlaying.album.short);
         $('#image').attr('src', request.nowPlaying.image);
+        $('#time .elapsed').text(request.nowPlaying.times.elapsed);
+        $('#time .duration').text(request.nowPlaying.times.duration);
     
         if (request.nowPlaying.inMyMusic) $('#inmusic').removeClass('disable');
         else $('#inmusic').addClass('disable');
