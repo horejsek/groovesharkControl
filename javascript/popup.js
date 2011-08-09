@@ -7,6 +7,9 @@ function showPopup () { $('body').css('display', 'block'); }
 function init () {
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+    
+    if (isNotificationOpen()) hidePin();
+    else showPin();
 }
 
 function moveInPlaylistToIndex (index) {
@@ -100,5 +103,13 @@ function setRadio (radio) {
         $('#radio').removeClass('active');
         $('#radio .station').text('Off');
     }
+}
+
+function showPin () {
+    $('#pin').show();
+}
+
+function hidePin () {
+    $('#pin').hide();
 }
 

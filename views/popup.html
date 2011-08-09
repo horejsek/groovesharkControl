@@ -8,6 +8,7 @@
 	</head>
 	<body onload="init()">
 		<div id="player">
+			<button id="pin" class="unpin" onclick="showNotification(stay=true);" title="Pin"></button>
 			<button id="shuffle" class="false" onclick="userAction('shuffle');" title="Shuffle songs"></button>
 			<button id="loop" class="none" onclick="userAction('loop');" title="Loop songs"></button>
 			<button id="crossfade" class="false" onclick="userAction('crossfade');" title="Crossfade between songs"></button>

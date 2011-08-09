@@ -24,6 +24,15 @@ body {
     cursor: pointer;
 }
 
+#pin {
+    background: url('../images/pin.png') no-repeat !important;
+    width: 10px !important;
+    height: 15px !important;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
 #playpause.play { background-position: -40px 0px !important; }
 #playpause.pause { background-position: -40px -40px !important; }
 #previous { background-position: -40px -80px !important; }

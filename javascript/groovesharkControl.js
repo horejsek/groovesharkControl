@@ -60,13 +60,28 @@ function userAction (action) {
     getData();
 }
 
-function showNotification () {
-    if (localStorage['showNotification'] == 'false')
-        return;
+function showNotification (stay) {
+    if (localStorage['showNotification'] == 'false') return;
     
-    var notification = webkitNotifications.createHTMLNotification(
-        '../views/notification.html'
-    );
-    notification.show();
+    if (!isNotificationOpen()) {
+        var notification = webkitNotifications.createHTMLNotification('../views/notification.html');
+        notification.show();
+    }
+    
+    if (stay) {
+        chrome.extension.getViews({type: 'popup'}).forEach(function(win) {
+            win.hidePin();
+        });
+        window.setTimeout(function () {
+            chrome.extension.getViews({type: 'notification'}).forEach(function (win) {
+                win.turnOffCloseOfWindow();
+            });
+        }, 100);
+    }
 }
+
+function isNotificationOpen () {
+    return chrome.extension.getViews({type: 'notification'}) != ''
+}
+
 
