@@ -20,6 +20,7 @@ function getNowPlaying () {
     var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width'));
 
     return {
+        id: $('#playerDetails_nowPlaying').attr('rel'),
         song: {
             short: $('#playerDetails_nowPlaying a.song').text(),
             long: $('#playerDetails_nowPlaying a.song').attr('title')
@@ -54,6 +55,7 @@ function getPlaylist() {
 
     $('#queue_list li.queue-item').each( function(index) {
         queueItem = {
+            id: $(this).find('div.queueSong').attr('rel'),
             song: $(this).find('a.queueSong_name').text(),
             artist: $(this).find('a.queueSong_artist').text(),
             isActive: $(this).hasClass('queue-item-active')
