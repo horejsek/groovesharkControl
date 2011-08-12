@@ -43,8 +43,8 @@ chrome.extension.onRequest.addListener(
         $('#time .elapsed').text(request.nowPlaying.times.elapsed);
         $('#time .duration').text(request.nowPlaying.times.duration);
     
-        if (request.nowPlaying.inMyMusic) $('#inmusic').removeClass('disable');
-        else $('#inmusic').addClass('disable');
+        if (request.nowPlaying.inLibrary) $('#library').removeClass('disable');
+        else $('#library').addClass('disable');
         
         if (request.nowPlaying.isFavorite) $('#favorite').removeClass('disable');
         else $('#favorite').addClass('disable');

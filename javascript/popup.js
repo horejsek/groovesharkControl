@@ -66,8 +66,8 @@ function setNowPlaying (nowPlaying) {
     $('#nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
     $('#nowPlaying .timeDuration').text(nowPlaying.times.duration);
     
-    if (nowPlaying.inMyMusic) $('#nowPlaying .inmusic').removeClass('disable');
-    else $('#nowPlaying .inmusic').addClass('disable');
+    if (nowPlaying.inLibrary) $('#nowPlaying .library').removeClass('disable');
+    else $('#nowPlaying .library').addClass('disable');
     
     if (nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
     else $('#nowPlaying .favorite').addClass('disable');

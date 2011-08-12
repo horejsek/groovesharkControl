@@ -19,16 +19,17 @@ body {
     font-size: 1.4em;
 }
 
-#inmusic,
+#library,
 #favorite {
     width: 19px;
     height: 18px;
     position: absolute;
     top: 70px;
+    cursor: pointer;
 }
 
-#inmusic {
-    background: url('../images/inmusic.png');
+#library {
+    background: url('../images/library.png');
     left: 8px;
 }
 
@@ -37,9 +38,14 @@ body {
     left: 27px;
 }
 
-#inmusic.disable,
+#library.disable,
 #favorite.disable {
-    background: none;
+    opacity: .5;
+}
+
+#library:hover,
+#favorite:hover {
+    opacity: .75;
 }
 
 

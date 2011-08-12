@@ -108,16 +108,17 @@ body {
     right: 112px;
 }
 
-#nowPlaying .inmusic,
+#nowPlaying .library,
 #nowPlaying .favorite {
     width: 19px;
     height: 18px;
     position: absolute;
     bottom: 25px;
+    cursor: pointer;
 }
 
-#nowPlaying .inmusic {
-    background: url('../images/inmusic.png');
+#nowPlaying .library {
+    background: url('../images/library.png');
     right: 86px;
 }
 
@@ -126,9 +127,14 @@ body {
     right: 67px;
 }
 
-#nowPlaying .inmusic.disable,
+#nowPlaying .library.disable,
 #nowPlaying .favorite.disable {
-    background: none;
+    opacity: .5;
+}
+
+#nowPlaying .library:hover,
+#nowPlaying .favorite:hover {
+    opacity: .75;
 }
 
 /* PROGRESS BAR */

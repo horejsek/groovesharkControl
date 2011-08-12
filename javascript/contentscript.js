@@ -37,9 +37,17 @@ function injectGrooveshark () {
             \
             case "addToLibrary": GS.user.addToLibrary(request.actionParams.songId); break;\
             case "removeFromLibrary": GS.user.removeFromLibrary(request.actionParams.songId); break;\
+            case "toggleLibrary":\
+                if (!$("#playerDetails_nowPlaying a.add").hasClass("selected")) GS.user.addToLibrary(GS.player.currentSong.SongID);\
+                else GS.user.removeFromLibrary(GS.player.currentSong.SongID);\
+                break;\
             \
             case "addToSongFavorites": GS.user.addToSongFavorites(request.actionParams.songId); break;\
             case "removeFromSongFavorites": GS.user.removeFromSongFavorites(request.actionParams.songId); break;\
+            case "toggleFavorite":\
+                if (!$("#playerDetails_nowPlaying a.favorite").hasClass("selected")) GS.user.addToSongFavorites(GS.player.currentSong.SongID);\
+                else GS.user.removeFromSongFavorites(GS.player.currentSong.SongID);\
+                break;\
             \
             case "smile": GS.player.voteSong(request.actionParams.songId, 1); break;\
             case "frown": GS.player.voteSong(request.actionParams.songId, -1); break;\

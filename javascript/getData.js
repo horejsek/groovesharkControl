@@ -20,7 +20,7 @@ function getNowPlaying () {
     var percent = 100 * parseFloat(progressBar.css('width')) / parseFloat(progressBar.parent().css('width'));
 
     return {
-        id: $('#playerDetails_nowPlaying').attr('rel'),
+        songId: $('#playerDetails_nowPlaying').attr('rel'),
         song: {
             short: $('#playerDetails_nowPlaying a.song').text(),
             long: $('#playerDetails_nowPlaying a.song').attr('title')
@@ -35,7 +35,7 @@ function getNowPlaying () {
         },
         image: $('#queue_list li.queue-item-active img').attr('src'),
 
-        inMyMusic: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
+        inLibrary: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
         isFavorite: $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
 
         positionInQueue: $('#queue_list li.queue-item-active span.position').text(),
@@ -55,7 +55,7 @@ function getPlaylist() {
 
     $('#queue_list li.queue-item').each( function(index) {
         queueItem = {
-            id: $(this).find('div.queueSong').attr('rel'),
+            songId: $(this).find('div.queueSong').attr('rel'),
             song: $(this).find('a.queueSong_name').text(),
             artist: $(this).find('a.queueSong_artist').text(),
             isActive: $(this).hasClass('queue-item-active')

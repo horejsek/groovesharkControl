@@ -81,4 +81,3 @@ function isNotificationOpen () {
     return chrome.extension.getViews({type: 'notification'}) != ''
 }
 
-
