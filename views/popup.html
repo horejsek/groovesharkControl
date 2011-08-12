@@ -9,13 +9,13 @@
 	<body onload="init()">
 		<div id="player">
 			<button id="pin" class="unpin" onclick="showNotification(stay=true);" title="Pin"></button>
-			<button id="shuffle" class="false" onclick="userAction('shuffle');" title="Shuffle songs"></button>
-			<button id="loop" class="none" onclick="userAction('loop');" title="Loop songs"></button>
-			<button id="crossfade" class="false" onclick="userAction('crossfade');" title="Crossfade between songs"></button>
+			<button id="shuffle" class="false" onclick="userAction('toggleShuffle');" title="Shuffle songs"></button>
+			<button id="loop" class="none" onclick="userAction('toggleLoop');" title="Loop songs"></button>
+			<button id="crossfade" class="false" onclick="userAction('toggleCrossfade');" title="Crossfade between songs"></button>
 			<button id="gotogrooveshark" onclick="goToGroovesharkTab();" title="Go to Grooveshark"></button>
-			<button id="previous" onclick="userAction('previous');" title="Previous song"></button>
-			<button id="next" onclick="userAction('next');" title="Next song"></button>
-			<button id="playpause" class="play" onclick="userAction('playOrPause');" title="Play/pause"></button>
+			<button id="previous" onclick="userAction('previousSong');" title="Previous song"></button>
+			<button id="next" onclick="userAction('nextSong');" title="Next song"></button>
+			<button id="playpause" class="play" onclick="userAction('playPause');" title="Play/pause"></button>
 		</div>
 		<div id="nowPlaying">
 			<img class="image" />

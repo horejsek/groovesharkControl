@@ -1,13 +1,4 @@
 
-var actions = {
-    'playOrPause': "$('#player_play_pause').click()",
-    'previous': "$('#player_previous').click()",
-    'next': "$('#player_next').click()",
-    'shuffle': "$('#player_shuffle').click()",
-    'loop': "$('#player_loop').click()",
-    'crossfade': "$('#player_crossfade').click()"
-}
-
 function getGroovesharkUrl () {
     return 'http://grooveshark.com/';
 }
@@ -44,20 +35,26 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
 function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
     var delayInMiliseconds = 1000;
     getData(callbackIfGroovesharkIsNotOpen);
-    window.setTimeout("periodicDataGetter("+callbackIfGroovesharkIsNotOpen+")", delayInMiliseconds);
+    window.setTimeout('periodicDataGetter('+callbackIfGroovesharkIsNotOpen+')', delayInMiliseconds);
 }
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {file: "javascript/getData.js"});
+        chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
     }, callbackIfGroovesharkIsNotOpen);
 }
 
-function userAction (action) {
+function userAction (action, params) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {code: actions[action]});
+        chrome.tabs.executeScript(tab.id, {
+            code: injectScriptWinPostMsg({'action': action, 'actionParams': params})
+        });
     });
     getData();
+}
+
+function injectScriptWinPostMsg (data) {
+    return 'window.postMessage(JSON.stringify(' + JSON.stringify(data) + '), "http://grooveshark.com");';
 }
 
 function showNotification (stay) {

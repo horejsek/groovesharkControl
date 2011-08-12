@@ -6,7 +6,7 @@
         "default_popup": "views/popup.html"
     },
     "content_scripts": [{
-        "js": ["javascript/jquery-1.6.2.min.js"],
+        "js": ["javascript/jquery-1.6.2.min.js", "javascript/contentscript.js"],
         "matches": ["http://grooveshark.com/*"]
     }],
     "description": "Grooveshark control.",
@@ -20,5 +20,5 @@
     "permissions": [
         "tabs", "notifications", "http://grooveshark.com/*"
     ],
-    "version": "0.7.3"
+    "version": "0.8"
 }
