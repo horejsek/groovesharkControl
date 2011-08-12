@@ -50,7 +50,10 @@ function injectGrooveshark () {
                 break;\
             \
             case "smile": GS.player.voteSong(request.actionParams.songId, 1); break;\
+            case "toggleSmile": $("#queue_list li.queue-item-active div.radio_options a.smile").click(); break;\
+            \
             case "frown": GS.player.voteSong(request.actionParams.songId, -1); break;\
+            case "toggleFrown": $("#queue_list li.queue-item-active div.radio_options a.frown").click(); break;\
             \
             case "mute": GS.player.setVolume(0); break;\
             case "volumeUpdate": GS.player.setVolume(request.actionParams.volume); break;\

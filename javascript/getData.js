@@ -37,6 +37,9 @@ function getNowPlaying () {
 
         inLibrary: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
         isFavorite: $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
+        
+        smile: $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass('active'),
+        frown: $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass('active'),
 
         positionInQueue: $('#queue_list li.queue-item-active span.position').text(),
         times: {

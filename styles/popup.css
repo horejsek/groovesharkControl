@@ -137,6 +137,39 @@ body {
     opacity: .75;
 }
 
+#nowPlaying .smile,
+#nowPlaying .frown {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    bottom: 25px;
+    cursor: pointer;
+    background: url('../images/smile_frown.png');
+    opacity: .5;
+}
+
+#nowPlaying .smile.active:hover,
+#nowPlaying .frown.active:hover {
+    opacity: 0.75;
+}
+
+#nowPlaying .smile.active,
+#nowPlaying .frown.active,
+#nowPlaying .smile:hover,
+#nowPlaying .frown:hover {
+    opacity: 1;
+}
+
+#nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
+#nowPlaying .smile.active { background-position: 0px -14px !important; }
+#nowPlaying .frown { background-position: -14px 0px !important; right: 6px; }
+#nowPlaying .frown.active { background-position: -14px -14px !important; }
+
+#nowPlaying .smile.disable,
+#nowPlaying .frown.disable {
+    display: none;
+}
+
 /* PROGRESS BAR */
 
 #progressbar {

@@ -72,6 +72,12 @@ function setNowPlaying (nowPlaying) {
     if (nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
     else $('#nowPlaying .favorite').addClass('disable');
     
+    if (nowPlaying.smile) $('#nowPlaying .smile').addClass('active');
+    else $('#nowPlaying .smile').removeClass('active');
+    
+    if (nowPlaying.frown) $('#nowPlaying .frown').addClass('active');
+    else $('#nowPlaying .frown').removeClass('active');
+    
     $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
     var percent = (nowPlaying.times.percent * 0.95 + 1) + '%';
@@ -99,9 +105,11 @@ function setRadio (radio) {
     if (radio.active) {
         $('#radio').addClass('active');
         $('#radio .station').text(radio.station);
+        $('#nowPlaying .smile, #nowPlaying .frown').removeClass('disable');
     } else {
         $('#radio').removeClass('active');
         $('#radio .station').text('Off');
+        $('#nowPlaying .smile, #nowPlaying .frown').addClass('disable');
     }
 }
 

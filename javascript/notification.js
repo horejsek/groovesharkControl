@@ -48,6 +48,15 @@ chrome.extension.onRequest.addListener(
         
         if (request.nowPlaying.isFavorite) $('#favorite').removeClass('disable');
         else $('#favorite').addClass('disable');
+    
+        if (request.nowPlaying.smile) $('#smile').addClass('active');
+        else $('#smile').removeClass('active');
+        
+        if (request.nowPlaying.frown) $('#frown').addClass('active');
+        else $('#frown').removeClass('active');
+        
+        if (request.radio.active) $('#smile, #frown').removeClass('disable');
+        else $('#smile, #frown').addClass('disable');
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
