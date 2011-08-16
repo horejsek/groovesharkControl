@@ -66,7 +66,12 @@ function setTitleByRequst (request) {
 
 function setIndexOfActiveSongByRequest (request) {
     if (request.isSomePlaylist) {
-        if (request.playlist.active != -1 && indexOfActiveSong != -1 && indexOfActiveSong != request.playlist.active) {
+        if (
+            request.playlist.active != -1 &&
+            indexOfActiveSong != -1 &&
+            indexOfActiveSong != request.playlist.active &&
+            request.nowPlaying.times.percent < 2.5
+        ) {
             showNotification();
         }
         indexOfActiveSong = request.playlist.active;
