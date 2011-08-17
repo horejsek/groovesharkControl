@@ -9,6 +9,8 @@ GS.lightbox.open("vipOnlyFeature");
 */
 
 function injectGrooveshark () {
+    injectId = 'groovesharkControlInject';
+    
     textScript = 'window.addEventListener("message", function (e) {\
         var request = JSON.parse(e.data);\
         if (!request.action) return;\
@@ -57,10 +59,15 @@ function injectGrooveshark () {
             \
             case "mute": GS.player.setVolume(0); break;\
             case "volumeUpdate": GS.player.setVolume(request.actionParams.volume); break;\
+            \
+            case "seekTo": GS.player.seekTo(GS.player.currentSong.EstimateDuration/100*request.actionParams.seekTo); break;\
         }\
     }, false);';
     
+    document.body.removeChild(document.getElementById(injectId));
+    
     injectScript = document.createElement('script');
+    injectScript.id = injectId;
     injectScript.innerHTML = textScript;
     document.body.appendChild(injectScript);
 }
