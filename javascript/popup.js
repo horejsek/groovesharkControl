@@ -10,6 +10,12 @@ function init () {
     
     if (isNotificationOpen()) hidePin();
     else showPin();
+    
+    $('#slider').slider({
+        stop: function(event, ui) {
+            userAction('seekTo', {'seekTo': $(this).slider('value')});
+        }
+    });
 }
 
 function moveInPlaylistToIndex (index) {
@@ -83,6 +89,8 @@ function setNowPlaying (nowPlaying) {
     var percent = (nowPlaying.times.percent * 0.95 + 1) + '%';
     $('#progressbar .elapsed').css('width', percent);
     $('#progressbar .scrubber').css('left', percent);
+    
+    $('#slider').slider('value', parseInt(nowPlaying.times.percent));
 }
 
 function setPlaylist (playlist) {
