@@ -11,6 +11,7 @@ function init () {
     resetIcon();
     resetTitle();
     periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
+    injectGrooveshark();
     
     /*function _dbg () {
         chrome.browserAction.setBadgeText({text: ''+indexOfActiveSong});
@@ -33,6 +34,12 @@ function resetTitle () {
 
 function setTitle (title) {
     chrome.browserAction.setTitle({title: title});
+}
+
+function injectGrooveshark () {
+    callWithGroovesharkTab(function (tab) {
+        chrome.tabs.executeScript(tab.id, {'file': 'javascript/contentscript.js'});
+    });
 }
 
 chrome.extension.onRequest.addListener(
