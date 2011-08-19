@@ -64,7 +64,9 @@ function injectGrooveshark () {
         }\
     }, false);';
     
-    document.body.removeChild(document.getElementById(injectId));
+    try {
+        document.body.removeChild(document.getElementById(injectId));
+    } catch (err) {}
     
     injectScript = document.createElement('script');
     injectScript.id = injectId;
