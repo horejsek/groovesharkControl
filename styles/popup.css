@@ -174,8 +174,8 @@ body {
 
 #progressbar {
     background: url('../images/progressBar/background.png') repeat-x;
-    width: 98%;
     height: 9px;
+    width: 320px;
     position: absolute;
     bottom: 10px;
 }
@@ -202,18 +202,15 @@ body {
 
 #progressbar .elapsed {
     background: url('../images/progressBar/foreground.png') repeat-x;
-    width: 50%;
+    width: 0%;
     height: 9px;
 }
 
-#progressbar .scrubber {
+#progressbar a {
     background: url('../images/progressBar/scrubber.png') no-repeat;
-    height: 16px;
     width: 15px;
-    position: absolute;
-    z-index: 10;
-    left: 50%;
-    top: -3px;
+    height: 16px;
+    cursor: pointer;
 }
 
 /* PLAYLIST */

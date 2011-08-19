@@ -11,7 +11,8 @@ function init () {
     if (isNotificationOpen()) hidePin();
     else showPin();
     
-    $('#slider').slider({
+    $('#progressbar').slider({
+        step: 0.1,
         stop: function(event, ui) {
             userAction('seekTo', {'seekTo': $(this).slider('value')});
         }
@@ -86,11 +87,8 @@ function setNowPlaying (nowPlaying) {
     
     $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
-    var percent = (nowPlaying.times.percent * 0.95 + 1) + '%';
-    $('#progressbar .elapsed').css('width', percent);
-    $('#progressbar .scrubber').css('left', percent);
-    
-    $('#slider').slider('value', parseInt(nowPlaying.times.percent));
+    $('#progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
+    $('#progressbar').slider('value', parseFloat(nowPlaying.times.percent));
 }
 
 function setPlaylist (playlist) {
