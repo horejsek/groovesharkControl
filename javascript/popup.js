@@ -7,16 +7,10 @@ function showPopup () { $('body').css('display', 'block'); }
 function init () {
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+    setUpProgressbar();
     
     if (isNotificationOpen()) hidePin();
     else showPin();
-    
-    $('#progressbar').slider({
-        step: 0.1,
-        stop: function(event, ui) {
-            userAction('seekTo', {'seekTo': $(this).slider('value')});
-        }
-    });
 }
 
 function moveInPlaylistToIndex (index) {
@@ -54,70 +48,6 @@ chrome.extension.onRequest.addListener(
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
 );
-
-function setPlayerOptions (options) {
-    $('#shuffle').attr('class', options.shuffle);
-    $('#loop').attr('class', options.loop);
-    $('#crossfade').attr('class', options.crossfade);
-}
-
-function setNowPlaying (nowPlaying) {
-    $('#nowPlaying .song').text(nowPlaying.song.short);
-    $('#nowPlaying .song').attr('title', nowPlaying.song.long);
-    $('#nowPlaying .artist').text(nowPlaying.artist.short);
-    $('#nowPlaying .artist').attr('title', nowPlaying.artist.long);
-    $('#nowPlaying .album').text(nowPlaying.album.short);
-    $('#nowPlaying .album').attr('title', nowPlaying.album.long);
-    $('#nowPlaying .image').attr('src', nowPlaying.image);
-    
-    $('#nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
-    $('#nowPlaying .timeDuration').text(nowPlaying.times.duration);
-    
-    if (nowPlaying.inLibrary) $('#nowPlaying .library').removeClass('disable');
-    else $('#nowPlaying .library').addClass('disable');
-    
-    if (nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
-    else $('#nowPlaying .favorite').addClass('disable');
-    
-    if (nowPlaying.smile) $('#nowPlaying .smile').addClass('active');
-    else $('#nowPlaying .smile').removeClass('active');
-    
-    if (nowPlaying.frown) $('#nowPlaying .frown').addClass('active');
-    else $('#nowPlaying .frown').removeClass('active');
-    
-    $('#nowPlaying .position').text(nowPlaying.positionInQueue);
-    
-    $('#progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
-    $('#progressbar').slider('value', parseFloat(nowPlaying.times.percent));
-}
-
-function setPlaylist (playlist) {
-    var playlistItems = $('#playlist');
-    playlistItems.text('');
-    $.each(playlist.items, function (index, item) {
-        var text = item.artist + ' - ' + item.song;
-        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
-
-        playlistItems.append(htmlOfItem);
-    });
-    
-    if (playlist.active != indexOfActiveSong) {
-        indexOfActiveSong = playlist.active;
-        scrollPlaylistToActiveSong();
-    }
-}
-
-function setRadio (radio) {
-    if (radio.active) {
-        $('#radio').addClass('active');
-        $('#radio .station').text(radio.station);
-        $('#nowPlaying .smile, #nowPlaying .frown').removeClass('disable');
-    } else {
-        $('#radio').removeClass('active');
-        $('#radio .station').text('Off');
-        $('#nowPlaying .smile, #nowPlaying .frown').addClass('disable');
-    }
-}
 
 function showPin () {
     $('#pin').show();

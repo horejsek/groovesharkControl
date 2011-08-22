@@ -1,28 +1,35 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="../styles/notification.css" type="text/css">
+		<link rel="stylesheet" href="../styles/jquery-ui-1.8.15.custom.css" type="text/css">
 		<script type="text/javascript" src="../javascript/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="../javascript/jquery-ui-1.8.15.custom.min.js"></script>
 		<script type="text/javascript" src="../javascript/groovesharkControl.js"></script>
 		<script type="text/javascript" src="../javascript/notification.js"></script>
 	</head>
 	<body onload="init()" onmouseover="turnOffCloseOfWindow()">
-	    <img id="image" />
-		<div id="library" onclick="userAction('toggleLibrary');"></div>
-		<div id="favorite" onclick="userAction('toggleFavorite');"></div>
-		<div id="smile" class="disable" onclick="userAction('toggleSmile');"></div>
-		<div id="frown" class="disable" onclick="userAction('toggleFrown');"></div>
-	    <div id="song"></div>
-	    <div id="artist"></div>
-	    <div id="album"></div>
-	    <div id="time">
-	        <span class="elapsed"></span> of
-	        <span class="duration"></span>
-	    </div>
-	    <div id="player">
+		<div id="nowPlaying">
+			<img class="image" />
+			<div class="song"></div>
+			<div class="artist"></div>
+			<div class="album"></div>
+			<div class="time"><span class="timeElapsed"></span> of <span class="timeDuration"></span></div>
+			<div class="position"></div>
+			<div class="library" onclick="userAction('toggleLibrary');"></div>
+			<div class="favorite" onclick="userAction('toggleFavorite');"></div>
+			<div class="smile disable" onclick="userAction('toggleSmile');"></div>
+			<div class="frown disable" onclick="userAction('toggleFrown');"></div>
+			<div id="progressbar">
+			    <div class="left"></div>
+			    <div class="elapsed"></div>
+			    <div class="right"></div>
+			</div>
+		</div>
+		<div id="player">
 			<button id="previous" onclick="userAction('previousSong');" title="Previous song"></button>
 			<button id="playpause" class="play" onclick="userAction('playPause');" title="Play/pause"></button>
 			<button id="next" onclick="userAction('nextSong');" title="Next song"></button>
-	    </div>
+		</div>
 	    <div id="countDown"></div>
 	</body>
 </html>
