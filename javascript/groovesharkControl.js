@@ -1,4 +1,6 @@
 
+var updateProgressbar = true;
+
 function getGroovesharkUrl () {
     return 'http://grooveshark.com/';
 }
@@ -100,7 +102,11 @@ function setUpProgressbar () {
     $('#progressbar').slider({
         step: 0.1,
         stop: function(event, ui) {
+            updateProgressbar = false;
             userAction('seekTo', {'seekTo': $(this).slider('value')});
+            setTimeout(function () {
+                updateProgressbar = true;
+            }, 500);
         }
     });
 }
@@ -138,7 +144,9 @@ function setNowPlaying (nowPlaying) {
     $('#nowPlaying .position').text(nowPlaying.positionInQueue);
     
     $('#progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
-    $('#progressbar').slider('value', parseFloat(nowPlaying.times.percent));
+    if (updateProgressbar) {
+        $('#progressbar').slider('value', parseFloat(nowPlaying.times.percent));
+    }
 }
 
 function setPlaylist (playlist) {
