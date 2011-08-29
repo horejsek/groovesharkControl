@@ -57,6 +57,21 @@ function injectScriptWinPostMsg (data) {
     return 'window.postMessage(JSON.stringify(' + JSON.stringify(data) + '), "http://grooveshark.com");';
 }
 
+function howLongDisplayNotification () {
+    var minTime = 1000;
+    var defaultTime = 5000;
+    try {
+        var time = parseInt(localStorage['showNotificationForMiliseconds']);
+        if (isNaN(time)) throw 'err1';
+        if (time < minTime) throw 'err2';
+        return time;
+    } catch (err) {
+        if (err == 'err1') return defaultTime;
+        if (err == 'err2') return minTime;
+        return defaultTime;
+    }
+}
+
 function showNotification (stay) {
     if (localStorage['showNotification'] == 'false' && !stay) return;
     

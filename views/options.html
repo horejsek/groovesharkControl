@@ -3,6 +3,7 @@
         <title>Grooveshark Control Options</title>
 		<link rel="stylesheet" href="../styles/options.css" type="text/css">
 		<script type="text/javascript" src="../javascript/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="../javascript/groovesharkControl.js"></script>
 		<script type="text/javascript" src="../javascript/options.js"></script>
     </head>
     <body onload="restoreOptions()">
@@ -11,6 +12,7 @@
             
             <h3>General</h3>
             <div><input type="checkbox" id="showNotification" /> Show notifications</div>
+            <div>Show notification for <input type="text" id="showNotificationForMiliseconds" /> miliseconds.</div>
             <button onclick="saveOptions()" id="save">Save</button>
             
             <h3>About</h3>

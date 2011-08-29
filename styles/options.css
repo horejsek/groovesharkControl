@@ -29,3 +29,7 @@ body {
     padding: 8px 5px 3px;
 }
 
+#showNotificationForMiliseconds {
+    width: 60px;
+}
+

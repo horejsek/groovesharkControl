@@ -1,11 +1,10 @@
 
 var shouldClose = true;
-var closeAfterMiliseconds = 5000;
 
 function closeNotification () {
     setTimeout(function() {
         if (shouldClose) window.close();
-    }, closeAfterMiliseconds);
+    }, howLongDisplayNotification());
 }
 
 function countDown () {
@@ -15,7 +14,7 @@ function countDown () {
     function _countDown () {
         if (shouldClose) {
             totalTime += step;
-            var percent = totalTime / (closeAfterMiliseconds / 100);
+            var percent = totalTime / (howLongDisplayNotification() / 100);
             $('#countDown').css('width', (100-percent) + '%');
             setTimeout(_countDown, step);
         }
