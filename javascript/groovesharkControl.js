@@ -99,7 +99,7 @@ function isNotificationOpen () {
 }
 
 function setUpProgressbar () {
-    $('#progressbar').slider({
+    $('.progressbar').slider({
         step: 0.1,
         stop: function(event, ui) {
             updateProgressbar = false;
@@ -118,39 +118,39 @@ function setPlayerOptions (options) {
 }
 
 function setNowPlaying (nowPlaying) {
-    $('#nowPlaying .song').text(nowPlaying.song.short);
-    $('#nowPlaying .song').attr('title', nowPlaying.song.long);
-    $('#nowPlaying .artist').text(nowPlaying.artist.short);
-    $('#nowPlaying .artist').attr('title', nowPlaying.artist.long);
-    $('#nowPlaying .album').text(nowPlaying.album.short);
-    $('#nowPlaying .album').attr('title', nowPlaying.album.long);
-    $('#nowPlaying .image').attr('src', nowPlaying.image);
+    $('.nowPlaying .song').text(nowPlaying.song.short);
+    $('.nowPlaying .song').attr('title', nowPlaying.song.long);
+    $('.nowPlaying .artist').text(nowPlaying.artist.short);
+    $('.nowPlaying .artist').attr('title', nowPlaying.artist.long);
+    $('.nowPlaying .album').text(nowPlaying.album.short);
+    $('.nowPlaying .album').attr('title', nowPlaying.album.long);
+    $('.nowPlaying .image').attr('src', nowPlaying.image);
     
-    $('#nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
-    $('#nowPlaying .timeDuration').text(nowPlaying.times.duration);
+    $('.nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
+    $('.nowPlaying .timeDuration').text(nowPlaying.times.duration);
     
-    if (nowPlaying.inLibrary) $('#nowPlaying .library').removeClass('disable');
-    else $('#nowPlaying .library').addClass('disable');
+    if (nowPlaying.inLibrary) $('.nowPlaying .library').removeClass('disable');
+    else $('.nowPlaying .library').addClass('disable');
     
-    if (nowPlaying.isFavorite) $('#nowPlaying .favorite').removeClass('disable');
-    else $('#nowPlaying .favorite').addClass('disable');
+    if (nowPlaying.isFavorite) $('.nowPlaying .favorite').removeClass('disable');
+    else $('.nowPlaying .favorite').addClass('disable');
     
-    if (nowPlaying.smile) $('#nowPlaying .smile').addClass('active');
-    else $('#nowPlaying .smile').removeClass('active');
+    if (nowPlaying.smile) $('.nowPlaying .smile').addClass('active');
+    else $('.nowPlaying .smile').removeClass('active');
     
-    if (nowPlaying.frown) $('#nowPlaying .frown').addClass('active');
-    else $('#nowPlaying .frown').removeClass('active');
+    if (nowPlaying.frown) $('.nowPlaying .frown').addClass('active');
+    else $('.nowPlaying .frown').removeClass('active');
     
-    $('#nowPlaying .position').text(nowPlaying.positionInQueue);
+    $('.nowPlaying .position').text(nowPlaying.positionInQueue);
     
-    $('#progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
+    $('.progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
     if (updateProgressbar) {
-        $('#progressbar').slider('value', parseFloat(nowPlaying.times.percent));
+        $('.progressbar').slider('value', parseFloat(nowPlaying.times.percent));
     }
 }
 
 function setPlaylist (playlist) {
-    var playlistItems = $('#playlist');
+    var playlistItems = $('.playlist');
     playlistItems.text('');
     $.each(playlist.items, function (index, item) {
         var text = item.artist + ' - ' + item.song;
@@ -167,13 +167,13 @@ function setPlaylist (playlist) {
 
 function setRadio (radio) {
     if (radio.active) {
-        $('#radio').addClass('active');
-        $('#radio .station').text(radio.station);
-        $('#nowPlaying .smile, #nowPlaying .frown').removeClass('disable');
+        $('.radio').addClass('active');
+        $('.radio .station').text(radio.station);
+        $('.nowPlaying .smile, .nowPlaying .frown').removeClass('disable');
     } else {
-        $('#radio').removeClass('active');
-        $('#radio .station').text('Off');
-        $('#nowPlaying .smile, #nowPlaying .frown').addClass('disable');
+        $('.radio').removeClass('active');
+        $('.radio .station').text('Off');
+        $('.nowPlaying .smile, .nowPlaying .frown').addClass('disable');
     }
 }
 

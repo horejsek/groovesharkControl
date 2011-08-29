@@ -4,7 +4,15 @@ body {
     background: url('../images/background_nowPlaying.png') repeat-x -50px;
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
+}
+
+#fullNotification {
     height: 85px;
+}
+
+#liteNotification {
+    display: none;
+    height: 40px;
 }
 
 #countDown {
@@ -16,15 +24,19 @@ body {
     bottom: 0px;
 }
 
+/*****************************/
+/***** FULL NOTIFICATION *****/
+/*****************************/
+
 /* PLAYER OPTIONS */
 
-#player {
+#fullNotification .player {
     position: absolute;
     top: 0px;
     right: 5px;
 }
 
-#player button {
+#fullNotification .player button {
     width: 25px;
     height: 35px;
     background: url('../images/controls.png') no-repeat;
@@ -32,20 +44,20 @@ body {
     cursor: pointer;
 }
 
-#playpause.play { background-position: -50px 0px !important; }
-#playpause.pause { background-position: -50px -40px !important; }
-#previous { background-position: -50px -80px !important; }
-#next { background-position: -50px -120px !important; }
+#fullNotification #playpause.play { background-position: -50px 0px !important; }
+#fullNotification #playpause.pause { background-position: -50px -40px !important; }
+#fullNotification #previous { background-position: -50px -80px !important; }
+#fullNotification #next { background-position: -50px -120px !important; }
 
-#playpause:hover,
-#previous:hover,
-#next:hover {
+#fullNotification #playpause:hover,
+#fullNotification #previous:hover,
+#fullNotification #next:hover {
     background-position-x: -130px !important;
 }
 
 /* NOW PLAYING */
 
-#nowPlaying {
+#fullNotification .nowPlaying {
     background: url('../images/background_nowPlaying.png') repeat-x;
     height: 110px;
     margin: 0px -6px 0px -6px;
@@ -53,13 +65,13 @@ body {
     position: relative;
 }
 
-#nowPlaying .song {
+#fullNotification .nowPlaying .song {
     color: #FFF;
     font-size: 1.3em;
     width: 200px;
 }
 
-#nowPlaying .image {
+#fullNotification .nowPlaying .image {
     width: 80px;
     height: 80px;
     position: absolute;
@@ -67,21 +79,21 @@ body {
     right: 5px;
 }
 
-#nowPlaying .time {
+#fullNotification .nowPlaying .time {
     font: 0.5em;
     position: absolute;
     bottom: 25px;
 }
 
-#nowPlaying .position {
+#fullNotification .nowPlaying .position {
     font: 0.5em;
     position: absolute;
     bottom: 25px;
     right: 92px;
 }
 
-#nowPlaying .library,
-#nowPlaying .favorite {
+#fullNotification .nowPlaying .library,
+#fullNotification .nowPlaying .favorite {
     width: 19px;
     height: 18px;
     position: absolute;
@@ -89,28 +101,28 @@ body {
     cursor: pointer;
 }
 
-#nowPlaying .library {
+#fullNotification .nowPlaying .library {
     background: url('../images/library.png');
     right: 66px;
 }
 
-#nowPlaying .favorite {
+#fullNotification .nowPlaying .favorite {
     background: url('../images/favorite.png');
     right: 47px;
 }
 
-#nowPlaying .library.disable,
-#nowPlaying .favorite.disable {
+#fullNotification .nowPlaying .library.disable,
+#fullNotification .nowPlaying .favorite.disable {
     opacity: .5;
 }
 
-#nowPlaying .library:hover,
-#nowPlaying .favorite:hover {
+#fullNotification .nowPlaying .library:hover,
+#fullNotification .nowPlaying .favorite:hover {
     opacity: .75;
 }
 
-#nowPlaying .smile,
-#nowPlaying .frown {
+#fullNotification .nowPlaying .smile,
+#fullNotification .nowPlaying .frown {
     width: 14px;
     height: 14px;
     position: absolute;
@@ -120,31 +132,74 @@ body {
     opacity: .5;
 }
 
-#nowPlaying .smile.active:hover,
-#nowPlaying .frown.active:hover {
+#fullNotification .nowPlaying .smile.active:hover,
+#fullNotification .nowPlaying .frown.active:hover {
     opacity: 0.75;
 }
 
-#nowPlaying .smile.active,
-#nowPlaying .frown.active,
-#nowPlaying .smile:hover,
-#nowPlaying .frown:hover {
+#fullNotification .nowPlaying .smile.active,
+#fullNotification .nowPlaying .frown.active,
+#fullNotification .nowPlaying .smile:hover,
+#fullNotification .nowPlaying .frown:hover {
     opacity: 1;
 }
 
-#nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
-#nowPlaying .smile.active { background-position: 0px -14px !important; }
-#nowPlaying .frown { background-position: -14px 0px !important; right: 6px; }
-#nowPlaying .frown.active { background-position: -14px -14px !important; }
+#fullNotification .nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
+#fullNotification .nowPlaying .smile.active { background-position: 0px -14px !important; }
+#fullNotification .nowPlaying .frown { background-position: -14px 0px !important; right: 6px; }
+#fullNotification .nowPlaying .frown.active { background-position: -14px -14px !important; }
 
-#nowPlaying .smile.disable,
-#nowPlaying .frown.disable {
+#fullNotification .nowPlaying .smile.disable,
+#fullNotification .nowPlaying .frown.disable {
     display: none;
 }
 
+/*****************************/
+/***** LITE NOTIFICATION *****/
+/*****************************/
+
+/* PLAYER OPTIONS */
+
+#liteNotification .player {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+#liteNotification .player button {
+    width: 20px;
+    height: 35px;
+    background: url('../images/controls.png') no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+#liteNotification #playpause.play { background-position: -50px 0px !important; }
+#liteNotification #playpause.pause { background-position: -50px -40px !important; }
+#liteNotification #previous { background-position: -50px -80px !important; }
+#liteNotification #next { background-position: -50px -120px !important; }
+
+#liteNotification #playpause:hover,
+#liteNotification #previous:hover,
+#liteNotification #next:hover {
+    background-position-x: -130px !important;
+}
+
+/* NOW PLAYING */
+
+#liteNotification .nowPlaying .song {
+    color: #FFF;
+    font-weight: bold;
+}
+
+
+/*****************************/
+/***** BOTH NOTIFICATION *****/
+/*****************************/
+
 /* PROGRESS BAR */
 
-#progressbar {
+.progressbar {
     background: url('../images/progressBar/background.png') repeat-x;
     height: 9px;
     width: 200px; /* 285 */
@@ -152,7 +207,7 @@ body {
     bottom: 10px;
 }
 
-#progressbar .left {
+.progressbar .left {
     background: url('../images/progressBar/left.png') no-repeat;
     height: 9px;
     width: 4px;
@@ -162,7 +217,7 @@ body {
     top: 0px;
 }
 
-#progressbar .right {
+.progressbar .right {
     background: url('../images/progressBar/right.png') no-repeat;
     height: 9px;
     width: 4px;
@@ -172,16 +227,17 @@ body {
     top: 0px;
 }
 
-#progressbar .elapsed {
+.progressbar .elapsed {
     background: url('../images/progressBar/foreground.png') repeat-x;
     width: 0%;
     height: 9px;
 }
 
-#progressbar a {
-    background: url('../images/progressBar/scrubber.png') no-repeat;
-    width: 15px;
-    height: 16px;
-    cursor: pointer;
+.progressbar a {
+    background: url('../images/progressBar/scrubber.png') no-repeat !important;
+    width: 15px !important;
+    height: 16px !important;
+    cursor: pointer !important;
 }
+
 

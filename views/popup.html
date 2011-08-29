@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="../javascript/popup.js"></script>
 	</head>
 	<body onload="init()">
-		<div id="player">
+		<div id="player" class="player">
 			<button id="pin" class="unpin" onclick="showNotification(stay=true);" title="Pin"></button>
 			<button id="shuffle" class="false" onclick="userAction('toggleShuffle');" title="Shuffle songs"></button>
 			<button id="loop" class="none" onclick="userAction('toggleLoop');" title="Loop songs"></button>
@@ -19,7 +19,7 @@
 			<button id="next" onclick="userAction('nextSong');" title="Next song"></button>
 			<button id="playpause" class="play" onclick="userAction('playPause');" title="Play/pause"></button>
 		</div>
-		<div id="nowPlaying">
+		<div id="nowPlaying" class="nowPlaying">
 			<img class="image" />
 			<div class="song"></div>
 			<div class="artist"></div>
@@ -30,13 +30,13 @@
 			<div class="favorite" onclick="userAction('toggleFavorite');"></div>
 			<div class="smile disable" onclick="userAction('toggleSmile');"></div>
 			<div class="frown disable" onclick="userAction('toggleFrown');"></div>
-			<div id="progressbar">
+			<div id="progressbar" class="progressbar">
 			    <div class="left"></div>
 			    <div class="elapsed"></div>
 			    <div class="right"></div>
 			</div>
 		</div>
-		<div id="playlist"></div>
-		<div id="radio">Radio: <span class="station"></span></div>
+		<div id="playlist" class="playlist"></div>
+		<div id="radio" class="radio">Radio: <span class="station"></span></div>
 	</body>
 </html>
