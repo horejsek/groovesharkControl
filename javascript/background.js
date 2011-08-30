@@ -12,7 +12,7 @@ function init () {
     resetTitle();
     periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
     injectGrooveshark();
-    
+
     /*function _dbg () {
         chrome.browserAction.setBadgeText({text: ''+indexOfActiveSong});
         window.setTimeout(_dbg, 1000);

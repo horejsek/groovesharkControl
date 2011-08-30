@@ -4,7 +4,7 @@ body {
     background: url('../images/background_nowPlaying.png') repeat-x -50px;
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
-    height: 85px;
+    height: 35px;
 }
 
 #countDown {
@@ -16,7 +16,7 @@ body {
     bottom: 0px;
 }
 
-#switchToLiteNotification {
+#switchToFullNotification {
     width: 5px;
     height: 5px;
     background: #555;
@@ -30,12 +30,12 @@ body {
 
 .player {
     position: absolute;
-    top: 0px;
-    right: 5px;
+    bottom: -2px;
+    right: 10px;
 }
 
 .player button {
-    width: 25px;
+    width: 20px;
     height: 35px;
     background: url('../images/controls.png') no-repeat;
     border: none;
@@ -55,101 +55,15 @@ body {
 
 /* NOW PLAYING */
 
-.nowPlaying {
-    background: url('../images/background_nowPlaying.png') repeat-x;
-    height: 110px;
-    margin: 0px -6px 0px -6px;
-    padding: 0px 5px 5px;
-    position: relative;
-}
-
 .nowPlaying .song {
     color: #FFF;
-    font-size: 1.3em;
-    width: 200px;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
-.nowPlaying .image {
-    width: 80px;
-    height: 80px;
+div.scrollingtext{
     position: absolute;
-    bottom: 10px;
-    right: 5px;
-}
-
-.nowPlaying .time {
-    font: 0.5em;
-    position: absolute;
-    bottom: 25px;
-}
-
-.nowPlaying .position {
-    font: 0.5em;
-    position: absolute;
-    bottom: 25px;
-    right: 92px;
-}
-
-.nowPlaying .library,
-.nowPlaying .favorite {
-    width: 19px;
-    height: 18px;
-    position: absolute;
-    bottom: 10px;
-    cursor: pointer;
-}
-
-.nowPlaying .library {
-    background: url('../images/library.png');
-    right: 66px;
-}
-
-.nowPlaying .favorite {
-    background: url('../images/favorite.png');
-    right: 47px;
-}
-
-.nowPlaying .library.disable,
-.nowPlaying .favorite.disable {
-    opacity: .5;
-}
-
-.nowPlaying .library:hover,
-.nowPlaying .favorite:hover {
-    opacity: .75;
-}
-
-.nowPlaying .smile,
-.nowPlaying .frown {
-    width: 14px;
-    height: 14px;
-    position: absolute;
-    bottom: 10px;
-    cursor: pointer;
-    background: url('../images/smile_frown.png');
-    opacity: .5;
-}
-
-.nowPlaying .smile.active:hover,
-.nowPlaying .frown.active:hover {
-    opacity: 0.75;
-}
-
-.nowPlaying .smile.active,
-.nowPlaying .frown.active,
-.nowPlaying .smile:hover,
-.nowPlaying .frown:hover {
-    opacity: 1;
-}
-
-.nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
-.nowPlaying .smile.active { background-position: 0px -14px !important; }
-.nowPlaying .frown { background-position: -14px 0px !important; right: 6px; }
-.nowPlaying .frown.active { background-position: -14px -14px !important; }
-
-.nowPlaying .smile.disable,
-.nowPlaying .frown.disable {
-    display: none;
+    white-space: nowrap;
 }
 
 /* PROGRESS BAR */
@@ -159,7 +73,7 @@ body {
     height: 9px;
     width: 200px; /* 285 */
     position: absolute;
-    bottom: 10px;
+    bottom: 7px;
 }
 
 .progressbar .left {
@@ -194,4 +108,5 @@ body {
     height: 16px !important;
     cursor: pointer !important;
 }
+
 

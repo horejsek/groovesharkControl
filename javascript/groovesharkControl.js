@@ -75,10 +75,18 @@ function howLongDisplayNotification () {
 }
 
 function showNotification (stay) {
+    _showNotification(stay, 'notification');
+}
+
+function showLiteNotification (stay) {
+    _showNotification(stay, 'liteNotification');
+}
+
+function _showNotification (stay, view) {
     if (localStorage['showNotification'] == 'false' && !stay) return;
     
-    if (!isNotificationOpen()) {
-        var notification = webkitNotifications.createHTMLNotification('../views/notification.html');
+    if (!isNotificationOpen() || stay) {
+        var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
         notification.show();
     }
     
@@ -86,7 +94,7 @@ function showNotification (stay) {
         chrome.extension.getViews({type: 'popup'}).forEach(function(win) {
             win.hidePin();
         });
-        window.setTimeout(function () {
+        setTimeout(function () {
             chrome.extension.getViews({type: 'notification'}).forEach(function (win) {
                 win.turnOffCloseOfWindow();
             });

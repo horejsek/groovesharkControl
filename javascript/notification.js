@@ -27,11 +27,36 @@ function init () {
     countDown();
     getData();
     setUpProgressbar();
+    setUpNotification();
 }
 
 function turnOffCloseOfWindow () {
     shouldClose = false;
     $('#countDown').css('display', 'none');
+}
+
+function setUpNotification () {   
+    $('#liteLine').SetScroller({
+        velocity: 50,
+        direction: 'horizontal',
+        startfrom: 'right',
+        loop: 'infinite',
+        movetype: 'linear',
+        onmouseover: 'pause',
+        onmouseout: 'play',
+        onstartup: 'play',
+        cursor: 'pointer'
+    });
+    
+    $('#switchToLiteNotification').click(function () {
+        showLiteNotification(true);
+        setTimeout(window.close, 200);
+    });
+    
+    $('#switchToFullNotification').click(function () {
+        showNotification(true);
+        setTimeout(window.close, 200);
+    });
 }
 
 chrome.extension.onRequest.addListener(

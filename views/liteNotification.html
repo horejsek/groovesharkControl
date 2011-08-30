@@ -1,6 +1,6 @@
 <html>
     <head>
-	    <link rel="stylesheet" href="../styles/notification.css" type="text/css">
+	    <link rel="stylesheet" href="../styles/liteNotification.css" type="text/css">
 	    <link rel="stylesheet" href="../styles/jquery-ui-1.8.15.custom.css" type="text/css">
 	    <script type="text/javascript" src="../javascript/jquery-1.6.2.min.js"></script>
 	    <script type="text/javascript" src="../javascript/jquery-ui-1.8.15.custom.min.js"></script>
@@ -10,16 +10,12 @@
     </head>
     <body onload="init()" onmouseover="turnOffCloseOfWindow()">
         <div class="nowPlaying">
-	        <img class="image" />
-	        <div class="song"></div>
-	        <div class="artist"></div>
-	        <div class="album"></div>
-	        <div class="time"><span class="timeElapsed"></span> of <span class="timeDuration"></span></div>
-	        <div class="position"></div>
-	        <div class="library" onclick="userAction('toggleLibrary');"></div>
-	        <div class="favorite" onclick="userAction('toggleFavorite');"></div>
-	        <div class="smile disable" onclick="userAction('toggleSmile');"></div>
-	        <div class="frown disable" onclick="userAction('toggleFrown');"></div>
+            <div id="liteLine">
+                <div class="scrollingtext">
+                    <span class="song"></span> by <span class="artist"></span>, <span class="album"></span>
+                    (<span class="timeDuration"></span>, <span class="position"></span>)
+                </div>
+            </div>
 	        <div class="progressbar">
 	            <div class="left"></div>
 	            <div class="elapsed"></div>
@@ -31,8 +27,7 @@
 	        <button id="playpause" class="play" onclick="userAction('playPause');" title="Play/pause"></button>
 	        <button id="next" onclick="userAction('nextSong');" title="Next song"></button>
         </div>
-        <div id="countDown"></div>
-	
-	    <div id="switchToLiteNotification"></div>
+        
+        <div id="switchToFullNotification"></div>
     </body>
 </html>
