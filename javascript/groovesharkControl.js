@@ -1,5 +1,12 @@
 
 var updateProgressbar = true;
+var selectedTabUrl = '';
+
+chrome.tabs.onSelectionChanged.addListener(function (tabId) {
+    chrome.tabs.get(tabId, function (tab) {
+        selectedTabUrl = tab.url;
+    });
+});
 
 function getGroovesharkUrl () {
     return 'http://grooveshark.com/';
@@ -7,6 +14,11 @@ function getGroovesharkUrl () {
 
 function isGroovesharkUrl (url) {
     return !(url.indexOf(getGroovesharkUrl()) != 0)
+}
+
+function isGroovesharkTabActive () {
+    alert(selectedTabUrl);
+    return isGroovesharkUrl(selectedTabUrl);
 }
 
 function goToGroovesharkTab () {
@@ -85,7 +97,7 @@ function showLiteNotification (stay) {
 function _showNotification (stay, view) {
     if (localStorage['showNotification'] == 'false' && !stay) return;
 
-    if (!isNotificationOpen() || stay) {
+    if ((!isNotificationOpen() && !isGroovesharkTabActive()) || stay) {
         var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
         notification.show();
     }
