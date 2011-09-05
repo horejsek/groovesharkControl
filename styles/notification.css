@@ -103,20 +103,26 @@ body {
     background: url('../images/library.png');
     right: 66px;
 }
+.nowPlaying .library.disable {
+    background: url('../images/library-off.png');
+}
 
 .nowPlaying .favorite {
     background: url('../images/favorite.png');
     right: 47px;
 }
+.nowPlaying .favorite.disable {
+    background: url('../images/favorite-off.png');
+}
 
 .nowPlaying .library.disable,
 .nowPlaying .favorite.disable {
-    opacity: .5;
+    opacity: .75;
 }
 
 .nowPlaying .library:hover,
 .nowPlaying .favorite:hover {
-    opacity: .75;
+    opacity: 1;
 }
 
 .nowPlaying .smile,
