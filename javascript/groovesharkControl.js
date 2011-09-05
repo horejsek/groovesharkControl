@@ -17,7 +17,6 @@ function isGroovesharkUrl (url) {
 }
 
 function isGroovesharkTabActive () {
-    alert(selectedTabUrl);
     return isGroovesharkUrl(selectedTabUrl);
 }
 
