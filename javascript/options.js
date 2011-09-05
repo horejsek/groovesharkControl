@@ -15,12 +15,12 @@ function saveOptions () {
 }
 
 function saved () {
-    $('#status').text(chrome.i18n.getMessage('optionsSaved'));
-    setTimeout(clearStatus, 1500);
-}
-
-function clearStatus () {
-    $('#status').text('');
+    $('#status')
+    	.stop()
+    	.css('opacity', 1)
+		.fadeIn(400)
+		.delay(1500)
+		.fadeOut(400);
 }
 
 $(document).ready(function () {
@@ -32,6 +32,8 @@ $(document).ready(function () {
             $('#showNotificationForMiliseconds').attr('disabled', 'disabled');
         }
     });
+
+    $('#status').text(chrome.i18n.getMessage('optionsSaved'));
 
 });
 
