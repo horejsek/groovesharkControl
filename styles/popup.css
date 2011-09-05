@@ -26,11 +26,11 @@ body {
 
 #pin {
     background: url('../images/pin.png') no-repeat !important;
-    width: 10px !important;
-    height: 15px !important;
+    width: 16px !important;
+    height: 16px !important;
     position: absolute;
-    left: 10px;
-    top: 10px;
+    left: 14px;
+    top: 14px;
 }
 
 #playpause.play { background-position: -40px 0px !important; }

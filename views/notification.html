@@ -7,6 +7,7 @@
 	    <script type="text/javascript" src="../javascript/jquery.Scroller-1.0.min.js"></script>
 	    <script type="text/javascript" src="../javascript/groovesharkControl.js"></script>
 	    <script type="text/javascript" src="../javascript/notification.js"></script>
+	    <script type="text/javascript" src="../javascript/jquery-i18n.js"></script>
     </head>
     <body onload="init()" onmouseover="turnOffCloseOfWindow()">
         <div class="nowPlaying">
@@ -14,7 +15,11 @@
 	        <div class="song"></div>
 	        <div class="artist"></div>
 	        <div class="album"></div>
-	        <div class="time"><span class="timeElapsed"></span> of <span class="timeDuration"></span></div>
+	        <div class="time">
+				<span class="timeElapsed"></span>
+				<span i18n-text="ofTime"></span>
+				<span class="timeDuration"></span>
+			</div>
 	        <div class="position"></div>
 	        <div class="library" onclick="userAction('toggleLibrary');"></div>
 	        <div class="favorite" onclick="userAction('toggleFavorite');"></div>
@@ -27,12 +32,12 @@
 	        </div>
         </div>
         <div class="player">
-	        <button id="previous" onclick="userAction('previousSong');" title="Previous song"></button>
-	        <button id="playpause" class="play" onclick="userAction('playPause');" title="Play/pause"></button>
-	        <button id="next" onclick="userAction('nextSong');" title="Next song"></button>
+	        <button id="previous" onclick="userAction('previousSong');" i18n-title="songPrevious"></button>
+	        <button id="playpause" class="play" onclick="userAction('playPause');" i18n-title="songPlayPause"></button>
+	        <button id="next" onclick="userAction('nextSong');" i18n-title="songNext"></button>
         </div>
         <div id="countDown"></div>
-	
+
 	    <div id="switchToLiteNotification"></div>
     </body>
 </html>
