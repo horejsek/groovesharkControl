@@ -49,9 +49,13 @@
 	"optionsTitle":
 		{"message":		"Grooveshark Control Options"
 		,"description":	"Title of options page."},
+
 	"optionsSaved":
 		{"message":		"Options saved"
 		,"description":	"Show on save options."},
+	"optionsSaveButton":
+		{"message":		"Save"
+		,"description":	"Button to save."},
 
 	"optionsGeneralTitle":
 		{"message":		"General"
@@ -61,5 +65,21 @@
 		,"description":	"Check to show notifications."},
 	"optionsGeneralNotificationsTime":
 		{"message":		"Show notification for %contents miliseconds."
-		,"description":	"Show notifications timer. %contents is time input editor."}
+		,"description":	"Show notifications timer. %contents is time input editor."},
+
+	"optionsAboutTitle":
+		{"message":		"Features"
+		,"description":	"Title of features/about on options."},
+	"optionsAboutPlayerControl":
+		{"message":		"Support to Player Control"},
+	"optionsAboutNowPlaying":
+		{"message":		"Support to Now Playing"},
+	"optionsAboutPlaylist":
+		{"message":		"Support to Playlist"},
+	"optionsAboutRadio":
+		{"message":		"Support to Radio"},
+	"optionsAboutIconStatus":
+		{"message":		"Support to Icon Status"},
+	"optionsAboutNotification":
+		{"message":		"Support to Notification"}
 }

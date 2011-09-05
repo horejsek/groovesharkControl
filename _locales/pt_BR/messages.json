@@ -49,9 +49,13 @@
 	"optionsTitle":
 		{"message":		"Opções de Grooveshark Control"
 		,"description":	"Título da página de opções."},
+
 	"optionsSaved":
 		{"message":		"Opções salvas"
 		,"description":	"Exibido ao salvar as opções."},
+	"optionsSaveButton":
+		{"message":		"Salvar"
+		,"description":	"Botão para salvar."},
 
 	"optionsGeneralTitle":
 		{"message":		"Configurações"
@@ -61,5 +65,21 @@
 		,"description":	"Ative para exibir as notificações."},
 	"optionsGeneralNotificationsTime":
 		{"message":		"Exibir notificações por %contents milésimos."
-		,"description":	"Tempo de exibição das notificações. %contents é o editor de tempo."}
+		,"description":	"Tempo de exibição das notificações. %contents é o editor de tempo."},
+
+	"optionsAboutTitle":
+		{"message":		"Recursos"
+		,"description":	"Título dos recursos/sobre na página de opções."},
+	"optionsAboutPlayerControl":
+		{"message":		"Suporte a Controle de Músicas"},
+	"optionsAboutNowPlaying":
+		{"message":		"Suporte a Tocando Agora"},
+	"optionsAboutPlaylist":
+		{"message":		"Suporte a Lista de Músicas"},
+	"optionsAboutRadio":
+		{"message":		"Suporte a Radio"},
+	"optionsAboutIconStatus":
+		{"message":		"Suporte a Ícone de Status"},
+	"optionsAboutNotification":
+		{"message":		"Suporte a Notificações"}
 }
