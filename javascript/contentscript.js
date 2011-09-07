@@ -61,6 +61,7 @@ function injectGrooveshark () {
             case "volumeUpdate": GS.player.setVolume(request.actionParams.volume); break;\
             \
             case "seekTo": GS.player.seekTo(GS.player.currentSong.EstimateDuration/100*request.actionParams.seekTo); break;\
+            case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\
         }\
     }, false);';
     

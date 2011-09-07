@@ -174,7 +174,7 @@ function setPlaylist (playlist) {
     playlistItems.text('');
     $.each(playlist.items, function (index, item) {
         var text = item.artist + ' - ' + item.song;
-        htmlOfItem = "<div onclick='moveInPlaylistToIndex(" + index + ")' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
+        htmlOfItem = "<div onclick='userAction(\"playSongInQueue\", {\"queueSongId\": " + (index+1) + "})' id='playlistItem_" + index + "' class='item" + (index%2==0 ? ' odd' : '') + (item.isActive ? ' active' : '') + "'>" + text + "</div>";
 
         playlistItems.append(htmlOfItem);
     });

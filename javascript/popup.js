@@ -13,19 +13,6 @@ function init () {
     else showPin();
 }
 
-function moveInPlaylistToIndex (index) {
-    callWithGroovesharkTab(function (tab) {
-        var moves = index - indexOfActiveSong;
-        if (moves <= 0) moves--;
-        action = actions[moves<0 ? 'previous' : 'next'];
-
-        for (var move = 0; move < Math.abs(moves); move++) {
-          chrome.tabs.executeScript(tab.id, {code: action});
-        }
-    });
-    getData();
-}
-
 function scrollPlaylistToActiveSong () {
     var index = indexOfActiveSong - 2;
     $('#playlist').scrollTo('#playlistItem_' + index, 800);
