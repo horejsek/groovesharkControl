@@ -24,11 +24,21 @@ function goToGroovesharkTab () {
     callWithGroovesharkTab(function (tab) {
         chrome.windows.update(tab.windowId, {focused: true});
         chrome.tabs.update(tab.id, {selected: true});
+    	updateGroovesharkTab(tab);
     }, createGroovesharkTab);
 }
 
 function createGroovesharkTab () {
-    chrome.tabs.create({url: getGroovesharkUrl()});
+    chrome.tabs.create({url: getGroovesharkUrl()}, function (tab) {
+    	updateGroovesharkTab(tab);
+	});
+}
+
+function updateGroovesharkTab (tab) {
+	if (localStorage['prepareGrooveshark'] != 'false') {
+		chrome.tabs.update(tab.id, {pinned: true});
+		chrome.tabs.move(tab.id, {index: 0});
+	}
 }
 
 function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
@@ -54,6 +64,7 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
         chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
+    	updateGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
 
