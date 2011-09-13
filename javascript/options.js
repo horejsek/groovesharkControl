@@ -4,11 +4,16 @@ function restoreOptions () {
         $('#showNotification').attr('checked', 'checked');
     }
 
+    if (localStorage['prepareGrooveshark'] != 'false') {
+        $('#prepareGrooveshark').attr('checked', 'checked');
+    }
+
     $('#showNotificationForMiliseconds').val(howLongDisplayNotification());
 }
 
 function saveOptions () {
     localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
+    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
     localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
 
     saved();

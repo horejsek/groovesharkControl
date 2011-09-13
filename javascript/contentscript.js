@@ -10,7 +10,7 @@ GS.lightbox.open("vipOnlyFeature");
 
 function injectGrooveshark () {
     injectId = 'groovesharkControlInject';
-    
+
     textScript = 'window.addEventListener("message", function (e) {\
         var request = JSON.parse(e.data);\
         if (!request.action) return;\
@@ -64,15 +64,14 @@ function injectGrooveshark () {
             case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\
         }\
     }, false);';
-    
-    try {
-        document.body.removeChild(document.getElementById(injectId));
-    } catch (err) {}
-    
-    injectScript = document.createElement('script');
-    injectScript.id = injectId;
-    injectScript.innerHTML = textScript;
-    document.body.appendChild(injectScript);
+
+    var scriptObject = document.getElementById(injectId);
+    if(scriptObject === null){
+		injectScript = document.createElement('script');
+		injectScript.id = injectId;
+		injectScript.innerHTML = textScript;
+		document.body.appendChild(injectScript);
+    }
 }
 
 injectGrooveshark();
