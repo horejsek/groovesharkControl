@@ -191,7 +191,6 @@ function setPlaylist (playlist) {
 
     if (playlist.active != indexOfActiveSong) {
         indexOfActiveSong = playlist.active;
-        scrollPlaylistToActiveSong();
     }
 }
 
