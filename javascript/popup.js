@@ -15,6 +15,11 @@ function init () {
 
 function scrollPlaylistToActiveSong () {
     var index = indexOfActiveSong - 2;
+    
+    if(localStorage['lastPositionInPlaylist'] && localStorage['lastPositionInPlaylist'] > 0) {
+        $('#playlist').scrollTo('#playlistItem_' + localStorage['lastPositionInPlaylist'], 0);
+    }
+    localStorage['lastPositionInPlaylist'] = index;
     $('#playlist').scrollTo('#playlistItem_' + index, 800);
 }
 
@@ -31,6 +36,8 @@ chrome.extension.onRequest.addListener(
         setNowPlaying(request.nowPlaying);
         setPlaylist(request.playlist);
         setRadio(request.radio);
+        
+        scrollPlaylistToActiveSong();
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
