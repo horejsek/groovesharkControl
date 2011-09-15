@@ -1,12 +1,17 @@
 
 var updateProgressbar = true;
-var selectedTabUrl = '';
+var isGroovesharkFocused = false;
 
-chrome.tabs.onSelectionChanged.addListener(function (tabId) {
-    chrome.tabs.get(tabId, function (tab) {
-        selectedTabUrl = tab.url;
+chrome.tabs.onSelectionChanged.addListener(checkIfIsGroovesharkFocused);
+chrome.windows.onFocusChanged.addListener(checkIfIsGroovesharkFocused);
+
+function checkIfIsGroovesharkFocused () {
+    callWithGroovesharkTab(function (tab) {
+        chrome.windows.get(tab.windowId, function (window) {
+            isGroovesharkFocused = tab.selected && window.focused;
+        });
     });
-});
+}
 
 function getGroovesharkUrl () {
     return 'http://grooveshark.com/';
@@ -14,10 +19,6 @@ function getGroovesharkUrl () {
 
 function isGroovesharkUrl (url) {
     return !(url.indexOf(getGroovesharkUrl()) != 0)
-}
-
-function isGroovesharkTabActive () {
-    return isGroovesharkUrl(selectedTabUrl);
 }
 
 function goToGroovesharkTab () {
@@ -105,7 +106,7 @@ function showLiteNotification (stay) {
 function _showNotification (stay, view) {
     if (localStorage['showNotification'] == 'false' && !stay) return;
 
-    if ((!isNotificationOpen() && !isGroovesharkTabActive()) || stay) {
+    if ((!isNotificationOpen() && !isGroovesharkFocused) || stay) {
         var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
         notification.show();
     }
