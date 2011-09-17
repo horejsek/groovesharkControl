@@ -1,5 +1,6 @@
 
 function restoreOptions () {
+
     if (localStorage['showNotification'] != 'false') {
         $('#showNotification').attr('checked', 'checked');
     }
@@ -9,6 +10,13 @@ function restoreOptions () {
     }
 
     $('#showNotificationForMiliseconds').val(howLongDisplayNotification());
+
+    $('td.enable > :checkbox').change(function(){
+		$(this).closest('tr').toggleClass('enabled', $(this).is(':checked'));
+	}).each(function(){
+		$(this).triggerHandler('change');
+	});
+
 }
 
 function saveOptions () {

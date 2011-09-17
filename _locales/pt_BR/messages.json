@@ -61,9 +61,6 @@
 		{"message":		"Configurações"
 		,"description":	"Título das opções gerais."},
 
-	"optionsGeneralShowNotifications":
-		{"message":		"Exibir notificações"
-		,"description":	"Ative para exibir as notificações."},
 	"optionsGeneralNotificationsTime":
 		{"message":		"Exibir notificações por %contents milésimos."
 		,"description":	"Tempo de exibição das notificações. %contents é o editor de tempo."},
@@ -86,5 +83,8 @@
 	"optionsAboutIconStatus":
 		{"message":		"Suporte a Ícone de Status"},
 	"optionsAboutNotification":
-		{"message":		"Suporte a Notificações"}
+		{"message":		"Suporte a Notificações"},
+
+	"donateIfLike":
+		{"message":		"Se você achou esta extensão útil, por favor, pague-me uma bebida! :p"}
 }

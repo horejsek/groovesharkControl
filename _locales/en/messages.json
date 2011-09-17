@@ -61,9 +61,6 @@
 		{"message":		"General"
 		,"description":	"Title of general options."},
 
-	"optionsGeneralShowNotifications":
-		{"message":		"Show Notifications"
-		,"description":	"Check to show notifications."},
 	"optionsGeneralNotificationsTime":
 		{"message":		"Show notification for %contents miliseconds."
 		,"description":	"Show notifications timer. %contents is time input editor."},
@@ -86,5 +83,8 @@
 	"optionsAboutIconStatus":
 		{"message":		"Support to Icon Status"},
 	"optionsAboutNotification":
-		{"message":		"Support to Notification"}
+		{"message":		"Support to Notification"},
+
+	"donateIfLike":
+		{"message":		"If you like of this extension, please, pay me a beer! :p"}
 }
