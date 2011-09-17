@@ -1,37 +1,37 @@
 
 body {
-    color: #CCC;
-    background: #252525;
-    width: 320px;
-    font-family: verdana, arial, sans-serif;
-    font-size: 0.8em;
+	color: #CCC;
+	background: #252525;
+	width: 320px;
+	font-family: verdana, arial, sans-serif;
+	font-size: 0.8em;
 	cursor: default;
 }
 
 /* PLAYER OPTIONS */
 
 #player {
-    text-align: center;
-    background: url('../images/background_player.png') repeat-x;
-    height: 40px;
-    margin: -6px -6px;
+	text-align: center;
+	background: url('../images/background_player.png') repeat-x;
+	height: 40px;
+	margin: -6px -6px;
 }
 
 #player button {
-    width: 35px;
-    height: 35px;
-    background: url('../images/controls.png') no-repeat;
-    border: none;
-    cursor: pointer;
+	width: 35px;
+	height: 35px;
+	background: url('../images/controls.png') no-repeat;
+	border: none;
+	cursor: pointer;
 }
 
 #pin {
-    background: url('../images/pin.png') no-repeat !important;
-    width: 16px !important;
-    height: 16px !important;
-    position: absolute;
-    left: 14px;
-    top: 14px;
+	background: url('../images/pin.png') no-repeat !important;
+	width: 16px !important;
+	height: 16px !important;
+	position: absolute;
+	left: 14px;
+	top: 14px;
 }
 
 #playpause.play { background-position: -40px 0px !important; }
@@ -52,119 +52,119 @@ body {
 #playpause:hover,
 #previous:hover,
 #next:hover {
-    background-position-x: -120px !important;
+	background-position-x: -120px !important;
 }
 
 #loop.none:hover,
 #shuffle.false:hover,
 #crossfade.false:hover {
-    background-position-x: -80px !important;
+	background-position-x: -80px !important;
 }
 
 #loop.all:hover,
 #shuffle.true:hover,
 #crossfade.true:hover {
-    background-position-x: -200px !important;
+	background-position-x: -200px !important;
 }
 
 #loop.one:hover {
-    background-position-x: -320px !important;
+	background-position-x: -320px !important;
 }
 
 #gotogrooveshark {
-    background: url('../images/icon_30.png') no-repeat 5px !important;
+	background: url('../images/icon_30.png') no-repeat 5px !important;
 }
 
 /* NOW PLAYING */
 
 #nowPlaying {
-    background: url('../images/background_nowPlaying.png') repeat-x;
-    height: 120px;
-    margin: 5px -6px 0px -6px;
-    padding: 5px;
-    position: relative;
+	background: url('../images/background_nowPlaying.png') repeat-x;
+	height: 120px;
+	margin: 5px -6px 0px -6px;
+	padding: 5px;
+	position: relative;
 }
 
 #nowPlaying .song {
-    color: #FFF;
-    font-size: 1.4em;
+	color: #FFF;
+	font-size: 1.4em;
 }
 
 #nowPlaying .image {
-    float: right;
-    width: 100px;
-    height: 100px;
+	float: right;
+	width: 100px;
+	height: 100px;
 }
 
 #nowPlaying .time {
-    font: 0.5em;
-    position: absolute;
-    bottom: 25px;
+	font: 0.5em;
+	position: absolute;
+	bottom: 25px;
 }
 
 #nowPlaying .position {
-    font: 0.5em;
-    position: absolute;
-    bottom: 25px;
-    right: 112px;
+	font: 0.5em;
+	position: absolute;
+	bottom: 25px;
+	right: 112px;
 }
 
 #nowPlaying .library,
 #nowPlaying .favorite {
-    width: 19px;
-    height: 18px;
-    position: absolute;
-    bottom: 25px;
-    cursor: pointer;
+	width: 19px;
+	height: 18px;
+	position: absolute;
+	bottom: 25px;
+	cursor: pointer;
 }
 
 #nowPlaying .library {
-    background: url('../images/library.png');
-    right: 86px;
+	background: url('../images/library.png');
+	right: 86px;
 }
 #nowPlaying .library.disable {
-    background: url('../images/library-off.png');
+	background: url('../images/library-off.png');
 }
 
 #nowPlaying .favorite {
-    background: url('../images/favorite.png');
-    right: 67px;
+	background: url('../images/favorite.png');
+	right: 67px;
 }
 #nowPlaying .favorite.disable {
-    background: url('../images/favorite-off.png');
+	background: url('../images/favorite-off.png');
 }
 
 #nowPlaying .library.disable,
 #nowPlaying .favorite.disable {
-    opacity: .75;
+	opacity: .75;
 }
 
 #nowPlaying .library:hover,
 #nowPlaying .favorite:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 #nowPlaying .smile,
 #nowPlaying .frown {
-    width: 14px;
-    height: 14px;
-    position: absolute;
-    bottom: 25px;
-    cursor: pointer;
-    background: url('../images/smile_frown.png');
-    opacity: .5;
+	width: 14px;
+	height: 14px;
+	position: absolute;
+	bottom: 25px;
+	cursor: pointer;
+	background: url('../images/smile_frown.png');
+	opacity: .5;
 }
 
 #nowPlaying .smile.active:hover,
 #nowPlaying .frown.active:hover {
-    opacity: 0.75;
+	opacity: 0.75;
 }
 
 #nowPlaying .smile.active,
 #nowPlaying .frown.active,
 #nowPlaying .smile:hover,
 #nowPlaying .frown:hover {
-    opacity: 1;
+	opacity: 1;
 }
 
 #nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
@@ -174,91 +174,90 @@ body {
 
 #nowPlaying .smile.disable,
 #nowPlaying .frown.disable {
-    display: none;
+	display: none;
 }
 
 /* PROGRESS BAR */
 
 #progressbar {
-    background: url('../images/progressBar/background.png') repeat-x;
-    height: 9px;
-    width: 320px;
-    position: absolute;
-    bottom: 10px;
+	background: url('../images/progressBar/background.png') repeat-x;
+	height: 9px;
+	width: 320px;
+	position: absolute;
+	bottom: 10px;
 }
 
 #progressbar .left {
-    background: url('../images/progressBar/left.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    left: 0px;
-    top: 0px;
+	background: url('../images/progressBar/left.png') no-repeat;
+	height: 9px;
+	width: 4px;
+	position: absolute;
+	z-index: 1;
+	left: 0px;
+	top: 0px;
 }
 
 #progressbar .right {
-    background: url('../images/progressBar/right.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    right: 0px;
-    top: 0px;
+	background: url('../images/progressBar/right.png') no-repeat;
+	height: 9px;
+	width: 4px;
+	position: absolute;
+	z-index: 1;
+	right: 0px;
+	top: 0px;
 }
 
 #progressbar .elapsed {
-    background: url('../images/progressBar/foreground.png') repeat-x;
-    width: 0%;
-    height: 9px;
+	background: url('../images/progressBar/foreground.png') repeat-x;
+	width: 0%;
+	height: 9px;
 }
 
 #progressbar a {
-    background: url('../images/progressBar/scrubber.png') no-repeat;
-    width: 15px;
-    height: 16px;
-    cursor: pointer;
+	background: url('../images/progressBar/scrubber.png') no-repeat;
+	width: 15px;
+	height: 16px;
+	cursor: pointer;
 }
 
 /* PLAYLIST */
 
 #playlist {
-    height: 300px;
-    overflow: auto;
-    margin: 0px -6px;
-    background: #FFFFFF;
-    color: #000000;
+	height: 300px;
+	overflow: auto;
+	margin: 0px -6px;
+	background: #FFFFFF;
+	color: #000000;
 }
 
 #playlist .item {
-    margin: 2px;
-    padding: 2px;
-    cursor: pointer;
+	margin: 2px;
+	padding: 2px;
+	cursor: pointer;
 
 }
 
 #playlist .item.odd {
-    background: #F3F7FB;
+	background: #F3F7FB;
 }
 
 #playlist .item.active,
 #playlist .item.active:hover {
-    background: #E1F7BD;
-    color: #415C15;
+	background: #E1F7BD;
+	color: #415C15;
 }
 
 #playlist .item:hover {
-    background: #BDCEE0;
+	background: #BDCEE0;
 }
 
 /* RADIO */
 
 #radio {
-    margin: 0px -6px -6px -6px;
-    padding: 5px;
+	margin: 0px -6px -6px -6px;
+	padding: 5px;
 }
 
 #radio.active {
-    font-weight: bold;
+	font-weight: bold;
 }
-

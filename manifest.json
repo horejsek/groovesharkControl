@@ -1,34 +1,34 @@
 {
-    "name": "Grooveshark Control",
-    "version": "1.5.0",
+	"name": "Grooveshark Control",
+	"version": "1.5.0",
 
-    "description": "__MSG_extDescription__",
+	"description": "__MSG_extDescription__",
 
-    "icons": {
-        "16": "images/icon_16.png",
-        "48": "images/icon_48.png",
-        "128": "images/icon_128.png"
-    },
+	"icons": {
+		"16": "images/icon_16.png",
+		"48": "images/icon_48.png",
+		"128": "images/icon_128.png"
+	},
 
-    "default_locale": "en",
+	"default_locale": "en",
 
-    "background_page": "views/background.html",
-    "options_page": "views/options.html",
+	"background_page": "views/background.html",
+	"options_page": "views/options.html",
 
-    "permissions": [
-        "tabs",
+	"permissions": [
+		"tabs",
 		"notifications",
 		"http://grooveshark.com/*"
-    ],
+	],
 
-    "content_scripts": [{
-        "js": ["javascript/jquery-1.6.2.min.js", "javascript/contentscript.js"],
-        "matches": ["http://grooveshark.com/*"]
-    }],
+	"content_scripts": [{
+		"js": ["javascript/jquery-1.6.2.min.js", "javascript/contentscript.js"],
+		"matches": ["http://grooveshark.com/*"]
+	}],
 
-    "browser_action": {
-        "default_icon": "images/backgroundIcons/disabled.png",
-        "default_title": "Grooveshark Control",
-        "default_popup": "views/popup.html"
-    }
+	"browser_action": {
+		"default_icon": "images/backgroundIcons/disabled.png",
+		"default_title": "Grooveshark Control",
+		"default_popup": "views/popup.html"
+	}
 }
