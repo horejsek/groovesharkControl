@@ -9,6 +9,7 @@ function restoreGenericOption (storageKey, defaultValue, callback) {
 	callback(localStorage[storageKey] || defaultValue);
 }
 
+// Restore options
 function restoreOptions () {
 
 	// Restore notification
@@ -25,6 +26,10 @@ function restoreOptions () {
 		$('#prepareGrooveshark').attr('checked', value);
 	});
 
+	restoreGenericOption('prepareGroovesharkMode', 'false', function(value){
+    	$('#prepareGroovesharkMode').val(value);
+	});
+
 	// Enable/disabled checkboxs
     $('td.enable > :checkbox').change(function(){
     	var checked = $(this).is(':checked');
@@ -35,19 +40,22 @@ function restoreOptions () {
 
 }
 
+// Save options
 function saveOptions () {
+	// Save notification
     localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
-    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
     localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
 
-    saved();
-}
+	// Save pin and left tab
+    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
+    localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
 
-function saved () {
-    $('#status')
-    	.stop()
+	// Show the "Options saved" tag
+    $('#status').stop()
     	.css('opacity', 1)
-		.fadeIn(400)
-		.delay(1500)
+		.fadeIn(400).delay(1500)
 		.fadeOut(400);
 }
+
+// Restore options
+$(restoreOptions);

@@ -66,8 +66,14 @@
 		,"description":	"Show notifications timer. %contents is time input editor."},
 
 	"optionsGeneralPrepareGrooveshark":
-		{"message":		"Pin Grooveshark tab on left"
+		{"message":		"Pin Grooveshark tab on left: %contents"
 		,"description":	"On click, move Grooveshark tab to left and pin it."},
+	"optionsGeneralPrepareGroovesharkOnCreate":
+		{"message":		"only on starts Grooveshark"
+		,"description":	"Small caps, please"},
+	"optionsGeneralPrepareGroovesharkEverytime":
+		{"message":		"everytime"
+		,"description":	"Small caps, please"},
 
 	"optionsAboutTitle":
 		{"message":		"Features"

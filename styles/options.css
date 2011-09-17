@@ -88,12 +88,12 @@ a#github > img {
 	border-radius: 4px;
 }
 
-#save {
+button#save {
 	font-weight: bold;
 	padding: 5px 10px;
 }
 
-#status {
+div#status {
 	background: #FFFCAD;
 	text-align: center;
 	position: absolute;
@@ -104,8 +104,3 @@ a#github > img {
 	border-radius: 0 0 10px 10px;
 	display: none;
 }
-
-#showNotificationForMiliseconds {
-	width: 60px;
-}
-

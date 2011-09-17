@@ -30,14 +30,17 @@ function goToGroovesharkTab () {
 
 function createGroovesharkTab () {
     chrome.tabs.create({url: getGroovesharkUrl()}, function (tab) {
-    	pinGroovesharkTab(tab);
+		pinGroovesharkTab(tab, true);
 	});
 }
 
-function pinGroovesharkTab (tab) {
+function pinGroovesharkTab (tab, forcePin) {
 	if (localStorage['prepareGrooveshark'] != 'false') {
-		chrome.tabs.update(tab.id, {pinned: true});
-		chrome.tabs.move(tab.id, {index: 0});
+		if (forcePin === true
+		 || localStorage['prepareGroovesharkMode'] === 'true') {
+			chrome.tabs.update(tab.id, {pinned: true});
+			chrome.tabs.move(tab.id, {index: 0});
+		}
 	}
 }
 
@@ -66,6 +69,8 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
         chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
+        // Pin ONLY if the mode is EVERYTIME
+        pinGroovesharkTab(tab, false);
     }, callbackIfGroovesharkIsNotOpen);
 }
 

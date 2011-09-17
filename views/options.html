@@ -7,7 +7,7 @@
 		<script type="text/javascript" src="../javascript/options.js"></script>
 	    <script type="text/javascript" src="../javascript/jquery-i18n.js"></script>
     </head>
-    <body onload="restoreOptions()">
+    <body>
         <h2 id="title" i18n-html="optionsTitle">
 		</h2>
 
@@ -25,13 +25,18 @@
 				<tr>
 					<td class="enable"><input type="checkbox" id="showNotification" /></td>
 					<td i18n-html="optionsGeneralNotificationsTime" colspan="2">
-						<input type="text" id="showNotificationForMiliseconds" />
+						<input type="text" id="showNotificationForMiliseconds" size="2" maxlength="5" />
 					</td>
 				</tr>
 				<!-- Pin and left tab Options -->
 				<tr>
 					<td class="enable"><input type="checkbox" id="prepareGrooveshark" /></td>
-					<td i18n-text="optionsGeneralPrepareGrooveshark"></td>
+					<td i18n-html="optionsGeneralPrepareGrooveshark">
+						<select id="prepareGroovesharkMode">
+							<option value="false" i18n-text="optionsGeneralPrepareGroovesharkOnCreate"></option>
+							<option value="true" i18n-text="optionsGeneralPrepareGroovesharkEverytime"></option>
+						</select>
+					</td>
 				</tr>
 				<!-- Save options -->
 				<tr>
