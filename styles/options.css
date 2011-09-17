@@ -94,6 +94,17 @@ button#save {
 	font-weight: bold;
 	padding: 5px 10px;
 }
+span#savePendings {
+	font-size: 10pt;
+	padding-left: 10px;
+	font-weight: normal;
+	color: #C80000;
+	display: none;
+}
+
+select#prepareGroovesharkMode {
+	margin-left: 5px;
+}
 
 div#status {
 	background: #FFFCAD;

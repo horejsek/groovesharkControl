@@ -56,6 +56,8 @@
 	"optionsSaveButton":
 		{"message":		"Salvar"
 		,"description":	"Botão para salvar."},
+	"optionsSavePendings":
+		{"message":		"Algumas modificações ainda não foram salvas."},
 
 	"optionsGeneralTitle":
 		{"message":		"Configurações"

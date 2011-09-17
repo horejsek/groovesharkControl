@@ -46,13 +46,23 @@ function restoreOptions () {
 		$(this).closest('tr')
 			.toggleClass('enabled', checked)
 			.find(':input, select, textarea').not(':checkbox').attr('disabled', !checked);
+		toggleSavePendings(true);
 	}).change();
 
 	// Show remove ads advise
 	$('#removeAds').change(function(){
+		toggleSavePendings(true);
 		if ($(this).is(':checked'))
 			alert(chrome.i18n.getMessage('optionsGeneralRemoveAdsAdvise'));
 	});
+
+	// Show save pendings on change inputs
+	$('input').change(function(){
+		toggleSavePendings(true);
+	});
+
+	// Enable toggler
+	toggleSavePendingsEnabled = true;
 
 }
 
@@ -76,6 +86,16 @@ function saveOptions () {
 		.fadeIn(400).delay(1500)
 		.fadeOut(400);
 
+	// Hide save pendings
+	toggleSavePendings(false);
+
+}
+
+// Toggle save pendings
+var toggleSavePendingsEnabled = false;
+function toggleSavePendings(mode, force){
+	if (toggleSavePendingsEnabled)
+		$('span#savePendings').fadeTo(150, mode ? 1 : 0);
 }
 
 // Restore options
