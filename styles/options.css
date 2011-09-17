@@ -1,8 +1,10 @@
+
 body {
 	margin: 0;
 	font-family: segoe ui, tahoma, sans-serif;
 	height: 85px;
 	background-color: #151515;
+	cursor: default;
 }
 
 h2#title {
