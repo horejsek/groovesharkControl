@@ -51,7 +51,9 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
                 }
             }
         }
-        callbackIfGroovesharkIsNotOpen();
+
+        if(typeof callbackIfGroovesharkIsNotOpen !== "undefined")
+	        callbackIfGroovesharkIsNotOpen();
     });
 }
 
