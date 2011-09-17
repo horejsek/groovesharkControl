@@ -37,7 +37,8 @@ table#features {
 }
 table#options td,
 table#features td {
-	height: 32px;
+	height: 28px;
+	font-size: 10pt;
 	vertical-align: middle;
 	color: #333;
 }
@@ -45,7 +46,6 @@ table#options td {
 	background-color: #fcfcfc;
 }
 table#features td {
-	font-size: 10pt;
 	padding-left: 40px;
 	height: 28px;
 }
