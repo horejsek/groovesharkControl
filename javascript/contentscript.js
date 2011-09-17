@@ -1,13 +1,4 @@
 
-/*
-GS.user.UserID
-GS.user.IsPremium
-GS.player.REPEAT_ALL
-GS.player.REPEAT_ONE
-GS.player.REPEAT_NONE
-GS.lightbox.open("vipOnlyFeature");
-*/
-
 function injectGrooveshark () {
     injectId = 'groovesharkControlInject';
 
@@ -62,6 +53,12 @@ function injectGrooveshark () {
             \
             case "seekTo": GS.player.seekTo(GS.player.currentSong.EstimateDuration/100*request.actionParams.seekTo); break;\
             case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\
+            \
+            case "removeAds":\
+				$("div#application").css("margin-right", request.actionParams.removeAds ? 0 : 180);\
+	    		$("div#capital").toggle(!request.actionParams.removeAds);\
+	    		GS.resize();\
+				break;\
         }\
     }, false);';
 
@@ -75,4 +72,3 @@ function injectGrooveshark () {
 }
 
 injectGrooveshark();
-

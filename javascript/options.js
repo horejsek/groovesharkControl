@@ -1,11 +1,16 @@
 
 // Restore a boolean option
-function restoreBooleanOption (storageKey, callback) {
-	callback(localStorage[storageKey] != 'false');
+function restoreBooleanOption (storageKey, defaultValue, callback) {
+	restoreGenericOption(storageKey, defaultValue, function(value){
+		callback(value !== 'false');
+	});
 }
 
 // Restore a generic option
 function restoreGenericOption (storageKey, defaultValue, callback) {
+	if(localStorage[storageKey] === null)
+		localStorage[storageKey] = defaultValue;
+
 	callback(localStorage[storageKey] || defaultValue);
 }
 
@@ -13,7 +18,7 @@ function restoreGenericOption (storageKey, defaultValue, callback) {
 function restoreOptions () {
 
 	// Restore notification
-	restoreBooleanOption('showNotification', function(value){
+	restoreBooleanOption('showNotification', 'true', function(value){
 		$('#showNotification').attr('checked', value);
 	});
 
@@ -22,12 +27,17 @@ function restoreOptions () {
 	});
 
 	// Restore pin and left tab
-	restoreBooleanOption('prepareGrooveshark', function(value){
+	restoreBooleanOption('prepareGrooveshark', 'false', function(value){
 		$('#prepareGrooveshark').attr('checked', value);
 	});
 
 	restoreGenericOption('prepareGroovesharkMode', 'false', function(value){
     	$('#prepareGroovesharkMode').val(value);
+	});
+
+	// Restore remove ads
+	restoreBooleanOption('removeAds', 'false', function(value){
+		$('#removeAds').attr('checked', value);
 	});
 
 	// Enable/disabled checkboxs
@@ -38,10 +48,17 @@ function restoreOptions () {
 			.find(':input, select, textarea').not(':checkbox').attr('disabled', !checked);
 	}).change();
 
+	// Show remove ads advise
+	$('#removeAds').change(function(){
+		if ($(this).is(':checked'))
+			alert(chrome.i18n.getMessage('optionsGeneralRemoveAdsAdvise'));
+	});
+
 }
 
 // Save options
 function saveOptions () {
+
 	// Save notification
     localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
     localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
@@ -50,11 +67,15 @@ function saveOptions () {
     localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
     localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
 
+    // Save remove ads
+    localStorage['removeAds'] = $('#removeAds').attr('checked') == 'checked';
+
 	// Show the "Options saved" tag
     $('#status').stop()
     	.css('opacity', 1)
 		.fadeIn(400).delay(1500)
 		.fadeOut(400);
+
 }
 
 // Restore options

@@ -31,16 +31,30 @@ function goToGroovesharkTab () {
 function createGroovesharkTab () {
     chrome.tabs.create({url: getGroovesharkUrl()}, function (tab) {
 		pinGroovesharkTab(tab, true);
+        removeGroovesharkAds(tab);
 	});
 }
 
 function pinGroovesharkTab (tab, forcePin) {
-	if (localStorage['prepareGrooveshark'] != 'false') {
+	if (tab.status === 'complete'
+	&&  localStorage['prepareGrooveshark'] !== 'false') {
 		if (forcePin === true
 		 || localStorage['prepareGroovesharkMode'] === 'true') {
 			chrome.tabs.update(tab.id, {pinned: true});
 			chrome.tabs.move(tab.id, {index: 0});
 		}
+	}
+}
+
+var lastRemoveAdsStatus = null;
+function removeGroovesharkAds (tab) {
+	if (tab.status === "complete"
+	&&  localStorage['removeAds'] !== lastRemoveAdsStatus){
+		// Send message and, on receive response, don't send anymore
+		lastRemoveAdsStatus = localStorage['removeAds'];
+		userAction('removeAds', {
+			removeAds: localStorage['removeAds'] === 'true'
+		});
 	}
 }
 
@@ -71,6 +85,7 @@ function getData (callbackIfGroovesharkIsNotOpen) {
         chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
         // Pin ONLY if the mode is EVERYTIME
         pinGroovesharkTab(tab, false);
+        removeGroovesharkAds(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
 
