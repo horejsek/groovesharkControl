@@ -1,10 +1,13 @@
 
 var indexOfActiveSong = -1;
+var isNowOpened = true;
 
 function hidePopup () { $('body').css('display', 'none'); }
 function showPopup () { $('body').css('display', 'block'); }
 
 function init () {
+    isNowOpened = true;
+    
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
@@ -16,11 +19,14 @@ function init () {
 function scrollPlaylistToActiveSong () {
     var index = indexOfActiveSong - 2;
     
-    if(localStorage['lastPositionInPlaylist'] && localStorage['lastPositionInPlaylist'] > 0) {
+    if (isNowOpened && localStorage['lastPositionInPlaylist'] && localStorage['lastPositionInPlaylist'] > 0) {
         $('#playlist').scrollTo('#playlistItem_' + localStorage['lastPositionInPlaylist'], 0);
+        isNowOpened = false;
     }
-    localStorage['lastPositionInPlaylist'] = index;
-    $('#playlist').scrollTo('#playlistItem_' + index, 800);
+    if (localStorage['lastPositionInPlaylist'] != index) {
+        $('#playlist').scrollTo('#playlistItem_' + index, 1000);
+        localStorage['lastPositionInPlaylist'] = index;
+    }
 }
 
 chrome.extension.onRequest.addListener(
