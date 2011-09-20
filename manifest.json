@@ -1,6 +1,6 @@
 {
     "name": "Grooveshark Control",
-    "version": "1.5.0",
+    "version": "1.5.1",
 
     "description": "__MSG_extDescription__",
 
@@ -17,8 +17,8 @@
 
     "permissions": [
         "tabs",
-		"notifications",
-		"http://grooveshark.com/*"
+        "notifications",
+        "http://grooveshark.com/*"
     ],
 
     "content_scripts": [{

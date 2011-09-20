@@ -2,7 +2,7 @@
 var shouldClose = true;
 
 function closeNotification () {
-    setTimeout(function() {
+    setTimeout(function () {
         if (shouldClose) window.close();
     }, howLongDisplayNotification());
 }

@@ -57,11 +57,11 @@ function injectGrooveshark () {
     }, false);';
 
     var scriptObject = document.getElementById(injectId);
-    if(scriptObject === null){
-		injectScript = document.createElement('script');
-		injectScript.id = injectId;
-		injectScript.innerHTML = textScript;
-		document.body.appendChild(injectScript);
+    if (scriptObject === null) {
+        injectScript = document.createElement('script');
+        injectScript.id = injectId;
+        injectScript.innerHTML = textScript;
+        document.body.appendChild(injectScript);
     }
 }
 

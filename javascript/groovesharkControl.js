@@ -29,20 +29,27 @@ function goToGroovesharkTab () {
 }
 
 function createGroovesharkTab () {
-    chrome.tabs.create({url: getGroovesharkUrl()}, function (tab) {
-		pinGroovesharkTab(tab, true);
-	});
+    var properties = {
+	url: getGroovesharkUrl()
+    };
+    
+    if (localStorage['prepareGrooveshark'] === 'true') {
+	properties['index'] = 0;
+	properties['pinned'] = true;
+    }
+    
+    chrome.tabs.create(properties);
 }
 
-function pinGroovesharkTab (tab, forcePin) {
-	if (tab.status === 'complete'
-	&&  localStorage['prepareGrooveshark'] !== 'false') {
-		if (forcePin === true
-		 || localStorage['prepareGroovesharkMode'] === 'true') {
-			chrome.tabs.update(tab.id, {pinned: true});
-			chrome.tabs.move(tab.id, {index: 0});
-		}
-	}
+function pinGroovesharkTab (tab) {
+    if (
+	tab.status === 'complete' &&
+	localStorage['prepareGrooveshark'] === 'true' &&
+	localStorage['prepareGroovesharkMode'] === 'everytime'
+    ) {
+	chrome.tabs.update(tab.id, {pinned: true});
+	chrome.tabs.move(tab.id, {index: 0});
+    }
 }
 
 function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
@@ -57,7 +64,7 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
         }
 
         if(typeof callbackIfGroovesharkIsNotOpen !== "undefined")
-	        callbackIfGroovesharkIsNotOpen();
+            callbackIfGroovesharkIsNotOpen();
     });
 }
 
@@ -71,7 +78,7 @@ function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
         chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
         // Pin ONLY if the mode is EVERYTIME
-        pinGroovesharkTab(tab, false);
+        pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
 
@@ -192,15 +199,15 @@ function setPlaylist (playlist) {
     playlistItems.empty();
 
     $.each(playlist.items, function (index, item) {
-        playlistItems.append($('<div class="item" />')
-			.addClass(index % 2 === 0 ? ' odd' : '')
-			.addClass(item.isActive ? ' active' : '')
-			.text(item.artist + ' - ' + item.song)
-			.click(function(){
-				userAction("playSongInQueue", {
-					queueSongId: item.queuedId
-				})
-			}));
+        playlistItems.append($('<div class="item" id="playlistItem_' + index + '" />')
+            .addClass(index % 2 === 0 ? ' odd' : '')
+            .addClass(item.isActive ? ' active' : '')
+            .text(item.artist + ' - ' + item.song)
+            .click(function(){
+                userAction("playSongInQueue", {
+                    queueSongId: item.queuedId
+                })
+            }));
     });
 
     if (playlist.active != indexOfActiveSong) {
