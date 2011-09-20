@@ -35,26 +35,15 @@ function restoreOptions () {
     	$('#prepareGroovesharkMode').val(value);
 	});
 
-	// Restore remove ads
-	restoreBooleanOption('removeAds', 'false', function(value){
-		$('#removeAds').attr('checked', value);
-	});
-
 	// Enable/disabled checkboxs
     $('td.enable > :checkbox').change(function(){
     	var checked = $(this).is(':checked');
 		$(this).closest('tr')
 			.toggleClass('enabled', checked)
 			.find(':input, select, textarea').not(':checkbox').attr('disabled', !checked);
+
 		toggleSavePendings(true);
 	}).change();
-
-	// Show remove ads advise
-	$('#removeAds').change(function(){
-		toggleSavePendings(true);
-		if ($(this).is(':checked'))
-			alert(chrome.i18n.getMessage('optionsGeneralRemoveAdsAdvise'));
-	});
 
 	// Show save pendings on change inputs
 	$('input').change(function(){
@@ -76,9 +65,6 @@ function saveOptions () {
 	// Save pin and left tab
     localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
     localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
-
-    // Save remove ads
-    localStorage['removeAds'] = $('#removeAds').attr('checked') == 'checked';
 
 	// Show the "Options saved" tag
     $('#status').stop()

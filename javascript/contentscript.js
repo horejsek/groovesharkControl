@@ -53,12 +53,6 @@ function injectGrooveshark () {
             \
             case "seekTo": GS.player.seekTo(GS.player.currentSong.EstimateDuration/100*request.actionParams.seekTo); break;\
             case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\
-            \
-            case "removeAds":\
-				$("div#application").css("margin-right", request.actionParams.removeAds ? 0 : 180);\
-	    		$("div#capital").toggle(!request.actionParams.removeAds);\
-	    		GS.resize();\
-				break;\
         }\
     }, false);';
 

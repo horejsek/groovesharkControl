@@ -77,11 +77,6 @@
 		{"message":		"everytime"
 		,"description":	"Small caps, please"},
 
-	"optionsGeneralRemoveAds":
-		{"message":		"Remove Grooveshark ads from page."},
-	"optionsGeneralRemoveAdsAdvise":
-		{"message":		"Attention: please, consider leaving advertisements turned on because that's how Grooveshark raises money to keep the server in operation without any charge.\n\nThe benefits of disabling the ads are imperceptible to end users, but the benefits of leaving them alone is to hear their favorite music for free.\n\nJust consider. ;)"},
-
 	"optionsAboutTitle":
 		{"message":		"Features"
 		,"description":	"Title of features/about on options."},
