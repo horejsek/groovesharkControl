@@ -23,7 +23,7 @@ function restoreOptions () {
 	});
 
 	restoreGenericOption('showNotificationForMiliseconds', 5000, function(value){
-		$('#showNotificationForMiliseconds').val(value < 1000 ? 1000 : value);
+    	$('#showNotificationForMiliseconds').val(value < 1000 ? 1000 : value);
 	});
 
 	// Restore pin and left tab
@@ -32,7 +32,7 @@ function restoreOptions () {
 	});
 
 	restoreGenericOption('prepareGroovesharkMode', 'false', function(value){
-		$('#prepareGroovesharkMode').val(value);
+    	$('#prepareGroovesharkMode').val(value);
 	});
 
 	// Restore remove ads
@@ -41,8 +41,8 @@ function restoreOptions () {
 	});
 
 	// Enable/disabled checkboxs
-	$('td.enable > :checkbox').change(function(){
-		var checked = $(this).is(':checked');
+    $('td.enable > :checkbox').change(function(){
+    	var checked = $(this).is(':checked');
 		$(this).closest('tr')
 			.toggleClass('enabled', checked)
 			.find(':input, select, textarea').not(':checkbox').attr('disabled', !checked);
@@ -70,19 +70,19 @@ function restoreOptions () {
 function saveOptions () {
 
 	// Save notification
-	localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
-	localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
+    localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
+    localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
 
 	// Save pin and left tab
-	localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
-	localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
+    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
+    localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
 
-	// Save remove ads
-	localStorage['removeAds'] = $('#removeAds').attr('checked') == 'checked';
+    // Save remove ads
+    localStorage['removeAds'] = $('#removeAds').attr('checked') == 'checked';
 
 	// Show the "Options saved" tag
-	$('#status').stop()
-		.css('opacity', 1)
+    $('#status').stop()
+    	.css('opacity', 1)
 		.fadeIn(400).delay(1500)
 		.fadeOut(400);
 
