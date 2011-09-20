@@ -56,21 +56,26 @@
 	"optionsSaveButton":
 		{"message":		"Salvar"
 		,"description":	"Botão para salvar."},
+	"optionsSavePendings":
+		{"message":		"Algumas modificações ainda não foram salvas."},
 
 	"optionsGeneralTitle":
 		{"message":		"Configurações"
 		,"description":	"Título das opções gerais."},
 
-	"optionsGeneralShowNotifications":
-		{"message":		"Exibir notificações"
-		,"description":	"Ative para exibir as notificações."},
 	"optionsGeneralNotificationsTime":
 		{"message":		"Exibir notificações por %contents milésimos."
 		,"description":	"Tempo de exibição das notificações. %contents é o editor de tempo."},
 
 	"optionsGeneralPrepareGrooveshark":
-		{"message":		"Fixar a página do Grooveshark à esquerda"
+		{"message":		"Fixar a página do Grooveshark à esquerda: %contents"
 		,"description":	"Ao clicar, move a página do Grooveshark e fixa na janela."},
+	"optionsGeneralPrepareGroovesharkOnCreate":
+		{"message":		"somente ao iniciar o Grooveshark"
+		,"description":	"Em minusculo, por favor"},
+	"optionsGeneralPrepareGroovesharkEverytime":
+		{"message":		"sempre"
+		,"description":	"Em minusculo, por favor"},
 
 	"optionsAboutTitle":
 		{"message":		"Recursos"
@@ -86,5 +91,8 @@
 	"optionsAboutIconStatus":
 		{"message":		"Suporte a Ícone de Status"},
 	"optionsAboutNotification":
-		{"message":		"Suporte a Notificações"}
+		{"message":		"Suporte a Notificações"},
+
+	"donateIfLike":
+		{"message":		"Se você achou esta extensão útil, por favor, pague-me uma bebida! :p"}
 }

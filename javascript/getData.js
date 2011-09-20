@@ -37,7 +37,7 @@ function getNowPlaying () {
 
         inLibrary: $('#playerDetails_nowPlaying a.add').hasClass('selected'),
         isFavorite: $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
-        
+
         smile: $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass('active'),
         frown: $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass('active'),
 
@@ -59,6 +59,7 @@ function getPlaylist() {
     $('#queue_list li.queue-item').each( function(index) {
         queueItem = {
             songId: $(this).find('div.queueSong').attr('rel'),
+            queuedId: $(this).find('div.queueSong').attr('id'),
             song: $(this).find('a.queueSong_name').text(),
             artist: $(this).find('a.queueSong_artist').text(),
             isActive: $(this).hasClass('queue-item-active')

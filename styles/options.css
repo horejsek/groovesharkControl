@@ -1,36 +1,119 @@
 
 body {
-    background: #555;
-    font-family: verdana, arial, sans-serif;
-    height: 85px;
+	margin: 0;
+	font-family: segoe ui, tahoma, sans-serif;
+	height: 85px;
+	background-color: #151515;
+	cursor: default;
 }
 
-#body {
-    background: #FFF;
-    width: 600px;
-    height: 450px;
-    margin: 50px auto;
-    padding: 5px 20px;
-    position: relative;
+h2#title {
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	color: white;
+	padding-left: 70px;
+	font-size: 12pt;
+	background:
+		url("../images/icon_30.png") no-repeat 20px center,
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAoCAIAAACw1AcgAAAAIElEQVQI12OwtLRkYmBgYPr//z+cRmdj41OKsZmHxX4A27pgmjUdmsEAAAAASUVORK5CYII=");
 }
 
-#save {
-    font-size: 1.5em;
-    margin: 15px;
+div#body {
+	width: 800px;
+	background: white;
+	position: absolute;
+	top: 60px;
+	left: 50%;
+	margin-left: -425px;
+	padding: 20px;
+	border: 4px black solid;
+	border-radius: 10px;
 }
 
-#status {
-    background: #FFFB88;
-    text-align: center;
-    position: absolute;
-    bottom: -36px;
-    left: 0px;
-    width: 630px;
-    padding: 8px 5px 8px;
-    display: none;
+table#options,
+table#features {
+	width: 100%;
+}
+table#options td,
+table#features td {
+	height: 28px;
+	font-size: 10pt;
+	vertical-align: middle;
+	color: #333;
+}
+table#options td {
+	background-color: #fcfcfc;
+}
+table#features td {
+	padding-left: 40px;
+	height: 28px;
+}
+table#options tr.enabled td,
+table#features tr.enabled td {
+	color: #111;
+	background-color: transparent;
+}
+table#options td.enable {
+	text-align: center;
+	width: 40px;
+}
+table#options td.title,
+table#options td.save,
+table#features td.title {
+	font-size: 12pt;
+	font-weight: bold;
+	padding: 10px;
+	color: black;
+	background-color: transparent;
 }
 
-#showNotificationForMiliseconds {
-    width: 60px;
+form#donate-form {
+	margin: 0 -20px 0 -20px;
+	background-color: #fafafa;
+	padding: 10px;
+	text-align: center;
+}
+span#donate {
+	vertical-align: 8px;
+	font-size: 10.5pt;
+	color: #444;
+	padding-left: 10px;
 }
 
+a#github {
+	position: absolute;
+	top: 4px;
+	right: 20px;
+}
+a#github > img {
+	border-radius: 4px;
+}
+
+button#save {
+	font-weight: bold;
+	padding: 5px 10px;
+}
+span#savePendings {
+	font-size: 10pt;
+	padding-left: 10px;
+	font-weight: normal;
+	color: #C80000;
+	display: none;
+}
+
+select#prepareGroovesharkMode {
+	margin-left: 5px;
+}
+
+div#status {
+	background: #FFFCAD;
+	text-align: center;
+	position: absolute;
+	bottom: -32px;
+	left: 0px;
+	width: 830px;
+	padding: 8px 5px 8px;
+	border-radius: 0 0 10px 10px;
+	display: none;
+}

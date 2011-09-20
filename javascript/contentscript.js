@@ -1,13 +1,4 @@
 
-/*
-GS.user.UserID
-GS.user.IsPremium
-GS.player.REPEAT_ALL
-GS.player.REPEAT_ONE
-GS.player.REPEAT_NONE
-GS.lightbox.open("vipOnlyFeature");
-*/
-
 function injectGrooveshark () {
     injectId = 'groovesharkControlInject';
 
@@ -75,4 +66,3 @@ function injectGrooveshark () {
 }
 
 injectGrooveshark();
-
