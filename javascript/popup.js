@@ -18,6 +18,7 @@ function init () {
 
 function scrollPlaylistToActiveSong () {
     var index = indexOfActiveSong - 2;
+    if (index < 0) index = 0;
     
     if (isNowOpened && localStorage['lastPositionInPlaylist'] && localStorage['lastPositionInPlaylist'] > 0) {
         $('#playlist').scrollTo('#playlistItem_' + localStorage['lastPositionInPlaylist'], 0);
