@@ -18,13 +18,18 @@ body {
 }
 
 #switchToFullNotification {
-    width: 5px;
-    height: 5px;
-    background: #555;
+    width: 16px;
+    height: 16px;
+    background: url('../images/pin.png'); /*#555*/
     position: absolute;
-    bottom: 0px;
-    left: 0px;
+    bottom: -5px;
+    left: -6px;
     cursor: pointer;
+    z-index: 10;
+}
+#switchToFullNotification:hover {
+    bottom: -2px;
+    left: -2px;
 }
 
 /* PLAYER OPTIONS */
