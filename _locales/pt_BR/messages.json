@@ -38,6 +38,9 @@
         {"message":        "de"
         ,"description":    "Example: 5 de 6."},
 
+    "radio":
+        {"message":        "Radio"
+        ,"description":    "Bottom of popup."},
     "radioOff":
         {"message":        "Desligado"
         ,"description":    "Fundo do popup. Radio: Desligado."},
