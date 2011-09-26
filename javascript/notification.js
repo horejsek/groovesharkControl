@@ -10,7 +10,7 @@ function closeNotification () {
 function countDown () {
     var step = 50;
     var totalTime = 0;
-    
+
     function _countDown () {
         if (shouldClose) {
             totalTime += step;
@@ -35,7 +35,7 @@ function turnOffCloseOfWindow () {
     $('#countDown').css('display', 'none');
 }
 
-function setUpNotification () {   
+function setUpNotification () {
     $('#liteLine').SetScroller({
         velocity: 50,
         direction: 'horizontal',
@@ -47,12 +47,12 @@ function setUpNotification () {
         onstartup: 'play',
         cursor: 'pointer'
     });
-    
+
     $('#switchToLiteNotification').click(function () {
         showLiteNotification(true);
         setTimeout(window.close, 200);
     });
-    
+
     $('#switchToFullNotification').click(function () {
         showNotification(true);
         setTimeout(window.close, 200);
@@ -61,11 +61,10 @@ function setUpNotification () {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        setPlayerOptions(request.playerOptions);
-        setNowPlaying(request.nowPlaying);
-        setRadio(request.radio);
-        
+        setPlayerOptions(request);
+        setNowPlaying(request);
+        setRadio(request);
+
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
 );
-

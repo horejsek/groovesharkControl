@@ -69,6 +69,15 @@ body {
     position: relative;
 }
 
+.nowPlaying .song,
+.nowPlaying .artist,
+.nowPlaying .album {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 110px;
+}
+
 .nowPlaying .song {
     color: #FFF;
     font-size: 1.3em;
@@ -206,4 +215,3 @@ body {
     height: 16px !important;
     cursor: pointer !important;
 }
-

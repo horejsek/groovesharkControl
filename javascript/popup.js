@@ -1,5 +1,5 @@
 
-var indexOfActiveSong = -1;
+var activeQueueSongID = -1;
 var isNowOpened = true;
 
 function hidePopup () { $('body').css('display', 'none'); }
@@ -7,26 +7,26 @@ function showPopup () { $('body').css('display', 'block'); }
 
 function init () {
     isNowOpened = true;
-    
+
     hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
-    
+
     if (isNotificationOpen()) hidePin();
     else showPin();
 }
 
 function scrollPlaylistToActiveSong () {
-    var index = indexOfActiveSong - 2;
+    var index = activeQueueSongID - 2;
     if (index < 0) index = 0;
-    
-    if (isNowOpened && localStorage['lastPositionInPlaylist'] && localStorage['lastPositionInPlaylist'] > 0) {
-        $('#playlist').scrollTo('#playlistItem_' + localStorage['lastPositionInPlaylist'], 0);
+
+    if (isNowOpened && localStorage['lastActiveQueueSongID'] && localStorage['lastActiveQueueSongID'] > 0) {
+        $('#playlist').scrollTo('#playlistItem_' + localStorage['lastActiveQueueSongID'], 0);
         isNowOpened = false;
     }
-    if (localStorage['lastPositionInPlaylist'] != index) {
+    if (localStorage['lastActiveQueueSongID'] != index) {
         $('#playlist').scrollTo('#playlistItem_' + index, 1000);
-        localStorage['lastPositionInPlaylist'] = index;
+        localStorage['lastActiveQueueSongID'] = index;
     }
 }
 
@@ -36,14 +36,14 @@ chrome.extension.onRequest.addListener(
             goToGroovesharkTab();
             return;
         }
-        
+
         showPopup();
-        
-        setPlayerOptions(request.playerOptions);
-        setNowPlaying(request.nowPlaying);
-        setPlaylist(request.playlist);
-        setRadio(request.radio);
-        
+
+        setPlayerOptions(request);
+        setNowPlaying(request);
+        setPlaylist(request);
+        setRadio(request);
+
         scrollPlaylistToActiveSong();
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
@@ -57,4 +57,3 @@ function showPin () {
 function hidePin () {
     $('#pin').hide();
 }
-

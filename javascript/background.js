@@ -1,5 +1,5 @@
 
-var indexOfActiveSong = -1;
+var activeQueueSongID = -1;
 
 var icons = {
     'disabled': 'backgroundIcons/disabled',
@@ -14,7 +14,7 @@ function init () {
     injectGrooveshark();
 
     /*function _dbg () {
-        chrome.browserAction.setBadgeText({text: ''+indexOfActiveSong});
+        chrome.browserAction.setBadgeText({text: ''+activeQueueSongID});
         window.setTimeout(_dbg, 1000);
     } _dbg();/**/
 }
@@ -54,7 +54,7 @@ chrome.extension.onRequest.addListener(
 function setIconByRequest (request) {
     if (request.isSomePlaylist) {
         if (request.isPlaying) {
-            var icon = icons['playing'] + '_' + parseInt(request.nowPlaying.times.percent / (100 / 19));
+            var icon = icons['playing'] + '_' + parseInt(request.playbackStatus.percent / (100 / 19));
             setIcon(icon);
         } else {
             setIcon(icons['pause']);
@@ -66,7 +66,7 @@ function setIconByRequest (request) {
 
 function setTitleByRequst (request) {
     if (request.isSomePlaylist) {
-        setTitle(request.nowPlaying.artist.short + ' - ' + request.nowPlaying.song.short);
+        setTitle(request.currentSong.ArtistName + ' - ' + request.currentSong.SongName);
     } else {
         resetTitle();
     }
@@ -75,16 +75,15 @@ function setTitleByRequst (request) {
 function setIndexOfActiveSongByRequest (request) {
     if (request.isSomePlaylist) {
         if (
-            request.playlist.active != -1 &&
-            indexOfActiveSong != -1 &&
-            indexOfActiveSong != request.playlist.active &&
-            request.nowPlaying.times.percent < 2.5
+            request.queue.activeSong.queueSongID != -1 &&
+            activeQueueSongID != -1 &&
+            activeQueueSongID != request.queue.activeSong.queueSongID &&
+            request.playbackStatus.percent < 2.5
         ) {
             showNotification();
         }
-        indexOfActiveSong = request.playlist.active;
+        activeQueueSongID = request.queue.activeSong.queueSongID;
     } else {
-        indexOfActiveSong = -1;
+        activeQueueSongID = -1;
     }
 }
-

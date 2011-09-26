@@ -9,12 +9,17 @@
         <script type="text/javascript" src="../javascript/notification.js"></script>
         <script type="text/javascript" src="../javascript/jquery-i18n.js"></script>
     </head>
-    <body onload="init()" onmouseover="turnOffCloseOfWindow()">
+    <body onload="init();" onmouseover="turnOffCloseOfWindow();">
         <div class="nowPlaying">
             <div id="liteLine">
                 <div class="scrollingtext">
                     <span class="song"></span> <span i18n-text="liteBy"></span> <span class="artist"></span>, <span class="album"></span>
-                    (<span class="timeDuration"></span>, <span class="position"></span>)
+                    (<span class="timeDuration"></span>,
+                    <span class="position">
+                        <span class="queuePosition"></span>
+                        <span i18n-text="ofSong"></span>
+                        <span class="queueCountSongs"></span>)
+                    </span>
                 </div>
             </div>
             <div class="progressbar">

@@ -9,7 +9,7 @@
         <script type="text/javascript" src="../javascript/notification.js"></script>
         <script type="text/javascript" src="../javascript/jquery-i18n.js"></script>
     </head>
-    <body onload="init()" onmouseover="turnOffCloseOfWindow()">
+    <body onload="init();" onmouseover="turnOffCloseOfWindow();">
         <div class="nowPlaying">
             <img class="image" />
             <div class="song"></div>
@@ -20,7 +20,11 @@
                 <span i18n-text="ofTime"></span>
                 <span class="timeDuration"></span>
             </div>
-            <div class="position"></div>
+            <div class="position">
+                <span class="queuePosition"></span>
+                <span i18n-text="ofSong"></span>
+                <span class="queueCountSongs"></span>
+            </div>
             <div class="library" onclick="userAction('toggleLibrary');"></div>
             <div class="favorite" onclick="userAction('toggleFavorite');"></div>
             <div class="smile disable" onclick="userAction('toggleSmile');"></div>

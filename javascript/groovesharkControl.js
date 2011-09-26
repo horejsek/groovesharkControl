@@ -1,6 +1,12 @@
 
+var DEFAULT_ALBUM_IMAGE = 'http://static.a.gs-cdn.net/webincludes/images/default/album_250.png';
+
 var updateProgressbar = true;
 var isGroovesharkFocused = false;
+
+
+/***** GROOVESHARK TAB *****/
+
 
 chrome.tabs.onSelectionChanged.addListener(checkIfIsGroovesharkFocused);
 chrome.windows.onFocusChanged.addListener(checkIfIsGroovesharkFocused);
@@ -32,12 +38,12 @@ function createGroovesharkTab () {
     var properties = {
 	url: getGroovesharkUrl()
     };
-    
+
     if (localStorage['prepareGrooveshark'] === 'true') {
 	properties['index'] = 0;
 	properties['pinned'] = true;
     }
-    
+
     chrome.tabs.create(properties);
 }
 
@@ -63,10 +69,15 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
             }
         }
 
-        if(typeof callbackIfGroovesharkIsNotOpen !== "undefined")
+        if(typeof callbackIfGroovesharkIsNotOpen !== "undefined") {
             callbackIfGroovesharkIsNotOpen();
+        }
     });
 }
+
+
+/***** DATA & ACTIONS *****/
+
 
 function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
     var delayInMiliseconds = 1000;
@@ -76,8 +87,7 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {file: 'javascript/getData.js'});
-        // Pin ONLY if the mode is EVERYTIME
+        chrome.tabs.sendRequest(tab.id, {'action': 'getData'});
         pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
@@ -94,6 +104,10 @@ function userAction (action, params) {
 function injectScriptWinPostMsg (data) {
     return 'window.postMessage(JSON.stringify(' + JSON.stringify(data) + '), "http://grooveshark.com");';
 }
+
+
+/***** NOTIFICATIONS *****/
+
 
 function howLongDisplayNotification () {
     var minTime = 1000;
@@ -142,6 +156,98 @@ function isNotificationOpen () {
     return chrome.extension.getViews({type: 'notification'}) != ''
 }
 
+
+/***** SETTERS *****/
+
+
+function setPlayerOptions (request) {
+    $('#shuffle').attr('class', request.shuffle);
+    $('#loop').attr('class', request.loop);
+    $('#crossfade').attr('class', request.crossfade);
+}
+
+function setNowPlaying (request) {
+    $('.nowPlaying .song').text(request.currentSong.SongName);
+    $('.nowPlaying .song').attr('title', request.currentSong.SongName);
+    $('.nowPlaying .artist').text(request.currentSong.ArtistName);
+    $('.nowPlaying .artist').attr('title', request.currentSong.ArtistName);
+    $('.nowPlaying .album').text(request.currentSong.AlbumName);
+    $('.nowPlaying .album').attr('title', request.currentSong.AlbumName);
+
+    $('.nowPlaying .image').attr('src', request.currentSong.imageUrlS || DEFAULT_ALBUM_IMAGE);
+
+    $('.nowPlaying .timeElapsed').text(msToHumanTime(request.playbackStatus.position));
+    $('.nowPlaying .timeDuration').text(msToHumanTime(request.playbackStatus.duration));
+
+    if (request.currentSong.inLibrary) $('.nowPlaying .library').removeClass('disable');
+    else $('.nowPlaying .library').addClass('disable');
+
+    if (request.currentSong.isFavorite) $('.nowPlaying .favorite').removeClass('disable');
+    else $('.nowPlaying .favorite').addClass('disable');
+
+    if (request.currentSong.smile) $('.nowPlaying .smile').addClass('active');
+    else $('.nowPlaying .smile').removeClass('active');
+
+    if (request.currentSong.frown) $('.nowPlaying .frown').addClass('active');
+    else $('.nowPlaying .frown').removeClass('active');
+
+    $('.nowPlaying .position .queuePosition').text(request.currentSong.queueSongID);
+    $('.nowPlaying .position .queueCountSongs').text(request.queue.songs.length);
+
+    $('.progressbar .elapsed').css('width', request.playbackStatus.percent + '%');
+    if (updateProgressbar) {
+        $('.progressbar').slider('value', request.playbackStatus.percent);
+    }
+}
+
+function setPlaylist (request) {
+    var playlistItems = $('.playlist');
+    playlistItems.empty();
+
+    $.each(request.queue.songs, function (index, item) {
+        playlistItems.append(
+	    $('<div class="item" id="playlistItem_' + index + '" />')
+		.addClass(index % 2 === 0 ? ' odd' : '')
+		.addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
+		.text(item.ArtistName + ' - ' + item.SongName)
+		.click(function () {
+		    userAction("playSongInQueue", {
+			queueSongId: item.queueSongID
+		    })
+		})
+	);
+    });
+
+    if (request.queue.activeSong.queueSongID != activeQueueSongID) {
+        activeQueueSongID = request.queue.activeSong.queueSongID;
+    }
+}
+
+function setRadio (request) {
+    if (request.queue.autoplayEnabled) {
+        $('.radio').addClass('active');
+        $('.radio .station').text(request.stationName);
+        $('.nowPlaying .smile, .nowPlaying .frown').removeClass('disable');
+    } else {
+        $('.radio').removeClass('active');
+        $('.radio .station').text(chrome.i18n.getMessage('radioOff'));
+        $('.nowPlaying .smile, .nowPlaying .frown').addClass('disable');
+    }
+}
+
+
+function msToHumanTime (ms) {
+    var s = ms / 1000;
+    var minutes = parseInt(s/60);
+    var seconds = parseInt(s%60);
+    if (seconds < 10) seconds = '0' + seconds;
+    return minutes + ':' + seconds;
+}
+
+
+/***** MISC *****/
+
+
 function setUpProgressbar () {
     $('.progressbar').slider({
         step: 0.1,
@@ -154,76 +260,3 @@ function setUpProgressbar () {
         }
     });
 }
-
-function setPlayerOptions (options) {
-    $('#shuffle').attr('class', options.shuffle);
-    $('#loop').attr('class', options.loop);
-    $('#crossfade').attr('class', options.crossfade);
-}
-
-function setNowPlaying (nowPlaying) {
-    $('.nowPlaying .song').text(nowPlaying.song.short);
-    $('.nowPlaying .song').attr('title', nowPlaying.song.long);
-    $('.nowPlaying .artist').text(nowPlaying.artist.short);
-    $('.nowPlaying .artist').attr('title', nowPlaying.artist.long);
-    $('.nowPlaying .album').text(nowPlaying.album.short);
-    $('.nowPlaying .album').attr('title', nowPlaying.album.long);
-    $('.nowPlaying .image').attr('src', nowPlaying.image);
-
-    $('.nowPlaying .timeElapsed').text(nowPlaying.times.elapsed);
-    $('.nowPlaying .timeDuration').text(nowPlaying.times.duration);
-
-    if (nowPlaying.inLibrary) $('.nowPlaying .library').removeClass('disable');
-    else $('.nowPlaying .library').addClass('disable');
-
-    if (nowPlaying.isFavorite) $('.nowPlaying .favorite').removeClass('disable');
-    else $('.nowPlaying .favorite').addClass('disable');
-
-    if (nowPlaying.smile) $('.nowPlaying .smile').addClass('active');
-    else $('.nowPlaying .smile').removeClass('active');
-
-    if (nowPlaying.frown) $('.nowPlaying .frown').addClass('active');
-    else $('.nowPlaying .frown').removeClass('active');
-
-    var positionInQueue = nowPlaying.positionInQueue.replace('of', chrome.i18n.getMessage('ofSong'));
-    $('.nowPlaying .position').text(positionInQueue);
-
-    $('.progressbar .elapsed').css('width', nowPlaying.times.percent + '%');
-    if (updateProgressbar) {
-        $('.progressbar').slider('value', parseFloat(nowPlaying.times.percent));
-    }
-}
-
-function setPlaylist (playlist) {
-    var playlistItems = $('.playlist');
-    playlistItems.empty();
-
-    $.each(playlist.items, function (index, item) {
-        playlistItems.append($('<div class="item" id="playlistItem_' + index + '" />')
-            .addClass(index % 2 === 0 ? ' odd' : '')
-            .addClass(item.isActive ? ' active' : '')
-            .text(item.artist + ' - ' + item.song)
-            .click(function(){
-                userAction("playSongInQueue", {
-                    queueSongId: item.queuedId
-                })
-            }));
-    });
-
-    if (playlist.active != indexOfActiveSong) {
-        indexOfActiveSong = playlist.active;
-    }
-}
-
-function setRadio (radio) {
-    if (radio.active) {
-        $('.radio').addClass('active');
-        $('.radio .station').text(radio.station);
-        $('.nowPlaying .smile, .nowPlaying .frown').removeClass('disable');
-    } else {
-        $('.radio').removeClass('active');
-        $('.radio .station').text(chrome.i18n.getMessage('radioOff'));
-        $('.nowPlaying .smile, .nowPlaying .frown').addClass('disable');
-    }
-}
-

@@ -9,7 +9,7 @@
         <script type="text/javascript" src="../javascript/popup.js"></script>
         <script type="text/javascript" src="../javascript/jquery-i18n.js"></script>
     </head>
-    <body onload="init()">
+    <body onload="init();">
         <div id="player" class="player">
             <button id="pin" class="unpin" onclick="showNotification(stay=true);" i18n-title="playerPin"></button>
             <button id="shuffle" class="false" onclick="userAction('toggleShuffle');" i18n-title="songShuffle"></button>
@@ -30,7 +30,11 @@
                 <span i18n-text="ofTime"></span>
                 <span class="timeDuration"></span>
             </div>
-            <div class="position"></div>
+            <div class="position">
+                <span class="queuePosition"></span>
+                <span i18n-text="ofSong"></span>
+                <span class="queueCountSongs"></span>
+            </div>
             <div class="library" onclick="userAction('toggleLibrary');"></div>
             <div class="favorite" onclick="userAction('toggleFavorite');"></div>
             <div class="smile disable" onclick="userAction('toggleSmile');"></div>

@@ -85,6 +85,15 @@ body {
     position: relative;
 }
 
+#nowPlaying .song,
+#nowPlaying .artist,
+#nowPlaying .album {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 220px;
+}
+
 #nowPlaying .song {
     color: #FFF;
     font-size: 1.4em;
@@ -261,4 +270,3 @@ body {
 #radio.active {
     font-weight: bold;
 }
-
