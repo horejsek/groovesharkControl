@@ -111,12 +111,16 @@ function injectGrooveshark () {
         injectScript.id = injectId;
         injectScript.innerHTML = textScript;
         document.body.appendChild(injectScript);
+
+        chrome.extension.onRequest.addListener(receiveRequest);
+        window.addEventListener("message", receiveMessage, false);
+
+        window.addEventListener("unload", function () {
+            chrome.extension.onRequest.removeListener(recieveRequest);
+            window.removeEventListener("message", receiveMessage, false);
+        }, false);
     }
 }
-
-
-injectGrooveshark();
-
 
 function receiveRequest (request, sender, sendResponse) {
     if (request.action == 'getData') {
@@ -131,11 +135,6 @@ function receiveMessage (e) {
     }
 }
 
-chrome.extension.onRequest.addListener(receiveRequest);
-window.addEventListener("message", receiveMessage, false);
 
-window.addEventListener("unload", function () {
-    chrome.extension.onRequest.removeListener(recieveRequest);
-    window.removeEventListener("message", receiveMessage, false);
-}, false);
+injectGrooveshark();
 
