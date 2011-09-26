@@ -51,7 +51,7 @@ function injectGrooveshark () {
             case "mute": GS.player.setVolume(0); break;\n\
             case "volumeUpdate": GS.player.setVolume(request.actionParams.volume); break;\n\
             \n\
-            case "seekTo": GS.player.seekTo(GS.player.currentSong.EstimateDuration/100*request.actionParams.seekTo); break;\n\
+            case "seekTo": GS.player.seekTo(GS.player.getPlaybackStatus()["duration"]/100*request.actionParams.seekTo); break;\n\
             case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\n\
             \n\
             case "getData":\n\
