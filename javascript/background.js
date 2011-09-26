@@ -1,11 +1,11 @@
 
-var activeQueueSongID = -1;
-
-var icons = {
-    'disabled': 'backgroundIcons/disabled',
-    'playing': 'backgroundIcons/playing',
-    'pause': 'backgroundIcons/pause'
+ICONS = {
+    'disabled': '../images/backgroundIcons/disabled.png',
+    'playing': '../images/backgroundIcons/playing.png',
+    'pause': '../images/backgroundIcons/pause.png'
 }
+
+var activeQueueSongID = -1;
 
 function init () {
     resetIcon();
@@ -20,12 +20,11 @@ function init () {
 }
 
 function resetIcon () {
-    setIcon(icons['disabled']);
+    setIcon(ICONS['disabled']);
 }
 
-function setIcon (iconName) {
-    var iconPath = '../images/' + iconName + '.png';
-    chrome.browserAction.setIcon({path: iconPath});
+function setIcon (icon) {
+    chrome.browserAction.setIcon({path: icon});
 }
 
 function resetTitle () {
@@ -54,10 +53,28 @@ chrome.extension.onRequest.addListener(
 function setIconByRequest (request) {
     if (request.isSomePlaylist) {
         if (request.isPlaying) {
-            var icon = icons['playing'] + '_' + parseInt(request.playbackStatus.percent / (100 / 19));
-            setIcon(icon);
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, 19, 19);
+
+            var imageObj = new Image();
+            imageObj.src = ICONS['playing'];
+            context.drawImage(imageObj, 0, 0);
+
+            context.fillStyle = '#CCC';
+            context.fillRect(0, 17, 19, 19);
+
+            var x = parseInt(request.playbackStatus.percent / (100 / 19))
+            context.fillStyle = '#000';
+            context.fillRect(0, 17, x, 19);
+
+            var imageData = context.getImageData(0, 0, 19, 19);
+
+            chrome.browserAction.setIcon({
+                imageData: imageData
+            });
         } else {
-            setIcon(icons['pause']);
+            setIcon(ICONS['pause']);
         }
     } else {
         resetIcon();
