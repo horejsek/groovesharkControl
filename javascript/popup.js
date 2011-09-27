@@ -20,8 +20,9 @@ function scrollPlaylistToActiveSong () {
     var index = activeQueueSongID - 2;
     if (index < 0) index = 0;
 
-    if (isNowOpened && localStorage['lastActiveQueueSongID'] && localStorage['lastActiveQueueSongID'] > 0) {
-        $('#playlist').scrollTo('#playlistItem_' + localStorage['lastActiveQueueSongID'], 0);
+    if (isNowOpened && localStorage['lastActiveQueueSongID'] && parseInt(localStorage['lastActiveQueueSongID']) > 0) {
+        var playlistItem = $('#playlistItem_' + localStorage['lastActiveQueueSongID']);
+        if (playlistItem.length) $('#playlist').scrollTo(playlistItem, 0);
         isNowOpened = false;
     }
     if (localStorage['lastActiveQueueSongID'] != index) {
