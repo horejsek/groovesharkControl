@@ -55,6 +55,11 @@ function injectGrooveshark () {
             case "playSongInQueue": GS.player.playSong(request.actionParams.queueSongId); break;\n\
             \n\
             case "getData":\n\
+                function isSomePlaylist () {\n\
+                    if (!GS.player.queue) return false;\n\
+                    if (!GS.player.queue.songs) return false;\n\
+                    return GS.player.queue.songs.length > 0;\n\
+                }\n\
                 function getLoop () {\n\
                     var loop = GS.player.getRepeat();\n\
                     if (loop == 1) return "one";\n\
@@ -90,7 +95,7 @@ function injectGrooveshark () {
                     shuffle: GS.player.getShuffle(),\n\
                     loop: getLoop(),\n\
                     crossfade: GS.player.getCrossfadeEnabled(),\n\
-                    isSomePlaylist: GS.player.queue.songs.length > 0,\n\
+                    isSomePlaylist: isSomePlaylist(),\n\
                     isPlaying: GS.player.isPlaying,\n\
                     isPaused: GS.player.isPaused,\n\
                     isMuted: GS.player.getIsMuted(),\n\
