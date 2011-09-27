@@ -53,26 +53,28 @@ chrome.extension.onRequest.addListener(
 function setIconByRequest (request) {
     if (request.isSomePlaylist) {
         if (request.isPlaying) {
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            context.clearRect(0, 0, 19, 19);
-
             var imageObj = new Image();
             imageObj.src = ICONS['playing'];
-            context.drawImage(imageObj, 0, 0);
+            imageObj.onload = function () {
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                context.clearRect(0, 0, 19, 19);
 
-            context.fillStyle = '#CCC';
-            context.fillRect(0, 17, 19, 19);
+                context.drawImage(imageObj, 0, 0);
 
-            var x = parseInt(request.playbackStatus.percent / (100 / 19))
-            context.fillStyle = '#000';
-            context.fillRect(0, 17, x, 19);
+                context.fillStyle = '#CCC';
+                context.fillRect(0, 17, 19, 19);
 
-            var imageData = context.getImageData(0, 0, 19, 19);
+                var x = parseInt(request.playbackStatus.percent / (100 / 19))
+                context.fillStyle = '#000';
+                context.fillRect(0, 17, x, 19);
 
-            chrome.browserAction.setIcon({
-                imageData: imageData
-            });
+                var imageData = context.getImageData(0, 0, 19, 19);
+
+                chrome.browserAction.setIcon({
+                    imageData: imageData
+                });
+            }
         } else {
             setIcon(ICONS['pause']);
         }
