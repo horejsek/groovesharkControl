@@ -3,7 +3,7 @@ function injectGrooveshark () {
     injectId = 'groovesharkControlInject';
 
     textScript = 'window.addEventListener("message", function (e) {\n\
-        var request = JSON.parse(e.data);\n\
+        var request = e.data;\n\
         if (!request.action) return;\n\
         \n\
         switch (request.action) {\n\
@@ -90,7 +90,7 @@ function injectGrooveshark () {
                     return playbackStatus;\n\
                 }\n\
                 \n\
-                data = {\n\
+                window.postMessage({\n\
                     action: "updateData",\n\
                     shuffle: GS.player.getShuffle(),\n\
                     loop: getLoop(),\n\
@@ -104,8 +104,7 @@ function injectGrooveshark () {
                     currentSong: getCurrentSong(),\n\
                     queue: GS.player.queue,\n\
                     stationName: $("#playerDetails_queue a").text()\n\
-                };\n\
-                window.postMessage(JSON.stringify(data), "http://grooveshark.com");\n\
+                }, "http://grooveshark.com");\n\
                 break;\n\
         }\n\
     }, false);';
@@ -129,14 +128,13 @@ function injectGrooveshark () {
 
 function receiveRequest (request, sender, sendResponse) {
     if (request.action == 'getData') {
-        window.postMessage(JSON.stringify({'action': 'getData'}), "http://grooveshark.com");
+        window.postMessage({action: 'getData'}, "http://grooveshark.com");
     }
 }
 
 function receiveMessage (e) {
-    var request = JSON.parse(e.data);
-    if (request.action == 'updateData') {
-        chrome.extension.sendRequest(request);
+    if (e.data.action == 'updateData') {
+        chrome.extension.sendRequest(e.data);
     }
 }
 

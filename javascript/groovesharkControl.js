@@ -102,7 +102,7 @@ function userAction (action, params) {
 }
 
 function injectScriptWinPostMsg (data) {
-    return 'window.postMessage(JSON.stringify(' + JSON.stringify(data) + '), "http://grooveshark.com");';
+    return 'window.postMessage(' + JSON.stringify(data) + ', "http://grooveshark.com");';
 }
 
 
