@@ -37,7 +37,7 @@ function setTitle (title) {
 
 function injectGrooveshark () {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {'file': 'javascript/jquery-1.6.2.min.js'});
+        chrome.tabs.executeScript(tab.id, {'file': 'javascript/libs/jquery-1.6.min.js'});
         chrome.tabs.executeScript(tab.id, {'file': 'javascript/contentscript.js'});
     });
 }
