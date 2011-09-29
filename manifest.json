@@ -22,7 +22,7 @@
     ],
 
     "content_scripts": [{
-        "js": ["javascript/libs/jquery-1.6.2.min.js", "javascript/contentscript.js"],
+        "js": ["javascript/libs/jquery-1.6.min.js", "javascript/contentscript.js"],
         "matches": ["http://grooveshark.com/*"]
     }],
 
