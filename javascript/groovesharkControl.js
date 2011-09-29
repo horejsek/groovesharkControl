@@ -87,22 +87,19 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.sendRequest(tab.id, {'action': 'getData'});
+    	chrome.tabs.sendRequest(tab.id, {command: 'getData'});
         pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
 
-function userAction (action, params) {
+function userAction (command, args, callback) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.executeScript(tab.id, {
-            code: injectScriptWinPostMsg({'action': action, 'actionParams': params})
-        });
+    	chrome.tabs.sendRequest(tab.id, {
+    		command: command,
+    		args: args
+    	}, callback);
     });
     getData();
-}
-
-function injectScriptWinPostMsg (data) {
-    return 'window.postMessage(' + JSON.stringify(data) + ', "http://grooveshark.com");';
 }
 
 
@@ -211,9 +208,7 @@ function setPlaylist (request) {
 		.addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
 		.text(item.ArtistName + ' - ' + item.SongName)
 		.click(function () {
-		    userAction("playSongInQueue", {
-			queueSongId: item.queueSongID
-		    })
+		    userAction("playSongInQueue", [item.queueSongID])
 		})
 	);
     });
@@ -253,7 +248,7 @@ function setUpProgressbar () {
         step: 0.1,
         stop: function(event, ui) {
             updateProgressbar = false;
-            userAction('seekTo', {'seekTo': $(this).slider('value')});
+            userAction('seekTo', [$(this).slider('value')]);
             setTimeout(function () {
                 updateProgressbar = true;
             }, 500);
