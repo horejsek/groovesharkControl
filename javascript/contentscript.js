@@ -1,157 +1,156 @@
-var GCInjector = new function(){
-	var self = this;
-	this.GS = false;
 
-	// Music controller
-	this.playSong = function(){
-		this.GS.player.playSong();
-	}
+var GCInjector = new function () {
+    var self = this;
+    this.GS = false;
 
-	this.pauseSong = function(){
-		this.GS.player.pauseSong();
-	}
+    // Music controller
+    this.playSong = function () {
+        this.GS.player.playSong();
+    }
 
-	this.resumeSong = function(){
-		this.GS.player.resumeSong();
-	}
+    this.pauseSong = function () {
+        this.GS.player.pauseSong();
+    }
 
-	this.playPause = function(){
-		if (this.GS.player.isPaused)
-			this.GS.player.resumeSong();
-		else
-		if (this.GS.player.isPlaying)
-			this.GS.player.pauseSong();
-		else
-		this.GS.player.playSong();
-	}
+    this.resumeSong = function () {
+        this.GS.player.resumeSong();
+    }
 
-	// Playlist jumper
-	this.previousSong = function(){
-		this.GS.player.previousSong();
-	}
+    this.playPause = function () {
+        if (this.GS.player.isPaused) {
+            this.GS.player.resumeSong();
+        } else if (this.GS.player.isPlaying) {
+            this.GS.player.pauseSong();
+        } else {
+            this.GS.player.playSong();
+        }
+    }
 
-	this.nextSong = function(){
-		this.GS.player.nextSong();
-	}
+    // Playlist jumper
+    this.previousSong = function () {
+        this.GS.player.previousSong();
+    }
 
-	// Suffle
-	this.setSuffle = function(suffleEnabled){
-		this.GS.player.setShuffle(shuffleEnabled);
-	}
+    this.nextSong = function () {
+        this.GS.player.nextSong();
+    }
 
-	this.toggleShuffle = function(){
-		$("#player_shuffle").click();
-	}
+    // Suffle
+    this.setSuffle = function (suffleEnabled) {
+        this.GS.player.setShuffle(shuffleEnabled);
+    }
 
-	// Crossfade
-	this.setCrossfade = function(crossfadeEnabled){
-		this.GS.player.setCrossfadeEnabled(crossfadeEnabled);
-	}
+    this.toggleShuffle = function () {
+        $("#player_shuffle").click();
+    }
 
-	this.toggleCrossfade = function(){
-		$("#player_crossfade").click();
-	}
+    // Crossfade
+    this.setCrossfade = function (crossfadeEnabled) {
+        this.GS.player.setCrossfadeEnabled(crossfadeEnabled);
+    }
 
-	// Loop
-	this.setLoop = function(loopMode){
-		this.GS.player.setRepeat(loopMode);
-	}
+    this.toggleCrossfade = function () {
+        $("#player_crossfade").click();
+    }
 
-	this.toggleLoop = function(){
-		$("#player_loop").click();
-	}
+    // Loop
+    this.setLoop = function (loopMode) {
+        this.GS.player.setRepeat(loopMode);
+    }
 
-	// Library
-	this.addToLibrary = function(songId){
-		this.GS.user.addToLibrary(songId);
-	}
+    this.toggleLoop = function () {
+        $("#player_loop").click();
+    }
 
-	this.removeFromLibrary = function(songId){
-		this.GS.user.removeFromLibrary(songId);
-	}
+    // Library
+    this.addToLibrary = function (songId) {
+        this.GS.user.addToLibrary(songId);
+    }
 
-	this.toggleLibrary = function(){
-        if (!$("#playerDetails_nowPlaying a.add").hasClass("selected"))
-			this.GS.user.addToLibrary(this.GS.player.currentSong.SongID);
-        else
-		this.GS.user.removeFromLibrary(this.GS.player.currentSong.SongID);
-	}
+    this.removeFromLibrary = function (songId) {
+        this.GS.user.removeFromLibrary(songId);
+    }
 
-	// Favorite
-	this.addToSongFavorites = function(songId){
-		this.GS.user.addToSongFavorites(songId);
-	}
+    this.toggleLibrary = function () {
+        if (!$("#playerDetails_nowPlaying a.add").hasClass("selected")) {
+            this.GS.user.addToLibrary(this.GS.player.currentSong.SongID);
+        } else {
+            this.GS.user.removeFromLibrary(this.GS.player.currentSong.SongID);
+        }
+    }
 
-	this.removeFromSongFavorites = function(songId){
-		this.GS.user.removeFromSongFavorites(songId);
-	}
+    // Favorite
+    this.addToSongFavorites = function (songId) {
+        this.GS.user.addToSongFavorites(songId);
+    }
 
-	this.toggleFavorite = function(){
-        if (!$("#playerDetails_nowPlaying a.favorite").hasClass("selected"))
-			this.GS.user.addToSongFavorites(this.GS.player.currentSong.SongID);
-        else
-		this.GS.user.removeFromSongFavorites(this.GS.player.currentSong.SongID);
-	}
+    this.removeFromSongFavorites = function (songId) {
+        this.GS.user.removeFromSongFavorites(songId);
+    }
 
-	// Smile
-	this.smile = function(songId){
-		this.GS.player.voteSong(songId, 1);
-	}
+    this.toggleFavorite = function () {
+        if (!$("#playerDetails_nowPlaying a.favorite").hasClass("selected")) {
+            this.GS.user.addToSongFavorites(this.GS.player.currentSong.SongID);
+        } else {
+            this.GS.user.removeFromSongFavorites(this.GS.player.currentSong.SongID);
+        }
+    }
 
-	this.toggleSmile = function(){
-		this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.smile ? 0 : 1);
-	}
+    // Smile
+    this.smile = function (songId) {
+        this.GS.player.voteSong(songId, 1);
+    }
 
-	// Frown
-	this.frown = function(songId){
-		this.GS.player.voteSong(songId, -1);
-	}
+    this.toggleSmile = function () {
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.smile ? 0 : 1);
+    }
 
-	this.toggleFrown = function(){
-		this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.frown ? 0 : -1);
-	}
+    // Frown
+    this.frown = function (songId) {
+        this.GS.player.voteSong(songId, -1);
+    }
 
-	// Volume
-	this.mute = function(){
-		this.GS.player.setVolume(0);
-	}
+    this.toggleFrown = function () {
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.frown ? 0 : -1);
+    }
 
-	this.volumeUpdate = function(volume){
-		this.GS.player.setVolume(volume);
-	}
+    // Volume
+    this.mute = function () {
+        this.GS.player.setVolume(0);
+    }
 
-	// Seek
-	this.seekTo = function(seekTo){
-		this.GS.player.seekTo((this.GS.player.getPlaybackStatus()["duration"]) / 100 * seekTo);
-	}
+    this.volumeUpdate = function (volume) {
+        this.GS.player.setVolume(volume);
+    }
 
-	// Queue
-	this.playSongInQueue = function(queueSongId){
-		this.GS.player.playSong(queueSongId);
-	}
+    // Seek
+    this.seekTo = function (seekTo) {
+        this.GS.player.seekTo((this.GS.player.getPlaybackStatus()["duration"]) / 100 * seekTo);
+    }
 
-	// Get Data
-	this.getData = function(){
+    // Queue
+    this.playSongInQueue = function (queueSongId) {
+        this.GS.player.playSong(queueSongId);
+    }
+
+    // Get Data
+    this.getData = function () {
         function isSomePlaylist () {
             if (!self.GS.player.queue)
-				return false;
+                return false;
 
             if (!self.GS.player.queue.songs)
-				return false;
+                return false;
 
             return self.GS.player.queue.songs.length > 0;
         }
 
         function getLoop () {
-            var loop = self.GS.player.getRepeat();
-
-            if (loop == 1)
-				return "one";
-
-            if (loop == 2)
-				return "all";
-
-            return "none";
+            switch (self.GS.player.getRepeat()) {
+                case 1: return "one";
+                case 2: return "all";
+                default: return "none";
+            }
         }
 
         function getCurrentSong () {
@@ -165,8 +164,7 @@ var GCInjector = new function(){
                 if (currentSong.CoverArtFilename) {
                     currentSong.imageUrl = currentSong.artPath + currentSong.CoverArtFilename;
                     currentSong.imageUrlS = currentSong.artPath + "s" + currentSong.CoverArtFilename;
-                }
-				else {
+                } else {
                     currentSong.imageUrl = null;
                 }
             }
@@ -184,7 +182,7 @@ var GCInjector = new function(){
             return playbackStatus;
         }
 
-		chrome.extension.sendRequest({
+        chrome.extension.sendRequest({
             action: "updateData",
             shuffle: this.GS.player.getShuffle(),
             loop: getLoop(),
@@ -199,32 +197,35 @@ var GCInjector = new function(){
             queue: this.GS.player.queue,
             stationName: $("#playerDetails_queue a").text()
         });
-	}
+    }
 
-	// Make a call to an internal command
-	this.call = function(command, args, callback){
-		// Ignore the call if GS not is ready
-		if(self.GS === false)
-			return;
+    // Make a call to an internal command
+    this.call = function (command, args, callback) {
+        // Ignore the call if GS not is ready
+        if (self.GS === false)
+            return;
 
-		// Run the command
-		args.push(callback);
-		self[command].apply(self, args);
-	}
+        // Run the command
+        args.push(callback);
+        self[command].apply(self, args);
+    }
 
-	// Define GSBody and GS;
-	document.body.onload = function(){
-		self.GS = this.GS;
-	}
+    // Define GSBody and GS;
+    document.body.onload = function(){
+        self.GS = this.GS;
+    }
 
-	// Wait by GS
-	this._wait_gs = setInterval(function(){
-		if(self.GS !== false)
-			clearInterval(self._wait_gs);
-	}, 33);
+    // Wait by GS
+    this._wait_gs = setInterval(function () {
+        if (self.GS !== false) {
+            clearInterval(self._wait_gs);
+        }
+    }, 1000);
 }
 
-chrome.extension.onRequest.addListener(function(request, sender, sendMessage){
-	if(typeof request.command !== 'undefined')
-		GCInjector.call(request.command, request.args || [], sendMessage);
+chrome.extension.onRequest.addListener(function (request, sender, sendMessage) {
+    if (typeof request.command !== 'undefined') {
+        console.log(request.command);
+        GCInjector.call(request.command, request.args || [], sendMessage);
+    }
 });

@@ -36,12 +36,12 @@ function goToGroovesharkTab () {
 
 function createGroovesharkTab () {
     var properties = {
-	url: getGroovesharkUrl()
+        url: getGroovesharkUrl()
     };
 
     if (localStorage['prepareGrooveshark'] === 'true') {
-	properties['index'] = 0;
-	properties['pinned'] = true;
+        properties['index'] = 0;
+        properties['pinned'] = true;
     }
 
     chrome.tabs.create(properties);
@@ -49,12 +49,12 @@ function createGroovesharkTab () {
 
 function pinGroovesharkTab (tab) {
     if (
-	tab.status === 'complete' &&
-	localStorage['prepareGrooveshark'] === 'true' &&
-	localStorage['prepareGroovesharkMode'] === 'everytime'
+        tab.status === 'complete' &&
+        localStorage['prepareGrooveshark'] === 'true' &&
+        localStorage['prepareGroovesharkMode'] === 'everytime'
     ) {
-	chrome.tabs.update(tab.id, {pinned: true});
-	chrome.tabs.move(tab.id, {index: 0});
+        chrome.tabs.update(tab.id, {pinned: true});
+        chrome.tabs.move(tab.id, {index: 0});
     }
 }
 
@@ -69,7 +69,7 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
             }
         }
 
-        if(typeof callbackIfGroovesharkIsNotOpen !== "undefined") {
+        if (typeof callbackIfGroovesharkIsNotOpen !== "undefined") {
             callbackIfGroovesharkIsNotOpen();
         }
     });
@@ -87,17 +87,17 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-    	chrome.tabs.sendRequest(tab.id, {command: 'getData'});
+        chrome.tabs.sendRequest(tab.id, {command: 'getData'});
         pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
 
 function userAction (command, args, callback) {
     callWithGroovesharkTab(function (tab) {
-    	chrome.tabs.sendRequest(tab.id, {
-    		command: command,
-    		args: args
-    	}, callback);
+        chrome.tabs.sendRequest(tab.id, {
+            command: command,
+            args: args
+        }, callback);
     });
     getData();
 }
@@ -203,14 +203,14 @@ function setPlaylist (request) {
 
     $.each(request.queue.songs, function (index, item) {
         playlistItems.append(
-	    $('<div class="item" id="playlistItem_' + index + '" />')
-		.addClass(index % 2 === 0 ? ' odd' : '')
-		.addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
-		.text(item.ArtistName + ' - ' + item.SongName)
-		.click(function () {
-		    userAction("playSongInQueue", [item.queueSongID])
-		})
-	);
+            $('<div class="item" id="playlistItem_' + index + '" />')
+            .addClass(index % 2 === 0 ? ' odd' : '')
+            .addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
+            .text(item.ArtistName + ' - ' + item.SongName)
+            .click(function () {
+                userAction("playSongInQueue", [item.queueSongID])
+            })
+        );
     });
 
     if (request.queue.activeSong.queueSongID != activeQueueSongID) {
