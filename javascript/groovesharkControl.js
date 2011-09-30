@@ -188,7 +188,7 @@ function setNowPlaying (request) {
     if (request.currentSong.frown) $('.nowPlaying .frown').addClass('active');
     else $('.nowPlaying .frown').removeClass('active');
 
-    $('.nowPlaying .position .queuePosition').text(request.currentSong.queueSongID);
+    $('.nowPlaying .position .queuePosition').text(request.queue.queuePosition);
     $('.nowPlaying .position .queueCountSongs').text(request.queue.songs.length);
 
     $('.progressbar .elapsed').css('width', request.playbackStatus.percent + '%');

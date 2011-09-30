@@ -135,6 +135,20 @@ var GCInjector = new function () {
 
     // Get Data
     this.getData = function () {
+        function parseSongItem (item) {
+            if (!item) return {};
+
+            var songItem = {};
+            songItem.SongId = item.SongID;
+            songItem.SongName = item.SongName;
+            songItem.ArtistName = item.ArtistName;
+            songItem.AlbumName = item.AlbumName;
+            songItem.queueSongID = item.queueSongID;
+            songItem.artPath = item.artPath;
+            songItem.CoverArtFilename = item.CoverArtFilename;
+            return songItem;
+        }
+
         function isSomePlaylist () {
             return (
                 self.GS.player.queue &&
@@ -152,7 +166,7 @@ var GCInjector = new function () {
         }
 
         function getCurrentSong () {
-            var currentSong = self.GS.player.currentSong;
+            var currentSong = parseSongItem(self.GS.player.currentSong);
 
             if (currentSong) {
                 currentSong.inLibrary = $("#playerDetails_nowPlaying a.add", self.GSbody).hasClass("selected");
@@ -180,6 +194,22 @@ var GCInjector = new function () {
             return playbackStatus;
         }
 
+        function getQueue () {
+            var queue = {
+                activeSong: parseSongItem(self.GS.player.queue.activeSong),
+                autoplayEnabled: self.GS.player.queue.autoplayEnabled,
+                queuePosition: 1,
+                songs: []
+            };
+            $.each(self.GS.player.queue.songs, function(key, value) {
+                queue.songs.push(parseSongItem(value));
+                if (value.queueSongID == queue.activeSong.queueSongID) {
+                    queue.queuePosition = key + 1;
+                }
+            });
+            return queue;
+        }
+
         chrome.extension.sendRequest({
             action: "updateData",
             shuffle: this.GS.player.getShuffle(),
@@ -192,7 +222,7 @@ var GCInjector = new function () {
             volume: this.GS.player.getVolume(),
             playbackStatus: getPlaybackStatus(),
             currentSong: getCurrentSong(),
-            queue: this.GS.player.queue,
+            queue: getQueue(),
             stationName: $("#playerDetails_queue a").text()
         });
     }
