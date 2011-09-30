@@ -136,13 +136,11 @@ var GCInjector = new function () {
     // Get Data
     this.getData = function () {
         function isSomePlaylist () {
-            if (!self.GS.player.queue)
-                return false;
-
-            if (!self.GS.player.queue.songs)
-                return false;
-
-            return self.GS.player.queue.songs.length > 0;
+            return (
+                self.GS.player.queue &&
+                self.GS.player.queue.songs &&
+                self.GS.player.queue.songs.length > 0
+            )
         }
 
         function getLoop () {
@@ -202,30 +200,22 @@ var GCInjector = new function () {
     // Make a call to an internal command
     this.call = function (command, args, callback) {
         // Ignore the call if GS not is ready
-        if (self.GS === false)
+        if (self.GS === false) {
             return;
+        }
 
         // Run the command
         args.push(callback);
         self[command].apply(self, args);
     }
 
-    // Define GSBody and GS;
-    document.body.onload = function(){
+    window.onload = function () {
         self.GS = this.GS;
     }
-
-    // Wait by GS
-    this._wait_gs = setInterval(function () {
-        if (self.GS !== false) {
-            clearInterval(self._wait_gs);
-        }
-    }, 1000);
 }
 
 chrome.extension.onRequest.addListener(function (request, sender, sendMessage) {
     if (typeof request.command !== 'undefined') {
-        console.log(request.command);
         GCInjector.call(request.command, request.args || [], sendMessage);
     }
 });
