@@ -44,9 +44,11 @@ function injectGrooveshark () {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        setIconByRequest(request);
-        setTitleByRequst(request);
-        setIndexOfActiveSongByRequest(request);
+    	if (request.command === 'updateData') {
+	        setIconByRequest(request);
+	        setTitleByRequst(request);
+	        setIndexOfActiveSongByRequest(request);
+        }
     }
 );
 

@@ -211,7 +211,7 @@ var GCInjector = new function () {
         }
 
         chrome.extension.sendRequest({
-            action: "updateData",
+            command: "updateData",
             shuffle: this.GS.player.getShuffle(),
             loop: getLoop(),
             crossfade: this.GS.player.getCrossfadeEnabled(),
