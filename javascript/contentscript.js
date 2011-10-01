@@ -97,21 +97,21 @@ var GCInjector = new function () {
     }
 
     // Smile
-    this.smile = function (songId) {
-        this.GS.player.voteSong(songId, 1);
+    this.isSmile = function (songId) {
+        return $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass("active");
     }
 
     this.toggleSmile = function () {
-        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.smile ? 0 : 1);
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.isSmile() ? 0 : 1);
     }
 
     // Frown
-    this.frown = function (songId) {
-        this.GS.player.voteSong(songId, -1);
+    this.isFrown = function (songId) {
+        return $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass("active");
     }
 
     this.toggleFrown = function () {
-        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.frown ? 0 : -1);
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.isFrown() ? 0 : -1);
     }
 
     // Volume
@@ -173,7 +173,7 @@ var GCInjector = new function () {
     // Get current queue song ID
     this.getQueueSongId = function(callback){
     	// If not have data about currentSong, set data as 'unavailable'
-    	if (typeof this.GS.player.currentSong === 'undefined'){
+    	if (typeof this.GS.player.currentSong === 'undefined') {
 			return callback('UNAVAILABLE');
     	}
 
@@ -239,10 +239,10 @@ var GCInjector = new function () {
             var currentSong = parseSongItem(self.GS.player.currentSong);
 
             if (currentSong) {
-                currentSong.inLibrary = $("#playerDetails_nowPlaying a.add", self.GSbody).hasClass("selected");
-                currentSong.isFavorite = $("#playerDetails_nowPlaying a.favorite", self.GSbody).hasClass("selected");
-                currentSong.smile = $("#queue_list li.queue-item-active div.radio_options a.smile", self.GSbody).hasClass("active");
-                currentSong.frown = $("#queue_list li.queue-item-active div.radio_options a.frown", self.GSbody).hasClass("active");
+                currentSong.inLibrary = $("#playerDetails_nowPlaying a.add").hasClass("selected");
+                currentSong.isFavorite = $("#playerDetails_nowPlaying a.favorite").hasClass("selected");
+                currentSong.smile = $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass("active");
+                currentSong.frown = $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass("active");
                 if (currentSong.CoverArtFilename) {
                     currentSong.imageUrl = currentSong.artPath + currentSong.CoverArtFilename;
                     currentSong.imageUrlS = currentSong.artPath + "s" + currentSong.CoverArtFilename;
