@@ -133,6 +133,31 @@ var GCInjector = new function () {
         this.GS.player.playSong(queueSongId);
     }
 
+    // Return if there are some song on playlist
+    this.isSomePlaylist = function(){
+        return
+            this.GS.player.queue &&
+            this.GS.player.queue.songs &&
+            this.GS.player.queue.songs.length > 0
+    }
+
+    // Get current percentage info
+    this.getCurrentPercentage = function(callback){
+    	// If not have nothing on playlist, send resetIcon command
+		if(this.isSomePlaylist() === false){
+			return callback('UNAVAILABLE');
+		}
+
+		// If is paused, send pause command
+		if(this.GS.player.isPlaying === false){
+			return callback('STOPPED');
+		}
+
+		// Instead, send current percentage
+		var playbackStatus = this.GS.player.getPlaybackStatus();
+		return callback(100 * playbackStatus.position / playbackStatus.duration);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {
