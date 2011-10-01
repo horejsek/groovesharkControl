@@ -271,6 +271,8 @@ var GCInjector = new function () {
 
 chrome.extension.onRequest.addListener(function (request, sender, sendMessage) {
     if (typeof request.command !== 'undefined') {
-        GCInjector.call(request.command, request.args || [], sendMessage);
+        GCInjector.call(request.command, request.args || [], function(){
+			sendMessage({args: arguments, argsLength: arguments.length});
+		});
     }
 });

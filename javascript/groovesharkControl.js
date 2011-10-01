@@ -97,7 +97,12 @@ function userAction (command, args, callback) {
         chrome.tabs.sendRequest(tab.id, {
             command: command,
             args: args
-        }, callback);
+        }, function(response){
+			if (typeof callback === 'function'){
+				response.args.length = response.argsLength;
+				callback.apply(this, Array.prototype.slice.call(response.args));
+			}
+		});
     });
     getData();
 }
