@@ -4,7 +4,7 @@ var isGroovesharkFocused = false;
 /** INIT */
 
 // Init DOM controller system
-function controlInit() {
+function controlInit(autoCallback) {
 	var collectData = function(){
     	// Control the player options
     	userAction('getPlayerOptions', null, function(playerSuffle, playerLoop, playerCrossfade){
@@ -51,6 +51,11 @@ function controlInit() {
 		    $('.progressbar .elapsed').css('width', percentage + '%');
 			$('.progressbar').slider('value', percentage);
     	});
+
+    	// Start a new callback collection, if need
+    	if (autoCallback) {
+    		autoCallback();
+    	}
 	}
 
     // Start the data collector system
@@ -214,27 +219,6 @@ function isNotificationOpen () {
 
 
 /***** SETTERS *****/
-
-function setPlaylist (request) {
-    var playlistItems = $('.playlist');
-    playlistItems.empty();
-
-    $.each(request.queue.songs, function (index, item) {
-        playlistItems.append(
-            $('<div class="item" id="playlistItem_' + index + '" />')
-            .addClass(index % 2 === 0 ? ' odd' : '')
-            .addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
-            .text(item.ArtistName + ' - ' + item.SongName)
-            .click(function () {
-                userAction("playSongInQueue", [item.queueSongID])
-            })
-        );
-    });
-
-    if (request.queue.activeSong.queueSongID != activeQueueSongID) {
-        activeQueueSongID = request.queue.activeSong.queueSongID;
-    }
-}
 
 function setRadio (request) {
     if (request.queue.autoplayEnabled) {
