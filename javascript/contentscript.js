@@ -163,6 +163,22 @@ var GCInjector = new function () {
 		return callback(100 * playbackStatus.position / playbackStatus.duration);
     }
 
+    // Get current song and artist name basically to fill badgeTitle
+    this.getCurrentSongData = function(callback){
+		// Does nothing, if GS yet is not defined
+		if (this.GS === false) {
+			return;
+		}
+
+    	// If not have nothing on playlist, send resetTitle command
+		if (this.isSomePlaylist() === false) {
+			return callback('UNAVAILABLE');
+		}
+
+		// Else, send song and artist name by callback
+		return callback(this.GS.player.currentSong.SongName, this.GS.player.currentSong.ArtistName);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {

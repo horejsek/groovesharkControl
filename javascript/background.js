@@ -17,6 +17,9 @@ function init () {
 	// If null, will render the new icon
 	var last19;
 
+	// Performance: save the last title to avoid use Chrome API
+	var lastTitle;
+
 	// Performance: preload the play-icon
 	var playImage = new Image();
 	playImage.src = ICONS['playing'];
@@ -60,6 +63,22 @@ function init () {
 				});
 			}
 		});
+
+		// Update badgeTitle - the song name, if avaiable
+		userAction('getCurrentSongData', null, function(songName, songArtist){
+			// If playlist is empty
+			if(songName === 'UNAVAILABLE'){
+				lastTitle = null;
+				return resetTitle();
+			}
+
+			// Else, set the new title info
+			var new_lastTitle = songName + ' - ' + songArtist;
+			if(new_lastTitle !== lastTitle){
+				lastTitle = new_lastTitle;
+				chrome.browserAction.setTitle({title: new_lastTitle});
+			}
+		});
     }, 1000);
 }
 
@@ -72,11 +91,7 @@ function setIcon (icon) {
 }
 
 function resetTitle () {
-    setTitle('Grooveshark Control');
-}
-
-function setTitle (title) {
-    chrome.browserAction.setTitle({title: title});
+	chrome.browserAction.setTitle({title: 'Grooveshark Control'});
 }
 
 function injectGrooveshark () {
@@ -89,19 +104,10 @@ function injectGrooveshark () {
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
     	if (request.command === 'updateData') {
-	        setTitleByRequst(request);
 	        setIndexOfActiveSongByRequest(request);
         }
     }
 );
-
-function setTitleByRequst (request) {
-    if (request.isSomePlaylist) {
-        setTitle(request.currentSong.ArtistName + ' - ' + request.currentSong.SongName);
-    } else {
-        resetTitle();
-    }
-}
 
 function setIndexOfActiveSongByRequest (request) {
     if (request.isSomePlaylist) {
