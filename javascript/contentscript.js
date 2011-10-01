@@ -143,17 +143,22 @@ var GCInjector = new function () {
 
     // Get current percentage info
     this.getCurrentPercentage = function(callback){
+		// Does nothing, if GS yet is not defined
+		if (this.GS === false) {
+			return;
+		}
+
     	// If not have nothing on playlist, send resetIcon command
-		if(this.isSomePlaylist() === false){
+		if (this.isSomePlaylist() === false) {
 			return callback('UNAVAILABLE');
 		}
 
 		// If is paused, send pause command
-		if(this.GS.player.isPlaying === false){
+		if (this.GS.player.isPlaying === false) {
 			return callback('STOPPED');
 		}
 
-		// Instead, send current percentage
+		// Else, send current percentage
 		var playbackStatus = this.GS.player.getPlaybackStatus();
 		return callback(100 * playbackStatus.position / playbackStatus.duration);
     }
