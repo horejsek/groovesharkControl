@@ -114,15 +114,6 @@ var GCInjector = new function () {
         this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.isFrown() ? 0 : -1);
     }
 
-    // Volume
-    this.mute = function () {
-        this.GS.player.setVolume(0);
-    }
-
-    this.volumeUpdate = function (volume) {
-        this.GS.player.setVolume(volume);
-    }
-
     // Seek
     this.seekTo = function (seekTo) {
         this.GS.player.seekTo((this.GS.player.getPlaybackStatus()["duration"]) / 100 * seekTo);
@@ -184,7 +175,7 @@ var GCInjector = new function () {
     // Get the player options (suffle, loop and crossfade)
     this.getPlayerOptions = function(callback){
 		var playerLoop;
-        switch (self.GS.player.getRepeat()) {
+        switch (this.GS.player.getRepeat()) {
             case 1:
 				playerLoop = "one";
 				break;
@@ -197,9 +188,9 @@ var GCInjector = new function () {
         }
 
 		return callback(
-			self.GS.player.getShuffle(),
+			this.GS.player.getShuffle(),
 			playerLoop,
-			self.GS.player.getCrossfadeEnabled()
+			this.GS.player.getCrossfadeEnabled()
 		);
     }
 
