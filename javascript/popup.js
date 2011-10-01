@@ -77,15 +77,17 @@ var Popup = new function(){
 		// Close window if tab is closed
 		onTabCloseAccept();
 
-	    if (isNotificationOpen()) hidePin();
-	    else showPin();
+		// Show/hide notification pin
+		this.togglePin(!isNotificationOpen());
+
+		// On click in pin, hide it
+		$('#pin').click(function(){
+			window.close();
+		});
 	}
-}
 
-function showPin () {
-    $('#pin').show();
-}
-
-function hidePin () {
-    $('#pin').hide();
+	// Show/hide notification pin
+	this.togglePin = function(mode) {
+		$('#pin').toggle(mode);
+	}
 }

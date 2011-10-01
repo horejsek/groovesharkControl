@@ -220,18 +220,9 @@ function _showNotification (stay, view) {
 
     if ((!isNotificationOpen() && !isGroovesharkFocused) || stay) {
         var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
-        notification.show();
-    }
 
-    if (stay) {
-        chrome.extension.getViews({type: 'popup'}).forEach(function(win) {
-            win.hidePin();
-        });
-        setTimeout(function () {
-            chrome.extension.getViews({type: 'notification'}).forEach(function (win) {
-                win.turnOffCloseOfWindow();
-            });
-        }, 100);
+		localStorage['_notificationStay'] = stay === true;
+        notification.show();
     }
 }
 
