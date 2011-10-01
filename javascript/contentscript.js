@@ -97,30 +97,21 @@ var GCInjector = new function () {
     }
 
     // Smile
-    this.smile = function (songId) {
-        this.GS.player.voteSong(songId, 1);
+    this.isSmile = function () {
+        return $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass("active");
     }
 
     this.toggleSmile = function () {
-        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.smile ? 0 : 1);
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.isSmile() ? 0 : 1);
     }
 
     // Frown
-    this.frown = function (songId) {
-        this.GS.player.voteSong(songId, -1);
+    this.isFrown = function () {
+        return $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass("active");
     }
 
     this.toggleFrown = function () {
-        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.GS.player.currentSong.frown ? 0 : -1);
-    }
-
-    // Volume
-    this.mute = function () {
-        this.GS.player.setVolume(0);
-    }
-
-    this.volumeUpdate = function (volume) {
-        this.GS.player.setVolume(volume);
+        this.GS.player.voteSong(this.GS.player.currentSong.queueSongID, this.isFrown() ? 0 : -1);
     }
 
     // Seek
@@ -133,98 +124,113 @@ var GCInjector = new function () {
         this.GS.player.playSong(queueSongId);
     }
 
-    // Get Data
-    this.getData = function () {
-        function parseSongItem (item) {
-            if (!item) return {};
+    // Get current percentage info
+    this.getCurrentPercentage = function(callback){
+    	// If not have nothing on playlist, send resetIcon command
+		if (this.GS.player.queue.songs.length === 0) {
+			return callback('UNAVAILABLE');
+		}
 
-            var songItem = {};
-            songItem.SongId = item.SongID;
-            songItem.SongName = item.SongName;
-            songItem.ArtistName = item.ArtistName;
-            songItem.AlbumName = item.AlbumName;
-            songItem.queueSongID = item.queueSongID;
-            songItem.artPath = item.artPath;
-            songItem.CoverArtFilename = item.CoverArtFilename;
-            return songItem;
+		// If is paused, send pause command
+		if (this.GS.player.isPlaying === false) {
+			return callback('STOPPED');
+		}
+
+		// Else, send current percentage
+		var playbackStatus = this.GS.player.getPlaybackStatus();
+		return callback(100 * playbackStatus.position / playbackStatus.duration);
+    }
+
+    // Get current song and artist name basically to fill badgeTitle
+    this.getCurrentSongData = function(callback){
+    	// If not have nothing on playlist, send resetTitle command
+		if (this.GS.player.queue.songs.length === 0
+		||  typeof this.GS.player.currentSong === 'undefined') {
+			return callback('UNAVAILABLE');
+		}
+
+		// Else, send song and artist name by callback
+		return callback(this.GS.player.currentSong.SongName, this.GS.player.currentSong.ArtistName);
+    }
+
+    // Get current queue song ID
+    this.getQueueSongId = function(callback){
+    	// If not have data about currentSong, set data as 'unavailable'
+    	if (typeof this.GS.player.currentSong === 'undefined') {
+			return callback('UNAVAILABLE');
+    	}
+
+		// Else, send the queue song ID
+		return callback(this.GS.player.queue.activeSong.queueSongID);
+    }
+
+    // Get the player options (suffle, loop and crossfade)
+    this.getPlayerOptions = function(callback){
+		var playerLoop;
+        switch (this.GS.player.getRepeat()) {
+            case 1:
+				playerLoop = "one";
+				break;
+            case 2:
+				playerLoop = "all";
+				break;
+            default:
+				playerLoop = "none";
+				break;
         }
 
-        function isSomePlaylist () {
-            return (
-                self.GS.player.queue &&
-                self.GS.player.queue.songs &&
-                self.GS.player.queue.songs.length > 0
-            )
-        }
+		return callback(
+			this.GS.player.getShuffle(),
+			playerLoop,
+			this.GS.player.getCrossfadeEnabled()
+		);
+    }
 
-        function getLoop () {
-            switch (self.GS.player.getRepeat()) {
-                case 1: return "one";
-                case 2: return "all";
-                default: return "none";
-            }
-        }
+    // Get now playing data
+    this.getNowPlaying = function(callback){
+    	// If not have data about currentSong, set data as 'unavailable'
+    	// Using -1 instead of UNAVAILABLE because that the first callback param is string (will confuse it)
+    	if (typeof this.GS.player.currentSong === 'undefined') {
+			return;
+    	}
 
-        function getCurrentSong () {
-            var currentSong = parseSongItem(self.GS.player.currentSong);
+   		var currentSong = this.GS.player.currentSong;
+		var playbackStatus = this.GS.player.getPlaybackStatus();
+		var queue = this.GS.player.queue;
 
-            if (currentSong) {
-                currentSong.inLibrary = $("#playerDetails_nowPlaying a.add", self.GSbody).hasClass("selected");
-                currentSong.isFavorite = $("#playerDetails_nowPlaying a.favorite", self.GSbody).hasClass("selected");
-                currentSong.smile = $("#queue_list li.queue-item-active div.radio_options a.smile", self.GSbody).hasClass("active");
-                currentSong.frown = $("#queue_list li.queue-item-active div.radio_options a.frown", self.GSbody).hasClass("active");
-                if (currentSong.CoverArtFilename) {
-                    currentSong.imageUrl = currentSong.artPath + currentSong.CoverArtFilename;
-                    currentSong.imageUrlS = currentSong.artPath + "s" + currentSong.CoverArtFilename;
-                } else {
-                    currentSong.imageUrl = null;
-                }
-            }
+		return callback(
+			currentSong.SongName,
+			currentSong.ArtistName,
+			currentSong.AlbumName,
+			currentSong.getImageURL('s'),
+			playbackStatus.position,
+			playbackStatus.duration,
+			$("#playerDetails_nowPlaying a.add").hasClass("selected"),
+			$("#playerDetails_nowPlaying a.favorite").hasClass("selected"),
+			this.isSmile(),
+			this.isFrown(),
+			queue.activeSong.index,
+			queue.songs.length,
+			this.GS.player.isPlaying
+    	);
+    }
 
-            return currentSong;
-        }
+    // Get playlist data
+    this.getPlaylist = function(callback){
+		return callback(
+			this.GS.player.queue.songs,
+			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.index : false,
+			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.queueSongID : false
+		);
+    }
 
-        function getPlaybackStatus () {
-            var playbackStatus = self.GS.player.getPlaybackStatus();
-
-            if (playbackStatus) {
-                playbackStatus.percent = 100 * playbackStatus.position / playbackStatus.duration;
-            }
-
-            return playbackStatus;
-        }
-
-        function getQueue () {
-            var queue = {
-                activeSong: parseSongItem(self.GS.player.queue.activeSong),
-                autoplayEnabled: self.GS.player.queue.autoplayEnabled,
-                queuePosition: 1,
-                songs: []
-            };
-            $.each(self.GS.player.queue.songs, function(key, value) {
-                queue.songs.push(parseSongItem(value));
-                if (value.queueSongID == queue.activeSong.queueSongID) {
-                    queue.queuePosition = key + 1;
-                }
-            });
-            return queue;
-        }
-
-        chrome.extension.sendRequest({
-            action: "updateData",
-            shuffle: this.GS.player.getShuffle(),
-            loop: getLoop(),
-            crossfade: this.GS.player.getCrossfadeEnabled(),
-            isSomePlaylist: isSomePlaylist(),
-            isPlaying: this.GS.player.isPlaying,
-            isPaused: this.GS.player.isPaused,
-            isMuted: this.GS.player.getIsMuted(),
-            volume: this.GS.player.getVolume(),
-            playbackStatus: getPlaybackStatus(),
-            currentSong: getCurrentSong(),
-            queue: getQueue(),
-            stationName: $("#playerDetails_queue a").text()
-        });
+    // Get radio data
+    this.getRadio = function(callback){
+    	var radioOn = this.GS.player.queue.autoplayEnabled;
+		return callback(
+			radioOn,
+			radioOn ? $("#playerDetails_queue a").text() : false
+		);
     }
 
     // Make a call to an internal command
@@ -246,6 +252,8 @@ var GCInjector = new function () {
 
 chrome.extension.onRequest.addListener(function (request, sender, sendMessage) {
     if (typeof request.command !== 'undefined') {
-        GCInjector.call(request.command, request.args || [], sendMessage);
+        GCInjector.call(request.command, request.args || [], function(){
+			sendMessage({args: arguments, argsLength: arguments.length});
+		});
     }
 });

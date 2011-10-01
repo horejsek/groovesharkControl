@@ -1,8 +1,82 @@
 
-var DEFAULT_ALBUM_IMAGE = 'http://static.a.gs-cdn.net/webincludes/images/default/album_250.png';
-
-var updateProgressbar = true;
 var isGroovesharkFocused = false;
+
+/** INIT */
+
+// Init DOM controller system
+function controlInit(autoCallback) {
+	var collectData = function(){
+    	// Control the player options
+    	userAction('getPlayerOptions', null, function(playerSuffle, playerLoop, playerCrossfade){
+		    $('#shuffle').attr('class', playerSuffle);
+		    $('#loop').attr('class', playerLoop);
+		    $('#crossfade').attr('class', playerCrossfade);
+    	});
+
+    	// Control the now playing data
+    	userAction('getNowPlaying', null, function(songName, artistName, albumName, albumImage,
+				playbackPosition, playbackDuration, inLibrary, inFavorite, isSmile, isFrown,
+				queueIndex, queueLength, isPlaying){
+			// Configure song data
+		    $('.nowPlaying .song')
+				.text(songName)
+		    	.attr('title', songName);
+		    $('.nowPlaying .artist')
+				.text(artistName)
+		    	.attr('title', artistName);
+		    $('.nowPlaying .album')
+				.text(albumName)
+		    	.attr('title', albumName);
+
+  			// Configure album image
+		    $('.nowPlaying .image')
+				.attr('src', albumImage);
+
+			// Configure text time
+		    $('.nowPlaying .timeElapsed').text(msToHumanTime(playbackPosition));
+		    $('.nowPlaying .timeDuration').text(msToHumanTime(playbackDuration));
+
+			// Configure song preferences
+		    $('.nowPlaying .library').toggleClass('disable', !inLibrary);
+			$('.nowPlaying .favorite').toggleClass('disable', !inFavorite);
+			$('.nowPlaying .smile').toggleClass('active', isSmile);
+			$('.nowPlaying .frown').toggleClass('active', isFrown);
+
+			// Configure queue
+		    $('.nowPlaying .position .queuePosition').text(queueIndex + 1);
+		    $('.nowPlaying .position .queueCountSongs').text(queueLength);
+
+			// Configure progress bar
+			var percentage = Math.round(100 / playbackDuration * playbackPosition);
+		    $('.progressbar .elapsed').css('width', percentage + '%');
+			$('.progressbar').slider('value', percentage);
+
+			// Configure player button
+	        $('#playpause').attr('class', isPlaying ? 'pause' : 'play');
+    	});
+
+    	// Collect radio data
+    	userAction('getRadio', null, function(radioOn, radioStation){
+    		if (radioStation === false) {
+    			radioStation = chrome.i18n.getMessage('radioOff')
+    		}
+
+			// Do some DOM changes...
+    		$('.radio').toggleClass('active', radioOn);
+			$('.radio .station').text(radioStation);
+			$('.nowPlaying .smile, .nowPlaying .frown').toggleClass('disable', !radioOn);
+    	});
+
+    	// Start a new callback collection, if need
+    	if (autoCallback) {
+    		autoCallback();
+    	}
+	}
+
+    // Start the data collector system
+    setInterval(collectData, 1000);
+    collectData();
+}
 
 
 /***** GROOVESHARK TAB *****/
@@ -75,6 +149,13 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
     });
 }
 
+// Close window if tab is closed
+function onTabCloseAccept () {
+	chrome.tabs.onRemoved.addListener(function(){
+		window.close();
+	});
+}
+
 
 /***** DATA & ACTIONS *****/
 
@@ -87,7 +168,6 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.sendRequest(tab.id, {command: 'getData'});
         pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
@@ -97,7 +177,12 @@ function userAction (command, args, callback) {
         chrome.tabs.sendRequest(tab.id, {
             command: command,
             args: args
-        }, callback);
+        }, function(response){
+			if (typeof callback === 'function'){
+				response.args.length = response.argsLength;
+				callback.apply(this, Array.prototype.slice.call(response.args));
+			}
+		});
     });
     getData();
 }
@@ -134,18 +219,9 @@ function _showNotification (stay, view) {
 
     if ((!isNotificationOpen() && !isGroovesharkFocused) || stay) {
         var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
-        notification.show();
-    }
 
-    if (stay) {
-        chrome.extension.getViews({type: 'popup'}).forEach(function(win) {
-            win.hidePin();
-        });
-        setTimeout(function () {
-            chrome.extension.getViews({type: 'notification'}).forEach(function (win) {
-                win.turnOffCloseOfWindow();
-            });
-        }, 100);
+		localStorage['_notificationStay'] = stay === true;
+        notification.show();
     }
 }
 
@@ -155,80 +231,6 @@ function isNotificationOpen () {
 
 
 /***** SETTERS *****/
-
-
-function setPlayerOptions (request) {
-    $('#shuffle').attr('class', request.shuffle);
-    $('#loop').attr('class', request.loop);
-    $('#crossfade').attr('class', request.crossfade);
-}
-
-function setNowPlaying (request) {
-    $('.nowPlaying .song').text(request.currentSong.SongName);
-    $('.nowPlaying .song').attr('title', request.currentSong.SongName);
-    $('.nowPlaying .artist').text(request.currentSong.ArtistName);
-    $('.nowPlaying .artist').attr('title', request.currentSong.ArtistName);
-    $('.nowPlaying .album').text(request.currentSong.AlbumName);
-    $('.nowPlaying .album').attr('title', request.currentSong.AlbumName);
-
-    $('.nowPlaying .image').attr('src', request.currentSong.imageUrlS || DEFAULT_ALBUM_IMAGE);
-
-    $('.nowPlaying .timeElapsed').text(msToHumanTime(request.playbackStatus.position));
-    $('.nowPlaying .timeDuration').text(msToHumanTime(request.playbackStatus.duration));
-
-    if (request.currentSong.inLibrary) $('.nowPlaying .library').removeClass('disable');
-    else $('.nowPlaying .library').addClass('disable');
-
-    if (request.currentSong.isFavorite) $('.nowPlaying .favorite').removeClass('disable');
-    else $('.nowPlaying .favorite').addClass('disable');
-
-    if (request.currentSong.smile) $('.nowPlaying .smile').addClass('active');
-    else $('.nowPlaying .smile').removeClass('active');
-
-    if (request.currentSong.frown) $('.nowPlaying .frown').addClass('active');
-    else $('.nowPlaying .frown').removeClass('active');
-
-    $('.nowPlaying .position .queuePosition').text(request.queue.queuePosition);
-    $('.nowPlaying .position .queueCountSongs').text(request.queue.songs.length);
-
-    $('.progressbar .elapsed').css('width', request.playbackStatus.percent + '%');
-    if (updateProgressbar) {
-        $('.progressbar').slider('value', request.playbackStatus.percent);
-    }
-}
-
-function setPlaylist (request) {
-    var playlistItems = $('.playlist');
-    playlistItems.empty();
-
-    $.each(request.queue.songs, function (index, item) {
-        playlistItems.append(
-            $('<div class="item" id="playlistItem_' + index + '" />')
-            .addClass(index % 2 === 0 ? ' odd' : '')
-            .addClass(item.queueSongID == request.queue.activeSong.queueSongID ? ' active' : '')
-            .text(item.ArtistName + ' - ' + item.SongName)
-            .click(function () {
-                userAction("playSongInQueue", [item.queueSongID])
-            })
-        );
-    });
-
-    if (request.queue.activeSong.queueSongID != activeQueueSongID) {
-        activeQueueSongID = request.queue.activeSong.queueSongID;
-    }
-}
-
-function setRadio (request) {
-    if (request.queue.autoplayEnabled) {
-        $('.radio').addClass('active');
-        $('.radio .station').text(request.stationName);
-        $('.nowPlaying .smile, .nowPlaying .frown').removeClass('disable');
-    } else {
-        $('.radio').removeClass('active');
-        $('.radio .station').text(chrome.i18n.getMessage('radioOff'));
-        $('.nowPlaying .smile, .nowPlaying .frown').addClass('disable');
-    }
-}
 
 
 function msToHumanTime (ms) {
@@ -247,11 +249,7 @@ function setUpProgressbar () {
     $('.progressbar').slider({
         step: 0.1,
         stop: function(event, ui) {
-            updateProgressbar = false;
             userAction('seekTo', [$(this).slider('value')]);
-            setTimeout(function () {
-                updateProgressbar = true;
-            }, 500);
         }
     });
 }

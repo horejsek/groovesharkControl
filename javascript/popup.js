@@ -1,60 +1,85 @@
 
-var activeQueueSongID = -1;
-var isNowOpened = true;
+var Popup = new function(){
+	var activeQueueSongID = -1;
 
-function hidePopup () { $('body').css('display', 'none'); }
-function showPopup () { $('body').css('display', 'block'); }
+	// Init popup page
+	this.init = function() {
+	    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
+	    setUpProgressbar();
 
-function init () {
-    isNowOpened = true;
+	    // Set the last y position on playlist
+	    var lastYPosition;
 
-    hidePopup();
-    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
-    setUpProgressbar();
+		// Start the controller
+	    controlInit(function(){
+		    // Get playlist data
+			userAction('getPlaylist', null, function(songs, activeIndex, activeId){
+				// Set the active queue song id
+			    if (activeQueueSongID !== activeId
+				&&  activeIndex !== false) {
+					// If is the first open, show body
+					if (activeQueueSongID === -1) {
+						$('body').css('display', 'block');
+					}
 
-    if (isNotificationOpen()) hidePin();
-    else showPin();
-}
+					// Set active queue song id
+			        activeQueueSongID = activeId;
 
-function scrollPlaylistToActiveSong () {
-    var index = activeQueueSongID - 2;
-    if (index < 0) index = 0;
+					// Clean the playlist
+				    var playlistItems = $('.playlist').empty();
 
-    if (isNowOpened && localStorage['lastActiveQueueSongID'] && parseInt(localStorage['lastActiveQueueSongID']) > 0) {
-        var playlistItem = $('#playlistItem_' + localStorage['lastActiveQueueSongID']);
-        if (playlistItem.length) $('#playlist').scrollTo(playlistItem, 0);
-        isNowOpened = false;
-    }
-    if (localStorage['lastActiveQueueSongID'] != index) {
-        $('#playlist').scrollTo('#playlistItem_' + index, 1000);
-        localStorage['lastActiveQueueSongID'] = index;
-    }
-}
+					// Print songs on playlist
+				    $.each(songs, function (index, item) {
+				        playlistItems.append(
+				            $('<div class="item" />')
+				            	.toggleClass('odd', index % 2 === 0)
+				            	.toggleClass('active', item.queueSongID === activeId)
+					            .text(item.ArtistName + ' - ' + item.SongName)
+					            .click(function () {
+					                userAction("playSongInQueue", [item.queueSongID])
+					            })
+				        );
+				    });
 
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-        if (!request.isSomePlaylist) {
-            goToGroovesharkTab();
-            return;
-        }
+					// Scroll playlist to this music
+					var playlistObject = $('.playlist');
+					var activeItem = $('.playlist .item.active');
+					var scrollToY = activeItem.prop('offsetTop') + ( activeItem.height() / 2 )
+						- ( playlistObject.height() / 2 ) - playlistObject.prop('offsetTop');
 
-        showPopup();
+					// Scroll Top Y need be 0 or upper
+					if (scrollToY < 0) {
+						scrollToY = 0;
+					}
 
-        setPlayerOptions(request);
-        setNowPlaying(request);
-        setPlaylist(request);
-        setRadio(request);
+					// If the popup is open now, will do a small animation
+					if (!lastYPosition) {
+						lastYPosition = scrollToY + ( scrollToY === 0 ? 200 : -200 );
+						playlistObject.prop('scrollTop', lastYPosition);
+					}
 
-        scrollPlaylistToActiveSong();
+					// Animate and align the active song on center of playlist if possible
+					playlistObject.animate({
+						scrollTop: scrollToY
+					}, 1000);
+			    }
+			    else
+			    // If playlist is empty, block the UI
+			    if (activeIndex === false){
+			    	goToGroovesharkTab();
+			    }
+			});
+		});
 
-        $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
-    }
-);
+		// Close window if tab is closed
+		onTabCloseAccept();
 
-function showPin () {
-    $('#pin').show();
-}
+		// Show/hide notification pin
+		$('#pin').toggle(!isNotificationOpen());
 
-function hidePin () {
-    $('#pin').hide();
+		// On click in pin, hide it
+		$('#pin').click(function(){
+			window.close();
+		});
+	}
 }

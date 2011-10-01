@@ -1,70 +1,71 @@
 
-var shouldClose = true;
+var Notification = new function(){
+	this.timer = false;
 
-function closeNotification () {
-    setTimeout(function () {
-        if (shouldClose) window.close();
-    }, howLongDisplayNotification());
+	// Init notification system
+	this.init = function(){
+	    // Countdown ONLY if not need "stay"
+	    if (localStorage.getItem('_notificationStay') !== 'true') {
+	    	this.countDown();
+	    }
+	    else {
+			localStorage['_notificationStay'] = false;
+			this.cancelClose();
+		}
+
+	    getData();
+	    setUpProgressbar();
+
+	    $('#liteLine').SetScroller({
+	        velocity: 50,
+	        direction: 'horizontal',
+	        startfrom: 'right',
+	        loop: 'infinite',
+	        movetype: 'linear',
+	        onmouseover: 'pause',
+	        onmouseout: 'play',
+	        onstartup: 'play',
+	        cursor: 'pointer'
+	    });
+
+	    $('#switchToLiteNotification').click(function () {
+	        showLiteNotification(true);
+	        setTimeout(window.close, 200);
+	    });
+
+	    $('#switchToFullNotification').click(function () {
+	        showNotification(true);
+	        setTimeout(window.close, 200);
+	    });
+
+		// Start the controller
+	    controlInit();
+
+		// Close window if tab is closed
+		onTabCloseAccept();
+	}
+
+	// Starts the countdown
+	this.countDown = function(){
+		console.trace();
+		var startTime = (new Date()).getTime();
+		this.timer = setInterval(function(){
+            var percent = Math.min(100, 100 / howLongDisplayNotification() * ( (new Date()).getTime() - startTime ));
+            $('#countDown').width((100 - percent) + '%');
+
+            // Close if get 100%
+            if (percent === 100) {
+          		window.close();
+            }
+		}, 50);
+	}
+
+	// Cancel the close
+	this.cancelClose = function(){
+		if (this.timer !== false) {
+			clearInterval(this.timer);
+		}
+
+		$('#countDown').hide();
+	}
 }
-
-function countDown () {
-    var step = 50;
-    var totalTime = 0;
-
-    function _countDown () {
-        if (shouldClose) {
-            totalTime += step;
-            var percent = totalTime / (howLongDisplayNotification() / 100);
-            $('#countDown').css('width', (100-percent) + '%');
-            setTimeout(_countDown, step);
-        }
-    }
-    _countDown();
-}
-
-function init () {
-    closeNotification();
-    countDown();
-    getData();
-    setUpProgressbar();
-    setUpNotification();
-}
-
-function turnOffCloseOfWindow () {
-    shouldClose = false;
-    $('#countDown').css('display', 'none');
-}
-
-function setUpNotification () {
-    $('#liteLine').SetScroller({
-        velocity: 50,
-        direction: 'horizontal',
-        startfrom: 'right',
-        loop: 'infinite',
-        movetype: 'linear',
-        onmouseover: 'pause',
-        onmouseout: 'play',
-        onstartup: 'play',
-        cursor: 'pointer'
-    });
-
-    $('#switchToLiteNotification').click(function () {
-        showLiteNotification(true);
-        setTimeout(window.close, 200);
-    });
-
-    $('#switchToFullNotification').click(function () {
-        showNotification(true);
-        setTimeout(window.close, 200);
-    });
-}
-
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-        setPlayerOptions(request);
-        setNowPlaying(request);
-        setRadio(request);
-
-        $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
-    }
-);
