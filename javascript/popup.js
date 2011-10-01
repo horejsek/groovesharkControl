@@ -12,6 +12,9 @@ function init () {
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
 
+    // Set the last y position on playlist
+    var lastYPosition;
+
 	// Start the controller
     controlInit(function(){
 	    // Get playlist data
@@ -27,7 +30,6 @@ function init () {
 			    $.each(songs, function (index, item) {
 			        playlistItems.append(
 			            $('<div class="item" />')
-			            	.attr('id', 'playlistItem_' + index)
 			            	.toggleClass('odd', index % 2 === 0)
 			            	.toggleClass('active', item.queueSongID === activeId)
 				            .text(item.ArtistName + ' - ' + item.SongName)
@@ -36,27 +38,34 @@ function init () {
 				            })
 			        );
 			    });
+
+				// Scroll playlist to this music
+				var playlistObject = $('.playlist');
+				var activeItem = $('.playlist .item.active');
+				var scrollToY = activeItem.prop('offsetTop') + ( activeItem.height() / 2 )
+					- ( playlistObject.height() / 2 ) - playlistObject.prop('offsetTop');
+
+				// Scroll Top Y need be 0 or upper
+				if (scrollToY < 0) {
+					scrollToY = 0;
+				}
+
+				// If the popup is open now, will do a small animation
+				if (!lastYPosition) {
+					lastYPosition = scrollToY + ( scrollToY === 0 ? 200 : -200 );
+					playlistObject.prop('scrollTop', lastYPosition);
+				}
+
+				// Animate and align the active song on center of playlist if possible
+				playlistObject.animate({
+					scrollTop: scrollToY
+				}, 1000);
 		    }
 		});
 	});
 
     if (isNotificationOpen()) hidePin();
     else showPin();
-}
-
-function scrollPlaylistToActiveSong () {
-    var index = activeQueueSongID - 2;
-    if (index < 0) index = 0;
-
-    if (isNowOpened && localStorage['lastActiveQueueSongID'] && parseInt(localStorage['lastActiveQueueSongID']) > 0) {
-        var playlistItem = $('#playlistItem_' + localStorage['lastActiveQueueSongID']);
-        if (playlistItem.length) $('#playlist').scrollTo(playlistItem, 0);
-        isNowOpened = false;
-    }
-    if (localStorage['lastActiveQueueSongID'] != index) {
-        $('#playlist').scrollTo('#playlistItem_' + index, 1000);
-        localStorage['lastActiveQueueSongID'] = index;
-    }
 }
 
 chrome.extension.onRequest.addListener(
@@ -67,8 +76,6 @@ chrome.extension.onRequest.addListener(
         }
 
         showPopup();
-
-        scrollPlaylistToActiveSong();
     }
 );
 
