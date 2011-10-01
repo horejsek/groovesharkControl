@@ -124,18 +124,10 @@ var GCInjector = new function () {
         this.GS.player.playSong(queueSongId);
     }
 
-    // Return if there are some song on playlist
-    this.isSomePlaylist = function(){
-        return
-            this.GS.player.queue &&
-            this.GS.player.queue.songs &&
-            this.GS.player.queue.songs.length > 0
-    }
-
     // Get current percentage info
     this.getCurrentPercentage = function(callback){
     	// If not have nothing on playlist, send resetIcon command
-		if (this.isSomePlaylist() === false) {
+		if (this.GS.player.queue.songs.length === 0) {
 			return callback('UNAVAILABLE');
 		}
 
@@ -152,7 +144,7 @@ var GCInjector = new function () {
     // Get current song and artist name basically to fill badgeTitle
     this.getCurrentSongData = function(callback){
     	// If not have nothing on playlist, send resetTitle command
-		if (this.isSomePlaylist() === false
+		if (this.GS.player.queue.songs.length === 0
 		||  typeof this.GS.player.currentSong === 'undefined') {
 			return callback('UNAVAILABLE');
 		}
