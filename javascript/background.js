@@ -29,13 +29,13 @@ function init () {
 		// UNAVAILABLE, STOPPED or percentage (float)
 		userAction('getCurrentPercentage', null, function(percentage){
 			// If playlist is empty
-			if(percentage === 'UNAVAILABLE'){
+			if (percentage === 'UNAVAILABLE') {
 				last19 = null;
 				return resetIcon();
 			}
 
 			// If player is paused
-			if(percentage === 'STOPPED'){
+			if (percentage === 'STOPPED') {
 				last19 = null;
 				return setIcon(ICONS['pause']);;
 			}
@@ -43,7 +43,7 @@ function init () {
 			// Else, calcule the new last19
 			// If is different of the old last19, render the new icon
 			var new_last19 = Math.round(percentage / (100 / 19));
-			if(new_last19 !== last19){
+			if (new_last19 !== last19) {
 				last19 = new_last19;
 
 				var canvas = document.getElementById('canvas');
@@ -67,17 +67,37 @@ function init () {
 		// Update badgeTitle - the song name, if avaiable
 		userAction('getCurrentSongData', null, function(songName, songArtist){
 			// If playlist is empty
-			if(songName === 'UNAVAILABLE'){
+			if (songName === 'UNAVAILABLE') {
 				lastTitle = null;
 				return resetTitle();
 			}
 
 			// Else, set the new title info
 			var new_lastTitle = songName + ' - ' + songArtist;
-			if(new_lastTitle !== lastTitle){
+			if (new_lastTitle !== lastTitle) {
 				lastTitle = new_lastTitle;
-				chrome.browserAction.setTitle({title: new_lastTitle});
+		 		chrome.browserAction.setTitle({title: new_lastTitle});
 			}
+		});
+
+		// Configure the active queue song id, and open the notification bar
+		userAction('getQueueSongId', null, function(queueSongId){
+			// If playlist is empty, set song queue ID to -1
+			if (queueSongId === 'UNAVAILABLE') {
+				activeQueueSongID = -1;
+				return;
+			}
+
+			// Auto-show notification system
+			if (queueSongId != -1
+			&&  activeQueueSongID != -1
+			&&  activeQueueSongID != queueSongId
+			&&  last19 < 1) {
+				showNotification();
+			}
+
+			// Set the active queue song ID
+			activeQueueSongID = queueSongId;
 		});
     }, 1000);
 }
@@ -99,28 +119,4 @@ function injectGrooveshark () {
         chrome.tabs.executeScript(tab.id, {'file': 'javascript/libs/jquery-1.6.min.js'});
         chrome.tabs.executeScript(tab.id, {'file': 'javascript/contentscript.js'});
     });
-}
-
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-    	if (request.command === 'updateData') {
-	        setIndexOfActiveSongByRequest(request);
-        }
-    }
-);
-
-function setIndexOfActiveSongByRequest (request) {
-    if (request.isSomePlaylist) {
-        if (
-            request.queue.activeSong.queueSongID != -1 &&
-            activeQueueSongID != -1 &&
-            activeQueueSongID != request.queue.activeSong.queueSongID &&
-            request.playbackStatus.percent < 2.5
-        ) {
-            showNotification();
-        }
-        activeQueueSongID = request.queue.activeSong.queueSongID;
-    } else {
-        activeQueueSongID = -1;
-    }
 }

@@ -179,6 +179,17 @@ var GCInjector = new function () {
 		return callback(this.GS.player.currentSong.SongName, this.GS.player.currentSong.ArtistName);
     }
 
+    // Get current queue song ID
+    this.getQueueSongId = function(callback){
+		// Does nothing, if GS yet is not defined
+		if (this.GS === false) {
+			return;
+		}
+
+		// Else, send the queue song ID
+		return callback(this.GS.player.queue.activeSong.queueSongID);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {
