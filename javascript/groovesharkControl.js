@@ -16,7 +16,7 @@ function controlInit(autoCallback) {
     	// Control the now playing data
     	userAction('getNowPlaying', null, function(songName, artistName, albumName, albumImage,
 				playbackPosition, playbackDuration, inLibrary, inFavorite, isSmile, isFrown,
-				queueIndex, queueLength){
+				queueIndex, queueLength, isPlaying){
 			// Configure song data
 		    $('.nowPlaying .song')
 				.text(songName)
@@ -50,6 +50,9 @@ function controlInit(autoCallback) {
 			var percentage = Math.round(100 / playbackDuration * playbackPosition);
 		    $('.progressbar .elapsed').css('width', percentage + '%');
 			$('.progressbar').slider('value', percentage);
+
+			// Configure player button
+	        $('#playpause').attr('class', isPlaying ? 'pause' : 'play');
     	});
 
     	// Collect radio data

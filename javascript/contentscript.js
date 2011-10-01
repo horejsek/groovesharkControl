@@ -227,7 +227,8 @@ var GCInjector = new function () {
 			this.isSmile(),
 			this.isFrown(),
 			queue.activeSong.index,
-			queue.songs.length
+			queue.songs.length,
+			this.GS.player.isPlaying
     	);
     }
 

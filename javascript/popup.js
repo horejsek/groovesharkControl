@@ -69,8 +69,6 @@ chrome.extension.onRequest.addListener(
         showPopup();
 
         scrollPlaylistToActiveSong();
-
-        $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
 );
 

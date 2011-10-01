@@ -60,9 +60,3 @@ function setUpNotification () {
         setTimeout(window.close, 200);
     });
 }
-
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-        $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
-    }
-);
