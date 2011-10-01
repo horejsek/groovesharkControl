@@ -240,6 +240,15 @@ var GCInjector = new function () {
 		);
     }
 
+    // Get radio data
+    this.getRadio = function(callback){
+    	var radioOn = this.GS.player.queue.autoplayEnabled;
+		return callback(
+			radioOn,
+			radioOn ? $("#playerDetails_queue a").text() : false
+		);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {

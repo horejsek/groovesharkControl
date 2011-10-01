@@ -68,8 +68,6 @@ chrome.extension.onRequest.addListener(
 
         showPopup();
 
-        setRadio(request);
-
         scrollPlaylistToActiveSong();
 
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');

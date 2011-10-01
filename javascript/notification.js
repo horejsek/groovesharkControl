@@ -63,8 +63,6 @@ function setUpNotification () {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        setRadio(request);
-
         $('#playpause').attr('class', request.isPlaying ? 'pause' : 'play');
     }
 );

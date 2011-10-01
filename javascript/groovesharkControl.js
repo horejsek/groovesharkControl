@@ -52,6 +52,18 @@ function controlInit(autoCallback) {
 			$('.progressbar').slider('value', percentage);
     	});
 
+    	// Collect radio data
+    	userAction('getRadio', null, function(radioOn, radioStation){
+    		if (radioStation === false) {
+    			radioStation = chrome.i18n.getMessage('radioOff')
+    		}
+
+			// Do some DOM changes...
+    		$('.radio').toggleClass('active', radioOn);
+			$('.radio .station').text(radioStation);
+			$('.nowPlaying .smile, .nowPlaying .frown').toggleClass('disable', !radioOn);
+    	});
+
     	// Start a new callback collection, if need
     	if (autoCallback) {
     		autoCallback();
@@ -219,18 +231,6 @@ function isNotificationOpen () {
 
 
 /***** SETTERS *****/
-
-function setRadio (request) {
-    if (request.queue.autoplayEnabled) {
-        $('.radio').addClass('active');
-        $('.radio .station').text(request.stationName);
-        $('.nowPlaying .smile, .nowPlaying .frown').removeClass('disable');
-    } else {
-        $('.radio').removeClass('active');
-        $('.radio .station').text(chrome.i18n.getMessage('radioOff'));
-        $('.nowPlaying .smile, .nowPlaying .frown').addClass('disable');
-    }
-}
 
 
 function msToHumanTime (ms) {
