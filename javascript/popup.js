@@ -42,7 +42,6 @@ chrome.extension.onRequest.addListener(
 
         showPopup();
 
-        setNowPlaying(request);
         setPlaylist(request);
         setRadio(request);
 

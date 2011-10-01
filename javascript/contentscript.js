@@ -97,7 +97,7 @@ var GCInjector = new function () {
     }
 
     // Smile
-    this.isSmile = function (songId) {
+    this.isSmile = function () {
         return $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass("active");
     }
 
@@ -106,7 +106,7 @@ var GCInjector = new function () {
     }
 
     // Frown
-    this.isFrown = function (songId) {
+    this.isFrown = function () {
         return $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass("active");
     }
 
@@ -201,6 +201,34 @@ var GCInjector = new function () {
 			playerLoop,
 			self.GS.player.getCrossfadeEnabled()
 		);
+    }
+
+    // Get now playing data
+    this.getNowPlaying = function(callback){
+    	// If not have data about currentSong, set data as 'unavailable'
+    	// Using -1 instead of UNAVAILABLE because that the first callback param is string (will confuse it)
+    	if (typeof this.GS.player.currentSong === 'undefined') {
+			return callback(-1);
+    	}
+
+   		var currentSong = this.GS.player.currentSong;
+		var playbackStatus = this.GS.player.getPlaybackStatus();
+		var queue = this.GS.player.queue;
+
+		return callback(
+			currentSong.SongName,
+			currentSong.ArtistName,
+			currentSong.AlbumName,
+			currentSong.getImageURL('s'),
+			playbackStatus.position,
+			playbackStatus.duration,
+			$("#playerDetails_nowPlaying a.add").hasClass("selected"),
+			$("#playerDetails_nowPlaying a.favorite").hasClass("selected"),
+			this.isSmile(),
+			this.isFrown(),
+			queue.activeSong.index,
+			queue.songs.length
+    	);
     }
 
     // Get Data

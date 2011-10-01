@@ -1,22 +1,61 @@
 
-var DEFAULT_ALBUM_IMAGE = 'http://static.a.gs-cdn.net/webincludes/images/default/album_250.png';
-
-var updateProgressbar = true;
 var isGroovesharkFocused = false;
 
 /** INIT */
 
 // Init DOM controller system
 function controlInit() {
-    // Start the data collector system
-    setInterval(function(){
+	var collectData = function(){
     	// Control the player options
     	userAction('getPlayerOptions', null, function(playerSuffle, playerLoop, playerCrossfade){
 		    $('#shuffle').attr('class', playerSuffle);
 		    $('#loop').attr('class', playerLoop);
 		    $('#crossfade').attr('class', playerCrossfade);
     	});
-    }, 1000);
+
+    	// Control the now playing data
+    	userAction('getNowPlaying', null, function(songName, artistName, albumName, albumImage,
+				playbackPosition, playbackDuration, inLibrary, inFavorite, isSmile, isFrown,
+				queueIndex, queueLength){
+			// Configure song data
+		    $('.nowPlaying .song')
+				.text(songName)
+		    	.attr('title', songName);
+		    $('.nowPlaying .artist')
+				.text(artistName)
+		    	.attr('title', artistName);
+		    $('.nowPlaying .album')
+				.text(albumName)
+		    	.attr('title', albumName);
+
+  			// Configure album image
+		    $('.nowPlaying .image')
+				.attr('src', albumImage);
+
+			// Configure text time
+		    $('.nowPlaying .timeElapsed').text(msToHumanTime(playbackPosition));
+		    $('.nowPlaying .timeDuration').text(msToHumanTime(playbackDuration));
+
+			// Configure song preferences
+		    $('.nowPlaying .library').toggleClass('disable', !inLibrary);
+			$('.nowPlaying .favorite').toggleClass('disable', !inFavorite);
+			$('.nowPlaying .smile').toggleClass('active', isSmile);
+			$('.nowPlaying .frown').toggleClass('active', isFrown);
+
+			// Configure queue
+		    $('.nowPlaying .position .queuePosition').text(queueIndex + 1);
+		    $('.nowPlaying .position .queueCountSongs').text(queueLength);
+
+			// Configure progress bar
+			var percentage = Math.round(100 / playbackDuration * playbackPosition);
+		    $('.progressbar .elapsed').css('width', percentage + '%');
+			$('.progressbar').slider('value', percentage);
+    	});
+	}
+
+    // Start the data collector system
+    setInterval(collectData, 1000);
+    collectData();
 }
 
 
@@ -176,40 +215,6 @@ function isNotificationOpen () {
 
 /***** SETTERS *****/
 
-function setNowPlaying (request) {
-    $('.nowPlaying .song').text(request.currentSong.SongName);
-    $('.nowPlaying .song').attr('title', request.currentSong.SongName);
-    $('.nowPlaying .artist').text(request.currentSong.ArtistName);
-    $('.nowPlaying .artist').attr('title', request.currentSong.ArtistName);
-    $('.nowPlaying .album').text(request.currentSong.AlbumName);
-    $('.nowPlaying .album').attr('title', request.currentSong.AlbumName);
-
-    $('.nowPlaying .image').attr('src', request.currentSong.imageUrlS || DEFAULT_ALBUM_IMAGE);
-
-    $('.nowPlaying .timeElapsed').text(msToHumanTime(request.playbackStatus.position));
-    $('.nowPlaying .timeDuration').text(msToHumanTime(request.playbackStatus.duration));
-
-    if (request.currentSong.inLibrary) $('.nowPlaying .library').removeClass('disable');
-    else $('.nowPlaying .library').addClass('disable');
-
-    if (request.currentSong.isFavorite) $('.nowPlaying .favorite').removeClass('disable');
-    else $('.nowPlaying .favorite').addClass('disable');
-
-    if (request.currentSong.smile) $('.nowPlaying .smile').addClass('active');
-    else $('.nowPlaying .smile').removeClass('active');
-
-    if (request.currentSong.frown) $('.nowPlaying .frown').addClass('active');
-    else $('.nowPlaying .frown').removeClass('active');
-
-    $('.nowPlaying .position .queuePosition').text(request.queue.queuePosition);
-    $('.nowPlaying .position .queueCountSongs').text(request.queue.songs.length);
-
-    $('.progressbar .elapsed').css('width', request.playbackStatus.percent + '%');
-    if (updateProgressbar) {
-        $('.progressbar').slider('value', request.playbackStatus.percent);
-    }
-}
-
 function setPlaylist (request) {
     var playlistItems = $('.playlist');
     playlistItems.empty();
@@ -260,11 +265,7 @@ function setUpProgressbar () {
     $('.progressbar').slider({
         step: 0.1,
         stop: function(event, ui) {
-            updateProgressbar = false;
             userAction('seekTo', [$(this).slider('value')]);
-            setTimeout(function () {
-                updateProgressbar = true;
-            }, 500);
         }
     });
 }
