@@ -168,7 +168,6 @@ function periodicDataGetter (callbackIfGroovesharkIsNotOpen) {
 
 function getData (callbackIfGroovesharkIsNotOpen) {
     callWithGroovesharkTab(function (tab) {
-        chrome.tabs.sendRequest(tab.id, {command: 'getData'});
         pinGroovesharkTab(tab);
     }, callbackIfGroovesharkIsNotOpen);
 }
