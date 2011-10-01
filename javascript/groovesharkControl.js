@@ -149,6 +149,13 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
     });
 }
 
+// Close window if tab is closed
+function onTabCloseAccept () {
+	chrome.tabs.onRemoved.addListener(function(){
+		window.close();
+	});
+}
+
 
 /***** DATA & ACTIONS *****/
 

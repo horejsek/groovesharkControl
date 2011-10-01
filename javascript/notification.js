@@ -29,7 +29,11 @@ function init () {
     setUpProgressbar();
     setUpNotification();
 
+	// Start the controller
     controlInit();
+
+	// Close window if tab is closed
+	onTabCloseAccept();
 }
 
 function turnOffCloseOfWindow () {

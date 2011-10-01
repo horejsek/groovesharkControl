@@ -64,6 +64,9 @@ function init () {
 		});
 	});
 
+	// Close window if tab is closed
+	onTabCloseAccept();
+
     if (isNotificationOpen()) hidePin();
     else showPin();
 }
