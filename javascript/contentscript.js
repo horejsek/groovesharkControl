@@ -231,6 +231,15 @@ var GCInjector = new function () {
     	);
     }
 
+    // Get playlist data
+    this.getPlaylist = function(callback){
+		return callback(
+			this.GS.player.queue.songs,
+			this.GS.player.queue.activeSong.index,
+			this.GS.player.queue.activeSong.queueSongID
+		);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {

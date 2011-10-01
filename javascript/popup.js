@@ -12,7 +12,33 @@ function init () {
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
 
-    controlInit();
+	// Start the controller
+    controlInit(function(){
+	    // Get playlist data
+		userAction('getPlaylist', null, function(songs, activeIndex, activeId){
+			// Set the active queue song id
+		    if (activeQueueSongID !== activeId) {
+		        activeQueueSongID = activeId;
+
+				// Clean the playlist
+			    var playlistItems = $('.playlist').empty();
+
+				// Print songs on playlist
+			    $.each(songs, function (index, item) {
+			        playlistItems.append(
+			            $('<div class="item" />')
+			            	.attr('id', 'playlistItem_' + index)
+			            	.toggleClass('odd', index % 2 === 0)
+			            	.toggleClass('active', item.queueSongID === activeId)
+				            .text(item.ArtistName + ' - ' + item.SongName)
+				            .click(function () {
+				                userAction("playSongInQueue", [item.queueSongID])
+				            })
+			        );
+			    });
+		    }
+		});
+	});
 
     if (isNotificationOpen()) hidePin();
     else showPin();
@@ -42,7 +68,6 @@ chrome.extension.onRequest.addListener(
 
         showPopup();
 
-        setPlaylist(request);
         setRadio(request);
 
         scrollPlaylistToActiveSong();
