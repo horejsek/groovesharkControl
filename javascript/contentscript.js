@@ -208,7 +208,7 @@ var GCInjector = new function () {
     	// If not have data about currentSong, set data as 'unavailable'
     	// Using -1 instead of UNAVAILABLE because that the first callback param is string (will confuse it)
     	if (typeof this.GS.player.currentSong === 'undefined') {
-			return callback(-1);
+			return;
     	}
 
    		var currentSong = this.GS.player.currentSong;
@@ -234,6 +234,11 @@ var GCInjector = new function () {
 
     // Get playlist data
     this.getPlaylist = function(callback){
+    	// If not have data about activeSong, set data as 'unavailable'
+    	if (typeof this.GS.player.activeSong === 'undefined') {
+			return;
+    	}
+
 		return callback(
 			this.GS.player.queue.songs,
 			this.GS.player.queue.activeSong.index,
