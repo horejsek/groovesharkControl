@@ -28,6 +28,8 @@ function init () {
     getData();
     setUpProgressbar();
     setUpNotification();
+
+    controlInit();
 }
 
 function turnOffCloseOfWindow () {
@@ -61,7 +63,6 @@ function setUpNotification () {
 
 chrome.extension.onRequest.addListener(
     function (request, sender, sendResponse) {
-        setPlayerOptions(request);
         setNowPlaying(request);
         setRadio(request);
 

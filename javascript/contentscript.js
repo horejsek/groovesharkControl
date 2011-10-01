@@ -181,6 +181,28 @@ var GCInjector = new function () {
 		return callback(this.GS.player.queue.activeSong.queueSongID);
     }
 
+    // Get the player options (suffle, loop and crossfade)
+    this.getPlayerOptions = function(callback){
+		var playerLoop;
+        switch (self.GS.player.getRepeat()) {
+            case 1:
+				playerLoop = "one";
+				break;
+            case 2:
+				playerLoop = "all";
+				break;
+            default:
+				playerLoop = "none";
+				break;
+        }
+
+		return callback(
+			self.GS.player.getShuffle(),
+			playerLoop,
+			self.GS.player.getCrossfadeEnabled()
+		);
+    }
+
     // Get Data
     this.getData = function () {
         function parseSongItem (item) {

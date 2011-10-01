@@ -12,6 +12,8 @@ function init () {
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
 
+    controlInit();
+
     if (isNotificationOpen()) hidePin();
     else showPin();
 }
@@ -40,7 +42,6 @@ chrome.extension.onRequest.addListener(
 
         showPopup();
 
-        setPlayerOptions(request);
         setNowPlaying(request);
         setPlaylist(request);
         setRadio(request);

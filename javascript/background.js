@@ -24,6 +24,7 @@ function init () {
 	var playImage = new Image();
 	playImage.src = ICONS['playing'];
 
+    // Start the data collector system
     setInterval(function(){
 		// Update the badgeIcon baseed on player percentage
 		// UNAVAILABLE, STOPPED or percentage (float)

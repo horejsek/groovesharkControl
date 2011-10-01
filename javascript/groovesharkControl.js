@@ -4,6 +4,21 @@ var DEFAULT_ALBUM_IMAGE = 'http://static.a.gs-cdn.net/webincludes/images/default
 var updateProgressbar = true;
 var isGroovesharkFocused = false;
 
+/** INIT */
+
+// Init DOM controller system
+function controlInit() {
+    // Start the data collector system
+    setInterval(function(){
+    	// Control the player options
+    	userAction('getPlayerOptions', null, function(playerSuffle, playerLoop, playerCrossfade){
+		    $('#shuffle').attr('class', playerSuffle);
+		    $('#loop').attr('class', playerLoop);
+		    $('#crossfade').attr('class', playerCrossfade);
+    	});
+    }, 1000);
+}
+
 
 /***** GROOVESHARK TAB *****/
 
@@ -160,13 +175,6 @@ function isNotificationOpen () {
 
 
 /***** SETTERS *****/
-
-
-function setPlayerOptions (request) {
-    $('#shuffle').attr('class', request.shuffle);
-    $('#loop').attr('class', request.loop);
-    $('#crossfade').attr('class', request.crossfade);
-}
 
 function setNowPlaying (request) {
     $('.nowPlaying .song').text(request.currentSong.SongName);
