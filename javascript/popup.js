@@ -1,12 +1,9 @@
 
-var activeQueueSongID = -1;
-var isNowOpened = true;
-
 var Popup = new function(){
+	var activeQueueSongID = -1;
+
 	// Init popup page
 	this.init = function() {
-	    isNowOpened = true;
-
 	    getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
 	    setUpProgressbar();
 
@@ -78,16 +75,11 @@ var Popup = new function(){
 		onTabCloseAccept();
 
 		// Show/hide notification pin
-		this.togglePin(!isNotificationOpen());
+		$('#pin').toggle(!isNotificationOpen());
 
 		// On click in pin, hide it
 		$('#pin').click(function(){
 			window.close();
 		});
-	}
-
-	// Show/hide notification pin
-	this.togglePin = function(mode) {
-		$('#pin').toggle(mode);
 	}
 }
