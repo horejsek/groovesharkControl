@@ -6,6 +6,7 @@ body {
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
     cursor: default;
+    display: none;
 }
 
 /* PLAYER OPTIONS */

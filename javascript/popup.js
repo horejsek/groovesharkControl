@@ -2,13 +2,9 @@
 var activeQueueSongID = -1;
 var isNowOpened = true;
 
-function hidePopup () { $('body').css('display', 'none'); }
-function showPopup () { $('body').css('display', 'block'); }
-
 function init () {
     isNowOpened = true;
 
-    hidePopup();
     getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
     setUpProgressbar();
 
@@ -20,7 +16,14 @@ function init () {
 	    // Get playlist data
 		userAction('getPlaylist', null, function(songs, activeIndex, activeId){
 			// Set the active queue song id
-		    if (activeQueueSongID !== activeId) {
+		    if (activeQueueSongID !== activeId
+			&&  activeIndex !== false) {
+				// If is the first open, show body
+				if (activeQueueSongID === -1) {
+					$('body').css('display', 'block');
+				}
+
+				// Set active queue song id
 		        activeQueueSongID = activeId;
 
 				// Clean the playlist
@@ -61,6 +64,11 @@ function init () {
 					scrollTop: scrollToY
 				}, 1000);
 		    }
+		    else
+		    // If playlist is empty, block the UI
+		    if (activeIndex === false){
+		    	goToGroovesharkTab();
+		    }
 		});
 	});
 
@@ -70,17 +78,6 @@ function init () {
     if (isNotificationOpen()) hidePin();
     else showPin();
 }
-
-chrome.extension.onRequest.addListener(
-    function (request, sender, sendResponse) {
-        if (!request.isSomePlaylist) {
-            goToGroovesharkTab();
-            return;
-        }
-
-        showPopup();
-    }
-);
 
 function showPin () {
     $('#pin').show();

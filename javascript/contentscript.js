@@ -225,15 +225,10 @@ var GCInjector = new function () {
 
     // Get playlist data
     this.getPlaylist = function(callback){
-    	// If not have data about activeSong, set data as 'unavailable'
-    	if (typeof this.GS.player.activeSong === 'undefined') {
-			return;
-    	}
-
 		return callback(
 			this.GS.player.queue.songs,
-			this.GS.player.queue.activeSong.index,
-			this.GS.player.queue.activeSong.queueSongID
+			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.index : false,
+			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.queueSongID : false
 		);
     }
 
