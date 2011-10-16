@@ -13,52 +13,36 @@ function init () {
     periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
     injectGrooveshark();
 
-    // Performance: store last 19 percentage status
-    // If null, will render the new icon
-    var last19;
-
-    // Performance: save the last title to avoid use Chrome API
     var lastTitle;
+    var lastStatus;
+    var lastPercentage;
 
-    // Performance: preload the play-icon
     var playImage = new Image();
     playImage.src = ICONS['playing'];
+
+    var pauseImage = new Image();
+    pauseImage.src = ICONS['pause'];
 
     // Start the data collector system
     setInterval(function () {
         // Update the badgeIcon baseed on player percentage
         // UNAVAILABLE, STOPPED or percentage (float)
         userAction('getCurrentPercentage', null, function(percentage){
-            if (percentage === 'UNAVAILABLE') {
+            if (percentage.status === 'UNAVAILABLE') {
                 last19 = null;
-                return resetIcon();
-            }
+                resetIcon();
+            } else {
+                if (lastPercentage !== percentage.percentage && lastStatus !== percentage.status) {
+                    lastStatus = percentage.status;
+                    lastPercentage = percentage.percentage;
 
-            if (percentage === 'STOPPED') {
-                last19 = null;
-                return setIcon(ICONS['pause']);;
-            }
+                    var p19 = Math.round(percentage.percentage / (100 / 19));
+                    var image = percentage.status == 'PLAYING' ? playImage : pauseImage;
 
-            // If is different of the old last19, render the new icon
-            var new_last19 = Math.round(percentage / (100 / 19));
-            if (new_last19 !== last19) {
-                last19 = new_last19;
-
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-
-                context.clearRect(0, 0, 19, 19);
-                context.drawImage(playImage, 0, 0);
-
-                context.fillStyle = '#CCC';
-                context.fillRect(0, 17, 19, 19);
-
-                context.fillStyle = '#000';
-                context.fillRect(0, 17, new_last19, 19);
-
-                chrome.browserAction.setIcon({
-                    imageData: context.getImageData(0, 0, 19, 19)
-                });
+                    chrome.browserAction.setIcon({
+                        imageData: createIcon(image, p19)
+                    });
+                }
             }
         });
 
@@ -102,6 +86,22 @@ function resetIcon () {
 
 function setIcon (icon) {
     chrome.browserAction.setIcon({path: icon});
+}
+
+function createIcon (backgroundImage, percent) {
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    context.clearRect(0, 0, 19, 19);
+    context.drawImage(backgroundImage, 0, 0);
+
+    context.fillStyle = '#CCC';
+    context.fillRect(0, 17, 19, 19);
+
+    context.fillStyle = '#000';
+    context.fillRect(0, 17, percent, 19);
+
+    return context.getImageData(0, 0, 19, 19);
 }
 
 function resetTitle () {

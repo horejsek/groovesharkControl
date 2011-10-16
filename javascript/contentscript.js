@@ -141,19 +141,25 @@ var GCInjector = new function () {
 
     // Get current percentage info
     this.getCurrentPercentage = function (callback) {
-        // If not have nothing on playlist, send resetIcon command
+        var result = {}
+
         if (this.GS.player.queue.songs.length === 0) {
-            return callback('UNAVAILABLE');
+            result.status = 'UNAVAILABLE';
+            result.percentage = null;
+        } else if (this.GS.player.isPlaying === false) {
+            result.status = 'STOPPED';
+            result.percentage = this.calculateCurrentPercantege();
+        } else {
+            result.status = 'PLAYING';
+            result.percentage = this.calculateCurrentPercantege();
         }
 
-        // If is paused, send pause command
-        if (this.GS.player.isPlaying === false) {
-            return callback('STOPPED');
-        }
+        return callback(result);
+    }
 
-        // Else, send current percentage
+    this.calculateCurrentPercantege = function () {
         var playbackStatus = this.GS.player.getPlaybackStatus();
-        return callback(100 * playbackStatus.position / playbackStatus.duration);
+        return 100 * playbackStatus.position / playbackStatus.duration;
     }
 
     // Get current song and artist name basically to fill badgeTitle
