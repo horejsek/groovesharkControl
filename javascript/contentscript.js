@@ -3,6 +3,21 @@ var GCInjector = new function () {
     var self = this;
     this.GS = false;
 
+    window.onload = function () {
+        self.GS = this.GS;
+    }
+
+    // Make a call to an internal command
+    this.call = function (command, args, callback) {
+        // Ignore the call if GS not is ready
+        if (self.GS === false || self.GS === undefined) {
+            return;
+        }
+
+        args.push(callback);
+        self[command].apply(self, args);
+    }
+
     // Music controller
     this.playSong = function () {
         this.GS.player.playSong();
@@ -41,7 +56,7 @@ var GCInjector = new function () {
     }
 
     this.toggleShuffle = function () {
-        $("#player_shuffle").click();
+        $('#player_shuffle').click();
     }
 
     // Crossfade
@@ -50,7 +65,7 @@ var GCInjector = new function () {
     }
 
     this.toggleCrossfade = function () {
-        $("#player_crossfade").click();
+        $('#player_crossfade').click();
     }
 
     // Loop
@@ -59,7 +74,7 @@ var GCInjector = new function () {
     }
 
     this.toggleLoop = function () {
-        $("#player_loop").click();
+        $('#player_loop').click();
     }
 
     // Library
@@ -72,7 +87,7 @@ var GCInjector = new function () {
     }
 
     this.toggleLibrary = function () {
-        if (!$("#playerDetails_nowPlaying a.add").hasClass("selected")) {
+        if (!$('#playerDetails_nowPlaying a.add').hasClass('selected')) {
             this.GS.user.addToLibrary(this.GS.player.currentSong.SongID);
         } else {
             this.GS.user.removeFromLibrary(this.GS.player.currentSong.SongID);
@@ -89,7 +104,7 @@ var GCInjector = new function () {
     }
 
     this.toggleFavorite = function () {
-        if (!$("#playerDetails_nowPlaying a.favorite").hasClass("selected")) {
+        if (!$('#playerDetails_nowPlaying a.favorite').hasClass('selected')) {
             this.GS.user.addToSongFavorites(this.GS.player.currentSong.SongID);
         } else {
             this.GS.user.removeFromSongFavorites(this.GS.player.currentSong.SongID);
@@ -98,7 +113,7 @@ var GCInjector = new function () {
 
     // Smile
     this.isSmile = function () {
-        return $("#queue_list li.queue-item-active div.radio_options a.smile").hasClass("active");
+        return $('#queue_list li.queue-item-active div.radio_options a.smile').hasClass('active');
     }
 
     this.toggleSmile = function () {
@@ -107,7 +122,7 @@ var GCInjector = new function () {
 
     // Frown
     this.isFrown = function () {
-        return $("#queue_list li.queue-item-active div.radio_options a.frown").hasClass("active");
+        return $('#queue_list li.queue-item-active div.radio_options a.frown').hasClass('active');
     }
 
     this.toggleFrown = function () {
@@ -116,7 +131,7 @@ var GCInjector = new function () {
 
     // Seek
     this.seekTo = function (seekTo) {
-        this.GS.player.seekTo((this.GS.player.getPlaybackStatus()["duration"]) / 100 * seekTo);
+        this.GS.player.seekTo((this.GS.player.getPlaybackStatus()['duration']) / 100 * seekTo);
     }
 
     // Queue
@@ -125,135 +140,121 @@ var GCInjector = new function () {
     }
 
     // Get current percentage info
-    this.getCurrentPercentage = function(callback){
-    	// If not have nothing on playlist, send resetIcon command
-		if (this.GS.player.queue.songs.length === 0) {
-			return callback('UNAVAILABLE');
-		}
+    this.getCurrentPercentage = function (callback) {
+        // If not have nothing on playlist, send resetIcon command
+        if (this.GS.player.queue.songs.length === 0) {
+            return callback('UNAVAILABLE');
+        }
 
-		// If is paused, send pause command
-		if (this.GS.player.isPlaying === false) {
-			return callback('STOPPED');
-		}
+        // If is paused, send pause command
+        if (this.GS.player.isPlaying === false) {
+            return callback('STOPPED');
+        }
 
-		// Else, send current percentage
-		var playbackStatus = this.GS.player.getPlaybackStatus();
-		return callback(100 * playbackStatus.position / playbackStatus.duration);
+        // Else, send current percentage
+        var playbackStatus = this.GS.player.getPlaybackStatus();
+        return callback(100 * playbackStatus.position / playbackStatus.duration);
     }
 
     // Get current song and artist name basically to fill badgeTitle
-    this.getCurrentSongData = function(callback){
-    	// If not have nothing on playlist, send resetTitle command
-		if (this.GS.player.queue.songs.length === 0
-		||  typeof this.GS.player.currentSong === 'undefined') {
-			return callback('UNAVAILABLE');
-		}
+    this.getCurrentSongData = function (callback) {
+        // If not have nothing on playlist, send resetTitle command
+        if (
+            this.GS.player.queue.songs.length === 0 ||
+            typeof this.GS.player.currentSong === 'undefined'
+        ) {
+            return callback('UNAVAILABLE');
+        }
 
-		// Else, send song and artist name by callback
-		return callback(this.GS.player.currentSong.SongName, this.GS.player.currentSong.ArtistName);
+        // Else, send song and artist name by callback
+        return callback(this.GS.player.currentSong.SongName, this.GS.player.currentSong.ArtistName);
     }
 
     // Get current queue song ID
-    this.getQueueSongId = function(callback){
-    	// If not have data about currentSong, set data as 'unavailable'
-    	if (typeof this.GS.player.currentSong === 'undefined') {
-			return callback('UNAVAILABLE');
-    	}
+    this.getQueueSongId = function (callback) {
+        // If not have data about currentSong, set data as 'unavailable'
+        if (typeof this.GS.player.currentSong === 'undefined') {
+            return callback('UNAVAILABLE');
+        }
 
-		// Else, send the queue song ID
-		return callback(this.GS.player.queue.activeSong.queueSongID);
+        // Else, send the queue song ID
+        return callback(this.GS.player.queue.activeSong.queueSongID);
     }
 
     // Get the player options (suffle, loop and crossfade)
-    this.getPlayerOptions = function(callback){
-		var playerLoop;
+    this.getPlayerOptions = function (callback) {
+        var playerLoop;
         switch (this.GS.player.getRepeat()) {
             case 1:
-				playerLoop = "one";
-				break;
+                playerLoop = 'one';
+                break;
             case 2:
-				playerLoop = "all";
-				break;
+                playerLoop = 'all';
+                break;
             default:
-				playerLoop = "none";
-				break;
+                playerLoop = 'none';
+                break;
         }
 
-		return callback(
-			this.GS.player.getShuffle(),
-			playerLoop,
-			this.GS.player.getCrossfadeEnabled()
-		);
+        return callback(
+            this.GS.player.getShuffle(),
+            playerLoop,
+            this.GS.player.getCrossfadeEnabled()
+        );
     }
 
     // Get now playing data
-    this.getNowPlaying = function(callback){
-    	// If not have data about currentSong, set data as 'unavailable'
-    	// Using -1 instead of UNAVAILABLE because that the first callback param is string (will confuse it)
-    	if (typeof this.GS.player.currentSong === 'undefined') {
-			return;
-    	}
-
-   		var currentSong = this.GS.player.currentSong;
-		var playbackStatus = this.GS.player.getPlaybackStatus();
-		var queue = this.GS.player.queue;
-
-		return callback(
-			currentSong.SongName,
-			currentSong.ArtistName,
-			currentSong.AlbumName,
-			currentSong.getImageURL('s'),
-			playbackStatus.position,
-			playbackStatus.duration,
-			$("#playerDetails_nowPlaying a.add").hasClass("selected"),
-			$("#playerDetails_nowPlaying a.favorite").hasClass("selected"),
-			this.isSmile(),
-			this.isFrown(),
-			queue.activeSong.index,
-			queue.songs.length,
-			this.GS.player.isPlaying
-    	);
-    }
-
-    // Get playlist data
-    this.getPlaylist = function(callback){
-		return callback(
-			this.GS.player.queue.songs,
-			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.index : false,
-			this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.queueSongID : false
-		);
-    }
-
-    // Get radio data
-    this.getRadio = function(callback){
-    	var radioOn = this.GS.player.queue.autoplayEnabled;
-		return callback(
-			radioOn,
-			radioOn ? $("#playerDetails_queue a").text() : false
-		);
-    }
-
-    // Make a call to an internal command
-    this.call = function (command, args, callback) {
-        // Ignore the call if GS not is ready
-        if (self.GS === false) {
+    this.getNowPlaying = function (callback) {
+        // If not have data about currentSong, set data as 'unavailable'
+        // Using -1 instead of UNAVAILABLE because that the first callback param is string (will confuse it)
+        if (typeof this.GS.player.currentSong === 'undefined') {
             return;
         }
 
-        // Run the command
-        args.push(callback);
-        self[command].apply(self, args);
+        var currentSong = this.GS.player.currentSong;
+        var playbackStatus = this.GS.player.getPlaybackStatus();
+        var queue = this.GS.player.queue;
+
+        return callback(
+            currentSong.SongName,
+            currentSong.ArtistName,
+            currentSong.AlbumName,
+            currentSong.getImageURL('s'),
+            playbackStatus.position,
+            playbackStatus.duration,
+            $('#playerDetails_nowPlaying a.add').hasClass('selected'),
+            $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
+            this.isSmile(),
+            this.isFrown(),
+            queue.activeSong.index,
+            queue.songs.length,
+            this.GS.player.isPlaying
+        );
     }
 
-    window.onload = function () {
-        self.GS = this.GS;
+    // Get playlist data
+    this.getPlaylist = function (callback) {
+        return callback(
+            this.GS.player.queue.songs,
+            this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.index : false,
+            this.GS.player.queue.activeSong ? this.GS.player.queue.activeSong.queueSongID : false
+        );
+    }
+
+    // Get radio data
+    this.getRadio = function (callback) {
+        var radioOn = this.GS.player.queue.autoplayEnabled;
+        return callback(
+            radioOn,
+            radioOn ? $('#playerDetails_queue a').text() : false
+        );
     }
 }
 
 chrome.extension.onRequest.addListener(function (request, sender, sendMessage) {
     if (typeof request.command !== 'undefined') {
-        GCInjector.call(request.command, request.args || [], function(){
-			sendMessage({args: arguments, argsLength: arguments.length});
-		});
+        GCInjector.call(request.command, request.args || [], function () {
+            sendMessage({args: arguments, argsLength: arguments.length});
+        });
     }
 });

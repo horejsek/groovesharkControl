@@ -1,77 +1,67 @@
 
 var isGroovesharkFocused = false;
 
-/** INIT */
 
 // Init DOM controller system
-function controlInit(autoCallback) {
-	var collectData = function(){
-    	// Control the player options
-    	userAction('getPlayerOptions', null, function(playerSuffle, playerLoop, playerCrossfade){
-		    $('#shuffle').attr('class', playerSuffle);
-		    $('#loop').attr('class', playerLoop);
-		    $('#crossfade').attr('class', playerCrossfade);
-    	});
+function controlInit (autoCallback) {
+    var collectData = function () {
+        // Control the player options
+        userAction('getPlayerOptions', null, function (playerSuffle, playerLoop, playerCrossfade) {
+            $('#shuffle').attr('class', playerSuffle);
+            $('#loop').attr('class', playerLoop);
+            $('#crossfade').attr('class', playerCrossfade);
+        });
 
-    	// Control the now playing data
-    	userAction('getNowPlaying', null, function(songName, artistName, albumName, albumImage,
-				playbackPosition, playbackDuration, inLibrary, inFavorite, isSmile, isFrown,
-				queueIndex, queueLength, isPlaying){
-			// Configure song data
-		    $('.nowPlaying .song')
-				.text(songName)
-		    	.attr('title', songName);
-		    $('.nowPlaying .artist')
-				.text(artistName)
-		    	.attr('title', artistName);
-		    $('.nowPlaying .album')
-				.text(albumName)
-		    	.attr('title', albumName);
+        // Control the now playing data
+        userAction('getNowPlaying', null, function (songName, artistName, albumName, albumImage,
+            playbackPosition, playbackDuration, inLibrary, inFavorite, isSmile, isFrown,
+            queueIndex, queueLength, isPlaying
+        ) {
+            // Configure song data
+            $('.nowPlaying .song').text(songName).attr('title', songName);
+            $('.nowPlaying .artist').text(artistName).attr('title', artistName);
+            $('.nowPlaying .album').text(albumName).attr('title', albumName);
+            $('.nowPlaying .image').attr('src', albumImage);
 
-  			// Configure album image
-		    $('.nowPlaying .image')
-				.attr('src', albumImage);
+            // Configure text time
+            $('.nowPlaying .timeElapsed').text(msToHumanTime(playbackPosition));
+            $('.nowPlaying .timeDuration').text(msToHumanTime(playbackDuration));
 
-			// Configure text time
-		    $('.nowPlaying .timeElapsed').text(msToHumanTime(playbackPosition));
-		    $('.nowPlaying .timeDuration').text(msToHumanTime(playbackDuration));
+            // Configure song preferences
+            $('.nowPlaying .library').toggleClass('disable', !inLibrary);
+            $('.nowPlaying .favorite').toggleClass('disable', !inFavorite);
+            $('.nowPlaying .smile').toggleClass('active', isSmile);
+            $('.nowPlaying .frown').toggleClass('active', isFrown);
 
-			// Configure song preferences
-		    $('.nowPlaying .library').toggleClass('disable', !inLibrary);
-			$('.nowPlaying .favorite').toggleClass('disable', !inFavorite);
-			$('.nowPlaying .smile').toggleClass('active', isSmile);
-			$('.nowPlaying .frown').toggleClass('active', isFrown);
+            // Configure queue
+            $('.nowPlaying .position .queuePosition').text(queueIndex + 1);
+            $('.nowPlaying .position .queueCountSongs').text(queueLength);
 
-			// Configure queue
-		    $('.nowPlaying .position .queuePosition').text(queueIndex + 1);
-		    $('.nowPlaying .position .queueCountSongs').text(queueLength);
+            // Configure progress bar
+            var percentage = Math.round(100 / playbackDuration * playbackPosition);
+            $('.progressbar .elapsed').css('width', percentage + '%');
+            $('.progressbar').slider('value', percentage);
 
-			// Configure progress bar
-			var percentage = Math.round(100 / playbackDuration * playbackPosition);
-		    $('.progressbar .elapsed').css('width', percentage + '%');
-			$('.progressbar').slider('value', percentage);
+            // Configure player button
+            $('#playpause').attr('class', isPlaying ? 'pause' : 'play');
+        });
 
-			// Configure player button
-	        $('#playpause').attr('class', isPlaying ? 'pause' : 'play');
-    	});
+        // Collect radio data
+        userAction('getRadio', null, function (radioOn, radioStation) {
+            if (radioStation === false) {
+                radioStation = chrome.i18n.getMessage('radioOff')
+            }
 
-    	// Collect radio data
-    	userAction('getRadio', null, function(radioOn, radioStation){
-    		if (radioStation === false) {
-    			radioStation = chrome.i18n.getMessage('radioOff')
-    		}
+            $('.radio').toggleClass('active', radioOn);
+            $('.radio .station').text(radioStation);
+            $('.nowPlaying .smile, .nowPlaying .frown').toggleClass('disable', !radioOn);
+        });
 
-			// Do some DOM changes...
-    		$('.radio').toggleClass('active', radioOn);
-			$('.radio .station').text(radioStation);
-			$('.nowPlaying .smile, .nowPlaying .frown').toggleClass('disable', !radioOn);
-    	});
-
-    	// Start a new callback collection, if need
-    	if (autoCallback) {
-    		autoCallback();
-    	}
-	}
+        // Start a new callback collection, if need
+        if (autoCallback) {
+            autoCallback();
+        }
+    }
 
     // Start the data collector system
     setInterval(collectData, 1000);
@@ -97,8 +87,15 @@ function getGroovesharkUrl () {
     return 'http://grooveshark.com/';
 }
 
+function getGroovesharkPreviewUrl () {
+    return 'http://preview.grooveshark.com/';
+}
+
 function isGroovesharkUrl (url) {
-    return !(url.indexOf(getGroovesharkUrl()) != 0)
+    return (
+        url.indexOf(getGroovesharkUrl()) == 0 ||
+        url.indexOf(getGroovesharkPreviewUrl()) == 0
+    )
 }
 
 function goToGroovesharkTab () {
@@ -143,7 +140,7 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
             }
         }
 
-        if (typeof callbackIfGroovesharkIsNotOpen !== "undefined") {
+        if (typeof callbackIfGroovesharkIsNotOpen !== 'undefined') {
             callbackIfGroovesharkIsNotOpen();
         }
     });
@@ -151,9 +148,9 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
 
 // Close window if tab is closed
 function onTabCloseAccept () {
-	chrome.tabs.onRemoved.addListener(function(){
-		window.close();
-	});
+    chrome.tabs.onRemoved.addListener(function () {
+        window.close();
+    });
 }
 
 
@@ -178,11 +175,11 @@ function userAction (command, args, callback) {
             command: command,
             args: args
         }, function(response){
-			if (typeof callback === 'function'){
-				response.args.length = response.argsLength;
-				callback.apply(this, Array.prototype.slice.call(response.args));
-			}
-		});
+            if (typeof callback === 'function'){
+                response.args.length = response.argsLength;
+                callback.apply(this, Array.prototype.slice.call(response.args));
+            }
+        });
     });
     getData();
 }
@@ -220,7 +217,7 @@ function _showNotification (stay, view) {
     if ((!isNotificationOpen() && !isGroovesharkFocused) || stay) {
         var notification = webkitNotifications.createHTMLNotification('../views/'+view+'.html');
 
-		localStorage['_notificationStay'] = stay === true;
+        localStorage['_notificationStay'] = stay === true;
         notification.show();
     }
 }
