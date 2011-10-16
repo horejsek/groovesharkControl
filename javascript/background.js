@@ -32,7 +32,7 @@ function init () {
                 last19 = null;
                 resetIcon();
             } else {
-                if (lastPercentage !== percentage.percentage && lastStatus !== percentage.status) {
+                if (lastPercentage !== percentage.percentage || lastStatus !== percentage.status) {
                     lastStatus = percentage.status;
                     lastPercentage = percentage.percentage;
 
