@@ -66,7 +66,7 @@ var Popup = new function(){
             });
         });
 
-        onTabCloseAccept();
+        closeWindowAfterCloseGSTab();
 
         $('#pin').toggle(!isNotificationOpen());
 

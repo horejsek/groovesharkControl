@@ -39,7 +39,7 @@ var Notification = new function(){
         });
 
         controlInit();
-        onTabCloseAccept();
+        closeWindowAfterCloseGSTab();
     }
 
     this.countDown = function(){

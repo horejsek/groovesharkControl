@@ -146,13 +146,17 @@ function callWithGroovesharkTab (callback, callbackIfGroovesharkIsNotOpen) {
     });
 }
 
-// Close window if tab is closed
-function onTabCloseAccept () {
-    chrome.tabs.onRemoved.addListener(function () {
-        window.close();
+// Close notification or popup if GS tab is closed
+function closeWindowAfterCloseGSTab () {
+    chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
+        callWithGroovesharkTab(
+            callback = function pass() {},
+            callbackIfGroovesharkIsNotOpen = function close() {
+                window.close();
+            }
+        );
     });
 }
-
 
 /***** DATA & ACTIONS *****/
 
