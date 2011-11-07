@@ -7,9 +7,6 @@ var Popup = new function(){
         getData(callbackIfGroovesharkIsNotOpen=createGroovesharkTab);
         setUpProgressbar();
 
-        // Set the last y position on playlist
-        var lastYPosition;
-
         // Start the controller
         controlInit(function () {
             // Get playlist data
@@ -41,27 +38,11 @@ var Popup = new function(){
                         );
                     });
 
-                    // Scroll playlist to this music
+                    // Scroll playlist to this song
                     var playlistObject = $('.playlist');
                     var activeItem = $('.playlist .item.active');
-                    var scrollToY = activeItem.prop('offsetTop') + ( activeItem.height() / 2 )
-                        - ( playlistObject.height() / 2 ) - playlistObject.prop('offsetTop');
-
-                    // Scroll Top Y need be 0 or upper
-                    if (scrollToY < 0) {
-                        scrollToY = 0;
-                    }
-
-                    // If the popup is open now, will do a small animation
-                    if (!lastYPosition) {
-                        lastYPosition = scrollToY + ( scrollToY === 0 ? 200 : -200 );
-                        playlistObject.prop('scrollTop', lastYPosition);
-                    }
-
-                    // Animate and align the active song on center of playlist if possible
-                    playlistObject.animate({
-                        scrollTop: scrollToY
-                    }, 1000);
+                    var scrollTo = activeItem.prop('offsetTop') - (playlistObject.height() / 4) - playlistObject.prop('offsetTop');
+                    playlistObject.prop('scrollTop', scrollTo > 0 ? scrollTo : 0);
                 }
             });
         });

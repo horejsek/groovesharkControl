@@ -13,6 +13,11 @@ function init () {
     periodicDataGetter(callbackIfGroovesharkIsNotOpen=resetIcon);
     injectGrooveshark();
 
+    /*function _dbg () {
+        chrome.browserAction.setBadgeText({text: ''+activeQueueSongID});
+        window.setTimeout(_dbg, 1000);
+    } _dbg();/**/
+
     var lastTitle;
     var lastStatus;
     var lastPercentage;
@@ -27,9 +32,9 @@ function init () {
     setInterval(function () {
         // Update the badgeIcon baseed on player percentage
         // UNAVAILABLE, STOPPED or percentage (float)
-        userAction('getCurrentPercentage', null, function(percentage){
+        userAction('getCurrentPercentage', null, function (percentage) {
             if (percentage.status === 'UNAVAILABLE') {
-                last19 = null;
+                var p19 = null;
                 resetIcon();
             } else {
                 if (lastPercentage !== percentage.percentage || lastStatus !== percentage.status) {
@@ -49,29 +54,25 @@ function init () {
         // Update badgeTitle - the song name, if avaiable
         userAction('getCurrentSongData', null, function (songName, songArtist) {
             if (songName === 'UNAVAILABLE') {
-                lastTitle = null;
-                return resetTitle();
-            }
-
-            var new_lastTitle = songName + ' - ' + songArtist;
-            if (new_lastTitle !== lastTitle) {
-                lastTitle = new_lastTitle;
-                 chrome.browserAction.setTitle({title: new_lastTitle});
+                resetTitle();
+            } else {
+                chrome.browserAction.setTitle({title: songName + ' - ' + songArtist});
             }
         });
 
-        // Configure the active queue song id, and open the notification bar
-        userAction('getQueueSongId', null, function(queueSongId){
+        // Configure the active queue song id, and open the notification
+        userAction('getQueueSongId', null, function (queueSongId) {
             if (queueSongId === 'UNAVAILABLE') {
                 activeQueueSongID = -1;
                 return;
             }
 
-            // Auto-show notification system
-            if (queueSongId != -1
-            &&  activeQueueSongID != -1
-            &&  activeQueueSongID != queueSongId
-            &&  last19 < 1) {
+            if (
+                queueSongId != -1 &&
+                activeQueueSongID != -1 &&
+                activeQueueSongID != queueSongId &&
+                lastPercentage < 5
+            ) {
                 showNotification();
             }
 

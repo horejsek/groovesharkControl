@@ -38,7 +38,7 @@ function controlInit (autoCallback) {
             $('.nowPlaying .position .queueCountSongs').text(queueLength);
 
             // Configure progress bar
-            var percentage = Math.round(100 / playbackDuration * playbackPosition);
+            var percentage = 100 / playbackDuration * playbackPosition;
             $('.progressbar .elapsed').css('width', percentage + '%');
             $('.progressbar').slider('value', percentage);
 
