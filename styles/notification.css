@@ -90,6 +90,7 @@ body {
     position: absolute;
     bottom: 10px;
     right: 5px;
+    background: url(http://images.grooveshark.com/static/albums/90_album.png) no-repeat -5px -5px;
 }
 
 .nowPlaying .time {
