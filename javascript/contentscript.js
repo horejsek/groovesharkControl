@@ -87,10 +87,10 @@ var GCInjector = new function () {
     }
 
     this.toggleLibrary = function () {
-        if (!$('#playerDetails_nowPlaying a.add').hasClass('selected')) {
-            this.GS.user.addToLibrary(this.GS.player.currentSong.SongID);
-        } else {
+        if (this.GS.player.currentSong.fromLibrary) {
             this.GS.user.removeFromLibrary(this.GS.player.currentSong.SongID);
+        } else {
+            this.GS.user.addToLibrary(this.GS.player.currentSong.SongID);
         }
     }
 
@@ -104,10 +104,10 @@ var GCInjector = new function () {
     }
 
     this.toggleFavorite = function () {
-        if (!$('#playerDetails_nowPlaying a.favorite').hasClass('selected')) {
-            this.GS.user.addToSongFavorites(this.GS.player.currentSong.SongID);
-        } else {
+        if (this.GS.player.currentSong.isFavorite) {
             this.GS.user.removeFromSongFavorites(this.GS.player.currentSong.SongID);
+        } else {
+            this.GS.user.addToSongFavorites(this.GS.player.currentSong.SongID);
         }
     }
 
@@ -225,11 +225,11 @@ var GCInjector = new function () {
             currentSong.SongName,
             currentSong.ArtistName,
             currentSong.AlbumName,
-            currentSong.getImageURL('s'),
+            "http://images.grooveshark.com/static/albums/90_" + currentSong.AlbumID + ".jpg",
             playbackStatus.position,
             playbackStatus.duration,
-            $('#playerDetails_nowPlaying a.add').hasClass('selected'),
-            $('#playerDetails_nowPlaying a.favorite').hasClass('selected'),
+            currentSong.fromLibrary,
+            currentSong.isFavorite,
             this.isSmile(),
             this.isFrown(),
             queue.activeSong.index,
