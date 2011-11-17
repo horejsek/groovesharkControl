@@ -4,6 +4,12 @@ var GCInjector = new function () {
     this.GS = false;
 
     window.onload = function () {
+        // I don't know why, but this fix problem (90 %).
+        var date = new Date();
+        do {
+            curDate = new Date();
+        } while (curDate-date < 1000);
+
         self.GS = this.GS;
     }
 
