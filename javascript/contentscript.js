@@ -1,16 +1,16 @@
 
 var GCInjector = new function () {
     var self = this;
-    this.GS = false;
 
+    // Get the GS object from unsafeWindow ( https://gist.github.com/1143845 )
+    var unsafeWindow = (function() {
+        var el = document.createElement('p');
+        el.setAttribute('onclick', 'return window;');
+        return el.onclick();
+    }());    
+    this.GS = unsafeWindow.GS || false;
     window.onload = function () {
-        // I don't know why, but this fix problem (90 %).
-        var date = new Date();
-        do {
-            curDate = new Date();
-        } while (curDate-date < 1000);
-
-        self.GS = this.GS;
+        self.GS = unsafeWindow.GS;  
     }
 
     // Make a call to an internal command
