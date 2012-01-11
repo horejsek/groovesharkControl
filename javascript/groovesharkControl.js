@@ -1,4 +1,3 @@
-
 var isGroovesharkFocused = false;
 
 
@@ -18,9 +17,9 @@ function controlInit (autoCallback) {
             queueIndex, queueLength, isPlaying
         ) {
             // Configure song data
-            $('.nowPlaying .song').text(songName).attr('title', songName);
-            $('.nowPlaying .artist').text(artistName).attr('title', artistName);
-            $('.nowPlaying .album').text(albumName).attr('title', albumName);
+            $('.nowPlaying .song').html(songName).attr('title', songName);
+            $('.nowPlaying .artist').html(artistName).attr('title', artistName);
+            $('.nowPlaying .album').html(albumName).attr('title', albumName);
             $('.nowPlaying .image').attr('src', albumImage);
 
             // Configure text time
