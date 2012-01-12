@@ -1,0 +1,27 @@
+Grooveshark control
+===================
+
+Chrome extension. With Grooveshark Control you can control Grooveshark
+on every page. Desktop notification of Grooveshark Control let you
+control Grooveshark everywhere on computer!
+
+ * Player control
+ * Now playing
+ * Playlist
+ * Radio
+ * Icon status
+ * Notification
+ * Options page
+
+How to install
+==============
+
+You can install it from Chrome web store here:
+http://chrome.google.com/webstore/detail/jjhlhcmfkkhnikmehakaceciakbppoij/
+
+How to develop
+==============
+
+Just extract it (if source is in archive), in Chrome (or Chromium) go to
+Extensions and check checkbox on top right corner 'Developer mode' and load
+it with clicking on the button 'Load unpacked extension'.
