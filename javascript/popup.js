@@ -1,4 +1,3 @@
-
 var Popup = new function(){
     var activeQueueSongID = -1;
 
@@ -31,7 +30,7 @@ var Popup = new function(){
                             $('<div class="item" />')
                                 .toggleClass('odd', index % 2 === 0)
                                 .toggleClass('active', item.queueSongID === activeId)
-                                .text(item.ArtistName + ' - ' + item.SongName)
+                                .html(item.ArtistName + ' - ' + item.SongName)
                                 .click(function () {
                                     userAction("playSongInQueue", [item.queueSongID])
                                 })
