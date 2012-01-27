@@ -1,4 +1,3 @@
-
 function restoreBooleanOption (storageKey, defaultValue, callback) {
     restoreGenericOption(storageKey, defaultValue, function(value){
         callback(value !== 'false');
@@ -53,11 +52,11 @@ function restoreOptions () {
 
 function saveOptions () {
     // Save notification
-    localStorage['showNotification'] = $('#showNotification').attr('checked') == 'checked';
+    localStorage['showNotification'] = $('#showNotification').is(':checked');
     localStorage['showNotificationForMiliseconds'] = $('#showNotificationForMiliseconds').val();
 
     // Save pin and left tab
-    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').attr('checked') == 'checked';
+    localStorage['prepareGrooveshark'] = $('#prepareGrooveshark').is(':checked');
     localStorage['prepareGroovesharkMode'] = $('#prepareGroovesharkMode').val();
 
     // Show the "Options saved" tag
