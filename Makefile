@@ -4,6 +4,7 @@ PYTHON=`which python2.7`
 
 CLOSURE_LIBRARY=libs/closure-library/
 CLOSURE_COMPILER=libs/closure-compiler.jar
+SELENIUM_SERVER=libs/selenium-server.jar
 
 CHROME_EXT_NAME=grooveshark-control
 CHROME_EXT_ZIP_ARCHIVE_NAME=$(CHROME_EXT_NAME).zip
