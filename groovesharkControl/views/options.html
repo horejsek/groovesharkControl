@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title i18n-text="optionsTitle"></title>
+        <link rel="stylesheet" href="../styles/options.css" type="text/css" />
+        <link rel="stylesheet" href="../styles/chrome/chrome.css" type="text/css" />
+        <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <h2 id="title" i18n-html="optionsTitle">
+        </h2>
+
+        <a href="https://github.com/horejsek/grooveshark-control/" target="gsc-github" id="github">
+            <img id="github" src="../images/github.png" />
+        </a>
+
+        <div id="body">
+            <table id="options">
+                <!-- General Options -->
+                <tr>
+                    <td colspan="3" class="title" i18n-text="optionsGeneralTitle"></td>
+                </tr>
+                <!-- Notification Options -->
+                <tr>
+                    <td class="enable"><input type="checkbox" id="showNotification" /></td>
+                    <td i18n-html="optionsGeneralNotificationsTime" colspan="2">
+                        <input type="text" id="showNotificationForMiliseconds" size="2" maxlength="5" />
+                    </td>
+                </tr>
+                <!-- Pin and left tab Options -->
+                <tr>
+                    <td class="enable"><input type="checkbox" id="prepareGrooveshark" /></td>
+                    <td i18n-html="optionsGeneralPrepareGrooveshark">
+                        <select id="prepareGroovesharkMode">
+                            <option value="onCreate" i18n-text="optionsGeneralPrepareGroovesharkOnCreate"></option>
+                            <option value="everytime" i18n-text="optionsGeneralPrepareGroovesharkEverytime"></option>
+                        </select>
+                    </td>
+                </tr>
+                <!-- Save options -->
+                <tr>
+                    <td colspan="3" class="save">
+                        <button onclick="saveOptions()" id="save" i18n-text="optionsSaveButton"></button>
+                        <span id="savePendings" i18n-text="optionsSavePendings"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+            <table id="features">
+                <tr><td class="title" i18n-text="optionsAboutTitle"></td></tr>
+                <tr><td i18n-text="optionsAboutPlayerControl"></td></tr>
+                <tr><td i18n-text="optionsAboutNowPlaying"></td></tr>
+                <tr><td i18n-text="optionsAboutPlaylist"></td></tr>
+                <tr><td i18n-text="optionsAboutRadio"></td></tr>
+                <tr><td i18n-text="optionsAboutIconStatus"></td></tr>
+                <tr><td i18n-text="optionsAboutNotification"></td></tr>
+            </table>
+
+            <br />
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="gsc-donate" id="donate-form">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHNwYJKoZIhvcNAQcEoIIHKDCCByQCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYAdJ+SmZBB7YISpJABu3iNctl8w293toh+BaxLITmQPqT5kJn7Fvc2rFgpNzvPsTT+22U1bj2xCRrIr1BkJQVyBg4wJoaPLqNHbJLeB7/3jn5OClYnDp/HL4w+tFRqfftLoTMd7yhr097Z2fxmsC+DmrDtLHGAoEeFy+V7UdSQ02TELMAkGBSsOAwIaBQAwgbQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIpKRvUBTK01OAgZDidu8hvtuZ3MmwgRo2Om26dc9B9OMxJDd60I8W4jzZbpI4u3PRctf08p3oKnBQ/uBqKQN4seE+GMWqkSy1wfWcstyulooqAgTz42A2sG+h0cs+wT/RfwREqXew5pMsVkoO3yUSCXgNphMJfs0A1ShgpUL+SnhkTYy2z4HwLaBOc55VOZtMlRpweN+kRT4rCPqgggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xMTA4MDIxODUwMDNaMCMGCSqGSIb3DQEJBDEWBBSqDRnbeQwABv5hXisR181LSa6MBTANBgkqhkiG9w0BAQEFAASBgDJwI4Y1cNKSbmMvoDqVg9Sep1V3gmaRWZpWgfKMi3Ka83AGkmrUybcoD0/076cw1XWB5x47GoXYvcSK1LunAa2fgTVb7+6I2Iweon8GZbTh5zJT7oxWiJXhDPmMWtdaaCwuNsyb42xoBBIC8vVqlKTEME0mKRE6291G4d3Ny/+X-----END PKCS7-----
+                ">
+                <input type="image" src="../images/donate.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" />
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                <span id="donate" i18n-text="donateIfLike"></span>
+            </form>
+
+            <div id="status" i18n-text="optionsSaved"></div>
+        </div>
+    </body>
+</html>

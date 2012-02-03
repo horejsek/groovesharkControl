@@ -1,0 +1,101 @@
+{
+    "extDescription":
+        {"message":        "Grooveshark control."
+        ,"description":    "Used on extension description."},
+
+    "songPrevious":
+        {"message":        "Previous song"
+        ,"description":    "Play the previous song."},
+    "songNext":
+        {"message":        "Next song"
+        ,"description":    "Play the next song."},
+
+    "songPlayPause":
+        {"message":        "Play/Pause"
+        ,"description":    "Play or pause the current song."},
+
+    "songShuffle":
+        {"message":        "Shuffle songs"
+        ,"description":    "Play songs randomly."},
+    "songLoop":
+        {"message":        "Loop songs"
+        ,"description":    "Control the songs looping."},
+    "songCrossfade":
+        {"message":        "Crossfade between songs"
+        ,"description":    "Enable the crossfade between songs."},
+
+    "playerPin":
+        {"message":        "Pin"
+        ,"description":    "Pin the player on the screen."},
+    "playerSite":
+        {"message":        "Go to Grooveshark"
+        ,"description":    "Change to Grooveshark tab."},
+
+    "ofTime":
+        {"message":        "of"
+        ,"description":    "Example: 1:17 of 3:40."},
+    "ofSong":
+        {"message":        "of"
+        ,"description":    "Example: 5 of 6."},
+
+    "radio":
+        {"message":        "Radio"
+        ,"description":    "Bottom of popup."},
+    "radioOff":
+        {"message":        "Off"
+        ,"description":    "Bottom of popup. Radio: Off."},
+
+    "liteBy":
+        {"message":        "by"
+        ,"description":    "Example: MusicName [by] Artist..."},
+
+    "optionsTitle":
+        {"message":        "Grooveshark Control Options"
+        ,"description":    "Title of options page."},
+
+    "optionsSaved":
+        {"message":        "Options saved"
+        ,"description":    "Show on save options."},
+    "optionsSaveButton":
+        {"message":        "Save"
+        ,"description":    "Button to save."},
+    "optionsSavePendings":
+        {"message":        "Some changes have not yet been saved."},
+
+    "optionsGeneralTitle":
+        {"message":        "General"
+        ,"description":    "Title of general options."},
+
+    "optionsGeneralNotificationsTime":
+        {"message":        "Show notification for %contents miliseconds."
+        ,"description":    "Show notifications timer. %contents is time input editor."},
+
+    "optionsGeneralPrepareGrooveshark":
+        {"message":        "Pin Grooveshark tab on left: %contents"
+        ,"description":    "On click, move Grooveshark tab to left and pin it."},
+    "optionsGeneralPrepareGroovesharkOnCreate":
+        {"message":        "only on starts Grooveshark"
+        ,"description":    "Small caps, please"},
+    "optionsGeneralPrepareGroovesharkEverytime":
+        {"message":        "everytime"
+        ,"description":    "Small caps, please"},
+
+    "optionsAboutTitle":
+        {"message":        "Features"
+        ,"description":    "Title of features/about on options."},
+    "optionsAboutPlayerControl":
+        {"message":        "Support to Player Control"},
+    "optionsAboutNowPlaying":
+        {"message":        "Support to Now Playing"},
+    "optionsAboutPlaylist":
+        {"message":        "Support to Playlist"},
+    "optionsAboutRadio":
+        {"message":        "Support to Radio"},
+    "optionsAboutIconStatus":
+        {"message":        "Support to Icon Status"},
+    "optionsAboutNotification":
+        {"message":        "Support to Notification"},
+
+    "donateIfLike":
+        {"message":        "If you like of this extension, please, pay me a beer! :p"}
+}
