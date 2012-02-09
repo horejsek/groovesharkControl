@@ -231,7 +231,7 @@ var GCInjector = new function () {
             currentSong.SongName,
             currentSong.ArtistName,
             currentSong.AlbumName,
-            "http://images.grooveshark.com/static/albums/90_" + currentSong.AlbumID + ".jpg",
+            "http://images.grooveshark.com/static/albums/90_" + currentSong.CoverArtFilename,
             playbackStatus.position,
             playbackStatus.duration,
             currentSong.fromLibrary,
