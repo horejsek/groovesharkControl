@@ -4,7 +4,7 @@ body {
     background: url('../images/background_nowPlaying.png') repeat-x -50px;
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
-    height: 85px;
+    height: 110px;
     cursor: default;
 }
 
@@ -60,14 +60,6 @@ body {
 }
 
 /* NOW PLAYING */
-
-.nowPlaying {
-    background: url('../images/background_nowPlaying.png') repeat-x;
-    height: 110px;
-    margin: 0px -6px 0px -6px;
-    padding: 0px 5px 5px;
-    position: relative;
-}
 
 .nowPlaying .song,
 .nowPlaying .artist,
