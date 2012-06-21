@@ -1,7 +1,6 @@
 {
     "name": "Grooveshark Control",
     "version": "1.10.6",
-
     "description": "__MSG_extDescription__",
 
     "icons": {
@@ -23,7 +22,7 @@
     ],
 
     "content_scripts": [{
-        "js": ["javascript/libs/jquery-1.6.min.js", "javascript/contentscript.js"],
+        "js": ["javascript/contentscript.min.js"],
         "matches": ["http://grooveshark.com/*", "http://preview.grooveshark.com/*"]
     }],
 

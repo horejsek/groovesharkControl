@@ -6,13 +6,13 @@
     <body onload="(new gc.Popup).init();">
         <div id="player" class="player">
             <button id="pin" class="unpin" onclick="showNotification(stay=true);" i18n-title="playerPin"></button>
-            <button id="shuffle" class="false" onclick="userAction('toggleShuffle');" i18n-title="songShuffle"></button>
-            <button id="loop" class="none" onclick="userAction('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
-            <button id="crossfade" class="false" onclick="userAction('toggleCrossfade');" i18n-title="songCrossfade"></button>
-            <button id="gotogrooveshark" onclick="goToGroovesharkTab();" i18n-title="playerSite"></button>
-            <button id="previous" onclick="userAction('previousSong');" i18n-title="songPrevious"></button>
-            <button id="next" onclick="userAction('nextSong');" i18n-title="songNext"></button>
-            <button id="playpause" class="play" onclick="userAction('playPause');" i18n-title="songPlayPause"></button>
+            <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
+            <button id="loop" class="none" onclick="gc.sendCommandToGrooveshark('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
+            <button id="crossfade" class="false" onclick="gc.sendCommandToGrooveshark('toggleCrossfade');" i18n-title="songCrossfade"></button>
+            <button id="gotogrooveshark" onclick="gc.goToGroovesharkTab();" i18n-title="playerSite"></button>
+            <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
+            <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
+            <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
         </div>
         <div id="nowPlaying" class="nowPlaying">
             <img class="image" />
@@ -29,10 +29,10 @@
                 <span i18n-text="ofSong"></span>
                 <span class="queueCountSongs"></span>
             </div>
-            <div class="library" onclick="userAction('toggleLibrary');"></div>
-            <div class="favorite" onclick="userAction('toggleFavorite');"></div>
-            <div class="smile disable" onclick="userAction('toggleSmile');"></div>
-            <div class="frown disable" onclick="userAction('toggleFrown');"></div>
+            <div class="library" onclick="gc.sendCommandToGrooveshark('toggleLibrary');"></div>
+            <div class="favorite" onclick="gc.sendCommandToGrooveshark('toggleFavorite');"></div>
+            <div class="smile disable" onclick="gc.sendCommandToGrooveshark('toggleSmile');"></div>
+            <div class="frown disable" onclick="gc.sendCommandToGrooveshark('toggleFrown');"></div>
             <div id="progressbar" class="progressbar">
                 <div class="left"></div>
                 <div class="elapsed"></div>

@@ -28,7 +28,7 @@ build: clean compile
 
 compile:
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
-	
+
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
@@ -38,7 +38,8 @@ compile:
 	    --input $(CHROME_EXT_JS_DIR)popup/popup.js \
 	    --input $(CHROME_EXT_JS_DIR)notification/notification.js \
 	    --input $(CHROME_EXT_JS_DIR)options/options.js \
-	    --output_mode compiled > $(CHROME_EXT_JS_DIR)groovesharkControl.min.js;
+	    --output_mode compiled \
+	    > $(CHROME_EXT_JS_DIR)groovesharkControl.min.js;
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
@@ -81,4 +82,3 @@ get-selenium-server:
 
 start-selenium-server:
 	java -jar $(SELENIUM_SERVER)
-

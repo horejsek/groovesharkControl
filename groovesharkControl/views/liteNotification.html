@@ -4,7 +4,7 @@
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
         <script type="text/javascript">var notification = new gc.Notification();</script>
     </head>
-    <body onload="notification.init();" onmouseover="notification.cancelClose();">
+    <body onload="(new gc.Notification).init();" onmouseover="notification.cancelClose();">
         <div class="nowPlaying">
             <div id="liteLine">
                 <div class="scrollingtext">
