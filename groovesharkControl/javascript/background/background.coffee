@@ -20,10 +20,14 @@ goog.scope ->
 
 
     gc.Background::init = ->
+        gc.injectGrooveshark()
         @reset()
         that = this
         chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
             that.update request
+        chrome.tabs.onRemoved.addListener (tabId, removeInfo) ->
+            gc.callIfGroovesharkTabIsNotOpen ->
+                that.reset()
 
     gc.Background::reset = ->
         @resetIcon()

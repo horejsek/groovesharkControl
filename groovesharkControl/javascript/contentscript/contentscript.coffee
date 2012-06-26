@@ -26,16 +26,23 @@ goog.require('goog.dom.query');
         sendData()
 
     sendData = ->
-        console.log
+        data =
             player: getPlayerOptions()
             playback: getPlaybackStatus()
             currentSong: getCurrentSongInformation()
             queue: getQueueInformation()
-        chrome.extension.sendRequest
-            player: getPlayerOptions()
-            playback: getPlaybackStatus()
-            currentSong: getCurrentSongInformation()
-            queue: getQueueInformation()
+        console.log 'send request', data
+        chrome.extension.sendRequest data, sendData_onRequest
+
+    sendData_onRequest = (request) ->
+        #  If no request (no one is listening), clean everything.
+        #  Probably somebody turned off this extension or extension crashed, so
+        #+ I need clean inteval and remove listener becouse if user turn extension
+        #+ on back, every command would be done twice.
+        if typeof request is 'undefined'
+            console.log 'clear interval & remove listener'
+            clearInterval dataCollectorIntervalId
+            chrome.extension.onRequest.removeListener listener
 
 
     getPlayerOptions = ->
@@ -198,13 +205,17 @@ goog.require('goog.dom.query');
     ###
 
 
-    setInterval dataCollector, delayInMiliseconds
+    dataCollectorIntervalId = setInterval dataCollector, delayInMiliseconds
 
-    chrome.extension.onRequest.addListener((request, sender, sendResponse) ->
-        if typeof request.command isnt 'undefined'
-            console.log 'onrequest', request
-            doCommand(request.command, request.args)
-            sendData()
-    )
+    listener = (request, sender, sendResponse) ->
+        if typeof request.command is 'undefined'
+            return
+        console.log 'on request', request
+        doCommand request.command, request.args
+        #  I need immediately send data back to the other pieces of extension,
+        #+ because some state (playing, current song, etc.) can be changed and
+        #+ I want to show it immediately, not after couple of miliseconds.
+        sendData()
+    chrome.extension.onRequest.addListener listener
 
 )()

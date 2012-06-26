@@ -9,9 +9,9 @@ goog.provide('gc')
     groovesharkPreviewUrl = 'http://preview.grooveshark.com/'
 
 
-    #gc.injectGrooveshark = ->
-    #    callWithGroovesharkTab (tab) ->
-    #        chrome.tabs.executeScript tab.id, file: 'javascript/contentscript.min.js'
+    gc.injectGrooveshark = ->
+        callWithGroovesharkTabIfIsOpened (tab) ->
+            chrome.tabs.executeScript tab.id, file: 'javascript/contentscript.min.js'
 
 
     gc.createGroovesharkTab = ->
@@ -47,8 +47,14 @@ goog.provide('gc')
         minutes + ':' + seconds
 
 
+    gc.callIfGroovesharkTabIsNotOpen = (callback) ->
+        pass = ->
+        callWithGroovesharkTab pass, callback
+
+    callWithGroovesharkTabIfIsOpened = (callback) ->
+        callWithGroovesharkTab callback, ->
+
     callWithGroovesharkTab = (callback, callbackIfGroovesharkIsNotOpen) ->
-        console.log callbackIfGroovesharkIsNotOpen
         chrome.windows.getAll populate: true, (windows) ->
             for win in windows
                 for tab in win.tabs when isGroovesharkUrl tab.url
