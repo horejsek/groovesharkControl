@@ -2,10 +2,11 @@
     <head>
         <link rel="stylesheet" href="../styles/popup.css" type="text/css">
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
+        <script type="text/javascript">var popup = new gc.Popup();</script>
     </head>
-    <body onload="(new gc.Popup).init();">
+    <body onload="popup.init();">
         <div id="player" class="player">
-            <button id="pin" class="unpin" onclick="showNotification(stay=true);" i18n-title="playerPin"></button>
+            <button id="pin" class="unpin" onclick="gc.showNotification(stay=true);" i18n-title="playerPin"></button>
             <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
             <button id="loop" class="none" onclick="gc.sendCommandToGrooveshark('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
             <button id="crossfade" class="false" onclick="gc.sendCommandToGrooveshark('toggleCrossfade');" i18n-title="songCrossfade"></button>
@@ -37,6 +38,7 @@
                 <div class="left"></div>
                 <div class="elapsed"></div>
                 <div class="right"></div>
+                <div class="goog-slider-thumb"></div>
             </div>
         </div>
         <div id="playlist" class="playlist"></div>

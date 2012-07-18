@@ -34,6 +34,8 @@ compile:
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)libs/closure-i18n.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/groovesharkControl.js \
+	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/progressbar.js \
+	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/viewUpdater.js \
 	    --input $(CHROME_EXT_JS_DIR)background/background.js \
 	    --input $(CHROME_EXT_JS_DIR)popup/popup.js \
 	    --input $(CHROME_EXT_JS_DIR)notification/notification.js \
@@ -44,7 +46,8 @@ compile:
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)contentscript/contentscript.js \
-	    --output_mode compiled > $(CHROME_EXT_JS_DIR)contentscript.min.js;
+	    --output_mode compiled \
+	    > $(CHROME_EXT_JS_DIR)contentscript.min.js;
 
 test:
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)

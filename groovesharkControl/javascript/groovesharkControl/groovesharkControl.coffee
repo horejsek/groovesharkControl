@@ -69,4 +69,23 @@ goog.provide('gc')
     isGroovesharkUrl = (url) ->
         url.indexOf(groovesharkUrl) == 0 || url.indexOf(groovesharkPreviewUrl) == 0
 
+
+    gc.showNotification = (stay) ->
+        createNotification 'notification', stay
+
+    gc.showLiteNotification = (stay) ->
+        createNotification 'liteNotification', stay
+
+    createNotification = (view, stay) ->
+        if chrome.extension.getViews(type: 'notification').length > 1
+            return
+        notification = webkitNotifications.createHTMLNotification '../views/'+view+'.html'
+        notification.show()
+
+        cancelCountDownOfCloseOfNotification = () ->
+            chrome.extension.getViews(type: 'notification').forEach((win) ->
+                win.notification.cancelCountDownOfWindowClose()
+            )
+        setTimeout cancelCountDownOfCloseOfNotification, 100 if stay
+
 )()

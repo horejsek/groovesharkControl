@@ -32,6 +32,7 @@ goog.scope ->
     gc.Background::reset = ->
         @resetIcon()
         @resetTitle()
+        @lastSongIndex = undefined
 
 
     gc.Background::update = (request) ->
@@ -42,6 +43,7 @@ goog.scope ->
         else
             @setIconByPlayback request.playback
             @setTitleBySong request.currentSong
+            @notification request.queue.activeSongIndex, request.playback.percentage
 
 
     gc.Background::resetIcon = ->
@@ -77,6 +79,20 @@ goog.scope ->
 
     gc.Background::setTitle = (title) ->
         chrome.browserAction.setTitle title: title
+
+
+    gc.Background::notification = (songIndex) ->
+        if songIndex is false
+            @lastSongIndex = undefined
+            return
+        if songIndex is @lastSongIndex
+            return
+
+        if songIndex && @lastSongIndex && songIndex != @lastSongIndex
+            gc.showNotification()
+
+        @lastSongIndex = songIndex
+
 
 
     return

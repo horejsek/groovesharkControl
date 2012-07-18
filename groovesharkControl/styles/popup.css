@@ -6,7 +6,6 @@ body {
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
     cursor: default;
-    display: none;
 }
 
 /* PLAYER OPTIONS */
@@ -224,11 +223,13 @@ body {
     height: 9px;
 }
 
-#progressbar a {
+#progressbar .goog-slider-thumb {
     background: url('../images/progressBar/scrubber.png') no-repeat;
     width: 15px;
     height: 16px;
     cursor: pointer;
+    position: absolute;
+    top: -3px;
 }
 
 /* PLAYLIST */

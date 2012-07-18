@@ -108,11 +108,11 @@ div.scrollingtext{
     height: 9px;
 }
 
-.progressbar a {
+.progressbar .goog-slider-thumb {
     background: url('../images/progressBar/scrubber.png') no-repeat !important;
     width: 15px !important;
     height: 16px !important;
     cursor: pointer !important;
+    position: absolute !important;
+    top: -3px !important;
 }
-
-

@@ -2,9 +2,9 @@
     <head>
         <link rel="stylesheet" href="../styles/liteNotification.css" type="text/css">
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
-        <script type="text/javascript">var notification = new gc.Notification();</script>
+        <script type="text/javascript">var notification = new gc.Notification(true);</script>
     </head>
-    <body onload="(new gc.Notification).init();" onmouseover="notification.cancelClose();">
+    <body onload="notification.init();" onmouseover="notification.cancelCountDownOfWindowClose();">
         <div class="nowPlaying">
             <div id="liteLine">
                 <div class="scrollingtext">
@@ -17,18 +17,19 @@
                     </span>
                 </div>
             </div>
-            <div class="progressbar">
+            <div id="progressbar" class="progressbar">
                 <div class="left"></div>
                 <div class="elapsed"></div>
                 <div class="right"></div>
+                <div class="goog-slider-thumb"></div>
             </div>
         </div>
         <div class="player">
-            <button id="previous" onclick="userAction('previousSong');" i18n-title="songPrevious"></button>
-            <button id="playpause" class="play" onclick="userAction('playPause');" i18n-title="songPlayPause"></button>
-            <button id="next" onclick="userAction('nextSong');" i18n-title="songNext"></button>
+            <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
+            <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
+            <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
         </div>
 
-        <div id="switchToFullNotification"></div>
+        <div id="switchToFullNotification" onclick="gc.showNotification(true); window.close();"></div>
     </body>
 </html>
