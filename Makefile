@@ -10,6 +10,8 @@ CHROME_EXT_NAME=grooveshark-control
 CHROME_EXT_ZIP_ARCHIVE_NAME=$(CHROME_EXT_NAME).zip
 CHROME_EXT_JS_DIR=groovesharkControl/javascript/
 CHROME_EXT_COFFEE_SOURCES=$(CHROME_EXT_JS_DIR)*/*.coffee
+CHROME_EXT_LOCALES_DIR=groovesharkControl/_locales/
+CHROME_EXT_COFFEE_LOCALES=$(CHROME_EXT_LOCALES_DIR)*/*.coffee
 
 all:
 	@echo "make build - Create zip archive for Chrome"
@@ -26,19 +28,20 @@ build: clean compile
 	mv /tmp/$(CHROME_EXT_ZIP_ARCHIVE_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)
 	rm -rf /tmp/$(CHROME_EXT_NAME)
 
-compile:
+compile: compile-jsons
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
 
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)libs/closure-i18n.js \
+	    --input $(CHROME_EXT_JS_DIR)libs/progressbar.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/groovesharkControl.js \
-	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/progressbar.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/viewUpdater.js \
 	    --input $(CHROME_EXT_JS_DIR)background/background.js \
 	    --input $(CHROME_EXT_JS_DIR)popup/popup.js \
 	    --input $(CHROME_EXT_JS_DIR)notification/notification.js \
+	    --input $(CHROME_EXT_JS_DIR)options/settings.js \
 	    --input $(CHROME_EXT_JS_DIR)options/options.js \
 	    --output_mode compiled \
 	    > $(CHROME_EXT_JS_DIR)groovesharkControl.min.js;
@@ -48,6 +51,12 @@ compile:
 	    --input $(CHROME_EXT_JS_DIR)contentscript/contentscript.js \
 	    --output_mode compiled \
 	    > $(CHROME_EXT_JS_DIR)contentscript.min.js;
+
+compile-jsons:
+	coffee -pb groovesharkControl/manifest.coffee > groovesharkControl/manifest.json
+	coffee -cb $(CHROME_EXT_COFFEE_LOCALES)
+	for f in `find $(CHROME_EXT_LOCALES_DIR) -name *.js`; do mv $$f $$f'on'; done
+	sed -i "s/^(//;s/);$$//" groovesharkControl/*.json $(CHROME_EXT_LOCALES_DIR)*/*.json
 
 test:
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
@@ -61,6 +70,8 @@ test:
 
 clean:
 	rm -rf /tmp/$(CHROME_EXT_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)
+	rm -f groovesharkControl/manifest.json
+	find $(CHROME_EXT_LOCALES_DIR) -type f -name *.json | xargs rm -f
 	find $(CHROME_EXT_JS_DIR) -type f -name *.js | xargs rm -f
 
 localdev: install-git-hooks init-submodules get-selenium-server install-libs

@@ -1,5 +1,5 @@
 
-goog.provide('gc')
+goog.provide 'gc'
 
 
 

@@ -1,11 +1,10 @@
 
-goog.provide('gc.Popup')
+goog.provide 'gc.Popup'
 
-goog.require('goog.dom')
-goog.require('goog.style')
-goog.require('gc')
-goog.require('gc.ViewUpdater')
-goog.require('gc.Progressbar')
+goog.require 'goog.dom'
+goog.require 'goog.style'
+goog.require 'gc'
+goog.require 'gc.ViewUpdater'
 
 
 

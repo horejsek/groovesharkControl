@@ -2,3 +2,4 @@ libs/selenium-server.jar
 *.komodo*
 *.zip
 *.js
+*.json

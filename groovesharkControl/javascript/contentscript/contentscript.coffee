@@ -1,6 +1,6 @@
 
-goog.require('goog.dom');
-goog.require('goog.dom.query');
+goog.require 'goog.dom'
+goog.require 'goog.dom.query'
 
 
 

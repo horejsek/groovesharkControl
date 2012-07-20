@@ -1,5 +1,5 @@
 
-goog.provide('gc.Background')
+goog.provide 'gc.Background'
 
 
 
@@ -22,9 +22,14 @@ goog.scope ->
     gc.Background::init = ->
         gc.injectGrooveshark()
         @reset()
+        @initListeners()
+
+    gc.Background::initListeners = () ->
         that = this
+
         chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
             that.update request
+
         chrome.tabs.onRemoved.addListener (tabId, removeInfo) ->
             gc.callIfGroovesharkTabIsNotOpen ->
                 that.reset()

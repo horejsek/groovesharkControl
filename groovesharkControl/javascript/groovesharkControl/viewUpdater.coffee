@@ -1,9 +1,8 @@
 
-goog.provide('gc.ViewUpdater')
+goog.provide 'gc.ViewUpdater'
 
-goog.require('goog.dom')
-goog.require('goog.style')
-goog.require('gc')
+goog.require 'goog.dom'
+goog.require 'gc'
 
 
 
@@ -30,6 +29,7 @@ goog.scope ->
 
 
     gc.ViewUpdater::initProgressbar = () ->
+        that = this
         @progressbar = new gc.Progressbar()
         @progressbar.init 'progressbar', () ->
             gc.sendCommandToGrooveshark 'seekTo', seekTo: that.progressbar.getValue()

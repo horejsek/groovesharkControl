@@ -1,10 +1,9 @@
 
-goog.provide('gc.Progressbar')
+goog.provide 'gc.Progressbar'
 
-goog.require('goog.dom')
-goog.require('goog.ui.Component');
-goog.require('goog.ui.Slider');
-goog.require('gc')
+goog.require 'goog.dom'
+goog.require 'goog.ui.Component'
+goog.require 'goog.ui.Slider'
 
 
 

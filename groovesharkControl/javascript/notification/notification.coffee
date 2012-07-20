@@ -1,11 +1,9 @@
 
-goog.provide('gc.Notification')
+goog.provide 'gc.Notification'
 
-goog.require('goog.dom')
-goog.require('goog.style')
-goog.require('gc')
-goog.require('gc.ViewUpdater')
-goog.require('gc.Progressbar')
+goog.require 'goog.dom'
+goog.require 'goog.style'
+goog.require 'gc.ViewUpdater'
 
 
 
