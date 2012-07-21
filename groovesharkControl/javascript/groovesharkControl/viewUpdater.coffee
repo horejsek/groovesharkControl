@@ -2,6 +2,7 @@
 goog.provide 'gc.ViewUpdater'
 
 goog.require 'goog.dom'
+goog.require 'goog.events'
 goog.require 'gc'
 
 
@@ -55,25 +56,23 @@ goog.scope ->
 
     VU::updateCurrentSongInformation = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.setProperties(
-            goog.dom.getElementByClass('song', nowPlayingElm)
-            textContent: song.songName
-            title: song.songName
-        )
-        goog.dom.setProperties(
-            goog.dom.getElementByClass('artist', nowPlayingElm)
-            textContent: song.artistName
-            title: song.artistName
-        )
-        goog.dom.setProperties(
-            goog.dom.getElementByClass('album', nowPlayingElm)
-            textContent: song.albumName
-            title: song.albumName
-        )
+
+        elm = goog.dom.getElementByClass 'song', nowPlayingElm
+        goog.dom.setProperties elm, textContent: song.songName, title: song.songName
+
+        elm = goog.dom.getElementByClass 'artist', nowPlayingElm
+        goog.dom.setProperties elm, textContent: song.artistName, title: song.artistName
+        @_addLink elm, () -> gc.goToPageWithArtist song.artistId
+
+        elm = goog.dom.getElementByClass('album', nowPlayingElm)
+        goog.dom.setProperties elm, textContent: song.albumName, title: song.albumName
+        @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongImage = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.getElementByClass('image', nowPlayingElm).src = song.albumImage
+        elm = goog.dom.getElementByClass 'image', nowPlayingElm
+        elm.src = song.albumImage
+        @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongOptions = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
@@ -81,6 +80,10 @@ goog.scope ->
         goog.dom.classes.enable goog.dom.getElementByClass('favorite', nowPlayingElm), 'disable', !song.isFavorite
         goog.dom.classes.enable goog.dom.getElementByClass('smile', nowPlayingElm), 'active', song.isSmile
         goog.dom.classes.enable goog.dom.getElementByClass('frown', nowPlayingElm), 'active', song.isFrown
+
+    VU::_addLink = (elm, callback) ->
+        goog.events.removeAll elm
+        goog.events.listen elm, goog.events.EventType.CLICK, callback
 
 
     # Playback.

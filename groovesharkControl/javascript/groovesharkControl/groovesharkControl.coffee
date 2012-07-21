@@ -46,6 +46,22 @@ goog.require 'gc.Settings'
                     chrome.tabs.move tab.id, index: 0
 
 
+    # Links.
+
+
+    gc.goToPageWithArtist = (artistId) ->
+        goToPage 'http://grooveshark.com/#!/artist//' + artistId
+
+    gc.goToPageWithAlbum = (albumId) ->
+        goToPage 'http://grooveshark.com/#!/album//' + albumId
+
+    goToPage = (url) ->
+        gc.goToGroovesharkTab()
+        callWithGroovesharkTab (tab) ->
+            if tab.url isnt url
+                chrome.tabs.update tab.id, url: url
+
+
     # Commands.
 
 

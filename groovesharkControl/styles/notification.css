@@ -71,6 +71,12 @@ body {
     position: relative;
 }
 
+.nowPlaying .artist,
+.nowPlaying .album,
+.nowPlaying .image {
+    cursor: pointer;
+}
+
 .nowPlaying .song,
 .nowPlaying .artist,
 .nowPlaying .album {

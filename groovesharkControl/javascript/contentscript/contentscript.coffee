@@ -81,7 +81,9 @@ goog.require 'goog.dom.query'
 
         songId: currentSong.SongID
         songName: currentSong.SongName
+        artistId: currentSong.ArtistID
         artistName: currentSong.ArtistName
+        albumId: currentSong.AlbumID
         albumName: currentSong.AlbumName
         albumImage: "http://images.grooveshark.com/static/albums/90_" + currentSong.CoverArtFilename
         fromLibrary: currentSong.fromLibrary
