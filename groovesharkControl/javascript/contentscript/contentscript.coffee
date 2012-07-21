@@ -106,7 +106,9 @@ goog.require 'goog.dom.query'
             songs.push
                 songId: song.SongID
                 songName: song.SongName
+                artistId: song.ArtistID
                 artistName: song.ArtistName
+                albumId: song.AlbumID
                 albumName: song.AlbumName
                 queueSongId: song.queueSongID
 
