@@ -115,5 +115,5 @@ div#status {
     width: 830px;
     padding: 8px 5px 8px;
     border-radius: 0 0 10px 10px;
-    display: none;
+    opacity: 0;
 }

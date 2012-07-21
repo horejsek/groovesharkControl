@@ -14,26 +14,33 @@ goog.inherits gc.Notification, gc.ViewUpdater
 
 
 goog.scope ->
-    gc.Notification::init = () ->
+    `var NTF = gc.Notification`
+
+    NTF::init = () ->
         @initListeners()
         @initProgressbar()
         @startCountDown()
 
 
-    gc.Notification::startCountDown = () ->
+    NTF::startCountDown = () ->
+        howLongShowNotification = @howLongShowNotification()
         startTime = (new Date()).getTime()
         fc = () ->
-            percent = Math.min(100, 100 / 5000 * ((new Date()).getTime() - startTime))
+            percent = Math.min(100, 100 / howLongShowNotification * ((new Date()).getTime() - startTime))
             window.close() if percent is 100
             goog.style.setStyle goog.dom.getElement('countDown'), 'width': (100 - percent) + '%'
         @timer = setInterval fc, 50
 
-    gc.Notification::cancelCountDownOfWindowClose = () ->
+    NTF::howLongShowNotification = () ->
+        settings = new gc.Settings()
+        settings.showNotificationForMiliseconds
+
+    NTF::cancelCountDownOfWindowClose = () ->
         clearInterval @timer if @timer isnt false
         goog.style.setStyle goog.dom.getElement('countDown'), 'display': 'none'
 
 
-    gc.Notification::update = (request) ->
+    NTF::update = (request) ->
         # If now isn't playing any song, close notification.
         if request.currentSong is undefined
             window.close()

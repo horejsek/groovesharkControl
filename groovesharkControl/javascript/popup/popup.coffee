@@ -9,17 +9,26 @@ goog.require 'gc.ViewUpdater'
 
 
 gc.Popup = ->
+    @lastSongIndex = undefined
 goog.inherits gc.Popup, gc.ViewUpdater
 
 
 
 goog.scope ->
-    gc.Popup::init = ->
+    `var PU = gc.Popup`
+
+    PU::init = ->
         @initListeners()
         @initProgressbar()
 
+        if gc.isShowedNotification()
+            @hidePin()
 
-    gc.Popup::update = (request) ->
+    PU::hidePin = () ->
+        goog.dom.getElement('pin').style.display = 'none'
+
+
+    PU::update = (request) ->
         # If now isn't playing any song, go to Grooveshark tab and close popup.
         if request.currentSong is undefined
             gc.goToGroovesharkTab()
@@ -30,6 +39,19 @@ goog.scope ->
         @updateCurrentSong request.currentSong
         @updatePlayback request.playback
         @updateQueue request.queue
+        @scrollToActiveSongInQueue request.queue.activeSongIndex
+        @lastSongIndex = request.queue.activeSongIndex
+
+
+    PU::scrollToActiveSongInQueue = (songIndex) ->
+        if songIndex is @lastSongIndex
+            return
+
+        queueElm = goog.dom.getElement 'playlist'
+        activeElm = goog.dom.getElementByClass 'active', queueElm
+        scrollTo = activeElm.offsetTop - (queueElm.offsetHeight / 4) - queueElm.offsetTop
+        queueElm.scrollTop = if scrollTo > 0 then scrollTo else 0
+
 
 
     return

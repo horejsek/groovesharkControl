@@ -4,28 +4,31 @@ goog.provide 'gc.Background'
 
 
 gc.Background = ->
+    @lastSongIndex = undefined
 
 
 
 goog.scope ->
-    gc.Background.ICONS =
+    `var BG = gc.Background`
+
+    BG.ICONS =
         disabled: '../images/backgroundIcons/disabled.png'
         playing: '../images/backgroundIcons/playing.png'
         pause: '../images/backgroundIcons/pause.png'
 
-    gc.Background.playImage = new Image()
-    gc.Background.playImage.src = gc.Background.ICONS.playing
-    gc.Background.pauseImage = new Image()
-    gc.Background.pauseImage.src = gc.Background.ICONS.pause
+    BG.playImage = new Image()
+    BG.playImage.src = BG.ICONS.playing
+    BG.pauseImage = new Image()
+    BG.pauseImage.src = BG.ICONS.pause
 
 
-    gc.Background::init = ->
+    BG::init = ->
         gc.injectGrooveshark()
         @reset()
         @initListeners()
 
-    gc.Background::initListeners = () ->
-        that = this
+    BG::initListeners = () ->
+        that = @
 
         chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
             that.update request
@@ -34,33 +37,35 @@ goog.scope ->
             gc.callIfGroovesharkTabIsNotOpen ->
                 that.reset()
 
-    gc.Background::reset = ->
+    BG::reset = ->
         @resetIcon()
         @resetTitle()
         @lastSongIndex = undefined
 
 
-    gc.Background::update = (request) ->
+    BG::update = (request) ->
         console.log request
 
+        gc.pinGroovesharkTab()
         if request.playback.status is 'UNAVAILABLE'
             @reset()
         else
             @setIconByPlayback request.playback
             @setTitleBySong request.currentSong
-            @notification request.queue.activeSongIndex, request.playback.percentage
+            @notification request.queue.activeSongIndex
+            @lastSongIndex = request.queue.activeSongIndex
 
 
-    gc.Background::resetIcon = ->
-        chrome.browserAction.setIcon path: gc.Background.ICONS.disabled
+    BG::resetIcon = ->
+        chrome.browserAction.setIcon path: BG.ICONS.disabled
 
-    gc.Background::setIconByPlayback = (playback) ->
+    BG::setIconByPlayback = (playback) ->
         p19 = Math.round(playback.percentage / (100 / 19))
-        image = if playback.status is 'PLAYING' then gc.Background.playImage else gc.Background.pauseImage
+        image = if playback.status is 'PLAYING' then BG.playImage else BG.pauseImage
         chrome.browserAction.setIcon
             imageData: @createIcon image, p19
 
-    gc.Background::createIcon = (backgroundImage, percent) ->
+    BG::createIcon = (backgroundImage, percent) ->
         canvas = goog.dom.getElement 'canvas'
         context = canvas.getContext '2d'
 
@@ -76,27 +81,21 @@ goog.scope ->
         context.getImageData 0, 0, 19, 19
 
 
-    gc.Background::resetTitle = ->
+    BG::resetTitle = ->
         @setTitle 'Grooveshark Control'
 
-    gc.Background::setTitleBySong = (song) ->
+    BG::setTitleBySong = (song) ->
         @setTitle song.songName + ' - ' + song.artistName
 
-    gc.Background::setTitle = (title) ->
+    BG::setTitle = (title) ->
         chrome.browserAction.setTitle title: title
 
 
-    gc.Background::notification = (songIndex) ->
-        if songIndex is false
-            @lastSongIndex = undefined
-            return
-        if songIndex is @lastSongIndex
+    BG::notification = (songIndex) ->
+        if songIndex is false || songIndex is undefined || @lastSongIndex is false || @lastSongIndex is undefined || songIndex is @lastSongIndex
             return
 
-        if songIndex && @lastSongIndex && songIndex != @lastSongIndex
-            gc.showNotification()
-
-        @lastSongIndex = songIndex
+        gc.showNotification()
 
 
 

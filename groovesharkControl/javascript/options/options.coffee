@@ -4,6 +4,7 @@ goog.provide 'gc.Options'
 goog.require 'goog.dom'
 goog.require 'goog.dom.query'
 goog.require 'goog.events'
+goog.require 'goog.fx.dom'
 goog.require 'goog.style'
 goog.require 'gc.Settings'
 
@@ -16,13 +17,15 @@ goog.inherits gc.Options, gc.Settings
 
 
 goog.scope ->
-    gc.Options::init = () ->
+    `var OPT = gc.Options`
+
+    OPT::init = () ->
         @initListeners()
         @prepareForm()
         @hideSavePendings()
 
 
-    gc.Options::initListeners = () ->
+    OPT::initListeners = () ->
         that = this
 
         for attributeId in @_getAttributeIds()
@@ -34,13 +37,13 @@ goog.scope ->
             elm = goog.dom.getElement attributeId
             goog.events.listen elm, goog.events.EventType.CHANGE, goog.bind(@_mainCheckboxChangeEvent, this)
 
-    gc.Options::_mainCheckboxChangeEvent = (e) ->
+    OPT::_mainCheckboxChangeEvent = (e) ->
         tr = e.target.parentElement.parentElement
         goog.dom.classes.enable tr, 'enabled', e.target.checked
         for elm in goog.dom.query 'input:not([type="checkbox"]), select, textarea', tr
             elm.disabled = !e.target.checked
 
-    gc.Options::_attributeChangeEvent = (e) ->
+    OPT::_attributeChangeEvent = (e) ->
         elm = e.target
         if elm.type is 'checkbox'
             @[elm.id] = elm.checked
@@ -48,21 +51,21 @@ goog.scope ->
             @[elm.id] = elm.value
 
 
-    gc.Options::prepareForm = () ->
+    OPT::prepareForm = () ->
         @_setCheckbox 'showNotification'
         @_setInput 'showNotificationForMiliseconds'
         @_setCheckbox 'prepareGrooveshark'
         @_setInput 'prepareGroovesharkMode'
 
-    gc.Options::_setCheckbox = (attributeId) ->
+    OPT::_setCheckbox = (attributeId) ->
         @_setFormElement attributeId, (elm, value) ->
             elm.checked = value
 
-    gc.Options::_setInput = (attributeId) ->
+    OPT::_setInput = (attributeId) ->
         @_setFormElement attributeId, (elm, value) ->
             elm.value = value
 
-    gc.Options::_setFormElement = (attributeId, setter) ->
+    OPT::_setFormElement = (attributeId, setter) ->
         evt = document.createEvent 'HTMLEvents'
         evt.initEvent 'change'
         elm = goog.dom.getElement(attributeId)
@@ -70,30 +73,30 @@ goog.scope ->
         elm.dispatchEvent evt
 
 
-    gc.Options::save = () ->
+    OPT::save = () ->
         goog.base this, 'save'
         @hideSavePendings()
         @showOptionsSaved()
 
-    gc.Options::saveDefaults = () ->
+    OPT::saveDefaults = () ->
         goog.base this, 'saveDefaults'
-        @restore()
         @prepareForm()
         @hideSavePendings()
         @showOptionsSaved()
 
 
-    gc.Options::showSavePendings = ->
+    OPT::showSavePendings = ->
         goog.dom.getElement('savePendings').style.display = 'block'
 
-    gc.Options::hideSavePendings = ->
+    OPT::hideSavePendings = ->
         goog.dom.getElement('savePendings').style.display = 'none'
 
 
-    gc.Options::showOptionsSaved = () ->
+    OPT::showOptionsSaved = () ->
         elm = goog.dom.getElement 'status'
-        elm.style.opacity = 1
-        #TODO: fadein, delay, fadeout
+        (new goog.fx.dom.FadeIn elm, 400).play()
+        fadeOut = () -> (new goog.fx.dom.FadeOut elm, 400).play()
+        setTimeout fadeOut, 2000
 
 
 

@@ -4,7 +4,6 @@ import selenium
 import os
 
 
-
 class ClosureWithSeleniumTestType(type):
     def __new__(cls, name, bases, attrs):
         cls.createTestMethods(attrs)
@@ -22,7 +21,7 @@ class ClosureWithSeleniumTestType(type):
 
 
 
-class SpecialCharacterTest(unittest.TestCase):
+class GroovesharkControlTest(unittest.TestCase):
     __metaclass__ = ClosureWithSeleniumTestType
 
     # Must be call by Makefile on root of repository.

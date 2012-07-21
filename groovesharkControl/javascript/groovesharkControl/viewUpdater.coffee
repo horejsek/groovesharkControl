@@ -11,11 +11,12 @@ gc.ViewUpdater = ->
 
 
 goog.scope ->
+    `var VU = gc.ViewUpdater`
 
     # Init.
 
 
-    gc.ViewUpdater::initListeners = () ->
+    VU::initListeners = () ->
         that = this
 
         chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
@@ -28,7 +29,7 @@ goog.scope ->
                 window.close()
 
 
-    gc.ViewUpdater::initProgressbar = () ->
+    VU::initProgressbar = () ->
         that = this
         @progressbar = new gc.Progressbar()
         @progressbar.init 'progressbar', () ->
@@ -38,7 +39,7 @@ goog.scope ->
     # Player options.
 
 
-    gc.ViewUpdater::updatePlayerOptions = (player) ->
+    VU::updatePlayerOptions = (player) ->
         goog.dom.classes.set goog.dom.getElement('shuffle'), player.shuffle
         goog.dom.classes.set goog.dom.getElement('loop'), player.loop
         goog.dom.classes.set goog.dom.getElement('crossfade'), player.crossfade
@@ -47,12 +48,12 @@ goog.scope ->
     # Current song.
 
 
-    gc.ViewUpdater::updateCurrentSong = (song) ->
+    VU::updateCurrentSong = (song) ->
         @updateCurrentSongInformation song
         @updateCurrentSongImage song
         @updateCurrentSongOptions song
 
-    gc.ViewUpdater::updateCurrentSongInformation = (song) ->
+    VU::updateCurrentSongInformation = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
         goog.dom.setProperties(
             goog.dom.getElementByClass('song', nowPlayingElm)
@@ -70,11 +71,11 @@ goog.scope ->
             title: song.albumName
         )
 
-    gc.ViewUpdater::updateCurrentSongImage = (song) ->
+    VU::updateCurrentSongImage = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
         goog.dom.getElementByClass('image', nowPlayingElm).src = song.albumImage
 
-    gc.ViewUpdater::updateCurrentSongOptions = (song) ->
+    VU::updateCurrentSongOptions = (song) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
         goog.dom.classes.enable goog.dom.getElementByClass('library', nowPlayingElm), 'disable', !song.fromLibrary
         goog.dom.classes.enable goog.dom.getElementByClass('favorite', nowPlayingElm), 'disable', !song.isFavorite
@@ -85,36 +86,36 @@ goog.scope ->
     # Playback.
 
 
-    gc.ViewUpdater::updatePlayback = (playback) ->
+    VU::updatePlayback = (playback) ->
         @updatePlaybackTimes playback
         @updatePlaybackProgressbar playback
         @updatePlaybackOptions playback
 
-    gc.ViewUpdater::updatePlaybackTimes = (playback) ->
+    VU::updatePlaybackTimes = (playback) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.getElementByClass('timeElapsed', nowPlayingElm).textContent = gc.msToHumanTime playback.position
-        goog.dom.getElementByClass('timeDuration', nowPlayingElm).textContent = gc.msToHumanTime playback.duration
+        goog.dom.getElementByClass('timeElapsed', nowPlayingElm).textContent = @msToHumanTime playback.position
+        goog.dom.getElementByClass('timeDuration', nowPlayingElm).textContent = @msToHumanTime playback.duration
 
-    gc.ViewUpdater::updatePlaybackProgressbar = (playback) ->
+    VU::updatePlaybackProgressbar = (playback) ->
         @progressbar.setValue playback.percentage
 
-    gc.ViewUpdater::updatePlaybackOptions = (playback) ->
+    VU::updatePlaybackOptions = (playback) ->
         goog.dom.classes.set goog.dom.getElement('playpause'), if playback.status is 'PLAYING' then 'pause' else 'play'
 
 
     # Queue.
 
 
-    gc.ViewUpdater::updateQueue = (queue) ->
+    VU::updateQueue = (queue) ->
         @updateQueueInformation queue
         @updateQueueSongs queue
 
-    gc.ViewUpdater::updateQueueInformation = (queue) ->
+    VU::updateQueueInformation = (queue) ->
         nowPlayingElm = goog.dom.getElement 'nowPlaying'
         goog.dom.getElementByClass('queuePosition', nowPlayingElm).textContent = queue.activeSongIndex + 1
         goog.dom.getElementByClass('queueCountSongs', nowPlayingElm).textContent = queue.songs.length
 
-    gc.ViewUpdater::updateQueueSongs = (queue) ->
+    VU::updateQueueSongs = (queue) ->
         playlistElm = goog.dom.getElement('playlist')
         playlistElm.textContent = ''
 
@@ -127,8 +128,20 @@ goog.scope ->
             goog.dom.classes.enable itemElm, 'active', song.queueSongId is queue.activeSongId
             goog.dom.appendChild playlistElm, itemElm
 
-    gc.ViewUpdater::createOnclickActionForPlaylist = (queueSongId) ->
+    VU::createOnclickActionForPlaylist = (queueSongId) ->
         -> gc.sendCommandToGrooveshark 'playSongInQueue', queueSongId: queueSongId
+
+
+    # Misc.
+
+
+    VU::msToHumanTime = (ms) ->
+        s = ms / 1000
+        minutes = parseInt s / 60
+        seconds = parseInt s % 60
+        if seconds < 10
+            seconds = '0' + seconds
+        minutes + ':' + seconds
 
 
 

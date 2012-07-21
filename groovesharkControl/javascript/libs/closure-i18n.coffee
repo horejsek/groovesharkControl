@@ -5,7 +5,7 @@ goog.require 'goog.events'
 
 
 
-goog.events.listen(window, 'load', (e) ->
+goog.events.listen window, 'load', (e) ->
     translate = ->
         translateByText()
         translateByHtml()
@@ -31,4 +31,3 @@ goog.events.listen(window, 'load', (e) ->
         chrome.i18n.getMessage(key)
 
     translate()
-)

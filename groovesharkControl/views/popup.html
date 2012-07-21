@@ -6,7 +6,7 @@
     </head>
     <body onload="popup.init();">
         <div id="player" class="player">
-            <button id="pin" class="unpin" onclick="gc.showNotification(stay=true);" i18n-title="playerPin"></button>
+            <button id="pin" class="unpin" onclick="gc.showNotification(stay=true); popup.hidePin();" i18n-title="playerPin"></button>
             <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
             <button id="loop" class="none" onclick="gc.sendCommandToGrooveshark('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
             <button id="crossfade" class="false" onclick="gc.sendCommandToGrooveshark('toggleCrossfade');" i18n-title="songCrossfade"></button>

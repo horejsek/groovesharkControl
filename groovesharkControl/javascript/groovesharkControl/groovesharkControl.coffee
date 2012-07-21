@@ -1,6 +1,8 @@
 
 goog.provide 'gc'
 
+goog.require 'gc.Settings'
+
 
 
 (->
@@ -14,10 +16,15 @@ goog.provide 'gc'
             chrome.tabs.executeScript tab.id, file: 'javascript/contentscript.min.js'
 
 
+    # Create & pin & go to tab.
+
+
     gc.createGroovesharkTab = ->
-        properties =
+        settings = new gc.Settings()
+        chrome.tabs.create
             url: groovesharkUrl
-        chrome.tabs.create properties
+            index: 0 if settings.prepareGrooveshark
+            pinned: true if settings.prepareGrooveshark
 
     #gc.createGroovesharkTabIfAlreadyIsnt = ->
     #    callWithGroovesharkTab ->
@@ -26,6 +33,20 @@ goog.provide 'gc'
         callWithGroovesharkTab (tab) ->
             chrome.windows.update tab.windowId, focused: true
             chrome.tabs.update tab.id, selected: true
+
+    gc.pinGroovesharkTab = () ->
+        settings = new gc.Settings()
+        if (
+            settings.prepareGrooveshark &&
+            settings.prepareGroovesharkMode is 'everytime'
+        )
+            callWithGroovesharkTab (tab) ->
+                if tab.status is 'complete'
+                    chrome.tabs.update tab.id, pinned: true
+                    chrome.tabs.move tab.id, index: 0
+
+
+    # Commands.
 
 
     gc.sendCommandToGrooveshark = (command, args) ->
@@ -38,13 +59,7 @@ goog.provide 'gc'
             chrome.tabs.sendRequest tab.id, request
 
 
-    gc.msToHumanTime = (ms) ->
-        s = ms / 1000
-        minutes = parseInt s / 60
-        seconds = parseInt s % 60
-        if seconds < 10
-            seconds = '0' + seconds
-        minutes + ':' + seconds
+    # Find & use tab with Grooveshark.
 
 
     gc.callIfGroovesharkTabIsNotOpen = (callback) ->
@@ -70,16 +85,35 @@ goog.provide 'gc'
         url.indexOf(groovesharkUrl) == 0 || url.indexOf(groovesharkPreviewUrl) == 0
 
 
-    gc.showNotification = (stay) ->
-        createNotification 'notification', stay
+    # Notifications.
 
-    gc.showLiteNotification = (stay) ->
-        createNotification 'liteNotification', stay
 
-    createNotification = (view, stay) ->
-        if chrome.extension.getViews(type: 'notification').length > 1
+    gc.showNotification = (stay, delay) ->
+        if delay
+            delayNotification 'showNotification', stay, delay
+        else
+            createNotification 'notification', stay
+
+    gc.showLiteNotification = (stay, delay) ->
+        if delay
+            delayNotification 'showLiteNotification', stay, delay
+        else
+            createNotification 'liteNotification', stay
+
+    delayNotification = (fcName, stay, delay) ->
+        bgWindow = chrome.extension.getBackgroundPage()
+        bgWindow.setTimeout(
+            () ->
+                bgWindow.gc[fcName] stay
+            delay
+        )
+
+    createNotification = (type, stay) ->
+        settings = new gc.Settings()
+        if (!settings.showNotification && !stay) || gc.isShowedNotification()
             return
-        notification = webkitNotifications.createHTMLNotification '../views/'+view+'.html'
+
+        notification = webkitNotifications.createHTMLNotification '../views/'+type+'.html'
         notification.show()
 
         cancelCountDownOfCloseOfNotification = () ->
@@ -87,5 +121,8 @@ goog.provide 'gc'
                 win.notification.cancelCountDownOfWindowClose()
             )
         setTimeout cancelCountDownOfCloseOfNotification, 100 if stay
+
+    gc.isShowedNotification = () ->
+        chrome.extension.getViews(type: 'notification').length > 0
 
 )()

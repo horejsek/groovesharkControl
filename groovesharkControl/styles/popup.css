@@ -1,4 +1,6 @@
 
+@import url("progressbar.css");
+
 body {
     color: #CCC;
     background: #252525;
@@ -187,49 +189,10 @@ body {
     display: none;
 }
 
-/* PROGRESS BAR */
-
 #progressbar {
-    background: url('../images/progressBar/background.png') repeat-x;
-    height: 9px;
     width: 320px;
     position: absolute;
     bottom: 10px;
-}
-
-#progressbar .left {
-    background: url('../images/progressBar/left.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    left: 0px;
-    top: 0px;
-}
-
-#progressbar .right {
-    background: url('../images/progressBar/right.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    right: 0px;
-    top: 0px;
-}
-
-#progressbar .elapsed {
-    background: url('../images/progressBar/foreground.png') repeat-x;
-    width: 0%;
-    height: 9px;
-}
-
-#progressbar .goog-slider-thumb {
-    background: url('../images/progressBar/scrubber.png') no-repeat;
-    width: 15px;
-    height: 16px;
-    cursor: pointer;
-    position: absolute;
-    top: -3px;
 }
 
 /* PLAYLIST */

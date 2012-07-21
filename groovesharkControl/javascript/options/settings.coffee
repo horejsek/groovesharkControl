@@ -9,46 +9,64 @@ gc.Settings = ->
 
 
 goog.scope ->
-    gc.Settings::_defaultAttrs =
+    `var STGS = gc.Settings`
+
+    STGS::_defaultAttrs =
         showNotification: true
         showNotificationForMiliseconds: 5000
         prepareGrooveshark: false
         prepareGroovesharkMode: 'onCreate'
 
-    gc.Settings::_getAttributeIds = () ->
+    STGS::_getAttributeIds = () ->
         for attributeId of @_defaultAttrs
             attributeId
 
 
-    gc.Settings::restore = () ->
+    # Restore.
+
+
+    STGS::restore = () ->
         @showNotification = @_restoreBooleanOption 'showNotification'
-        @showNotificationForMiliseconds = @_restoreGenericOption 'showNotificationForMiliseconds'
+        @showNotificationForMiliseconds = @_restoreIntegerOption 'showNotificationForMiliseconds', 1000
 
         @prepareGrooveshark = @_restoreBooleanOption 'prepareGrooveshark'
         @prepareGroovesharkMode = @_restoreGenericOption 'prepareGroovesharkMode'
 
-    gc.Settings::_restoreBooleanOption = (storageKey) ->
+    STGS::_restoreBooleanOption = (storageKey) ->
         value = @_restoreGenericOption storageKey
         value isnt 'false' && value isnt false
 
-    gc.Settings::_restoreGenericOption = (storageKey) ->
+    STGS::_restoreIntegerOption = (storageKey, minimal=undefined) ->
+        value = @_restoreGenericOption storageKey
+        try
+            value = parseInt value
+            throw 'err1' if isNaN value
+            throw 'err2' if minimal && minimal > value
+        catch err
+            switch err
+                when 'err1' then value = @_defaultAttrs[storageKey]
+                when 'err2' then value = minimal
+                else value = @_defaultAttrs[storageKey]
+        return value
+
+    STGS::_restoreGenericOption = (storageKey) ->
         localStorage[storageKey] = @_defaultAttrs[storageKey] if localStorage[storageKey] is null
         return localStorage[storageKey] || @_defaultAttrs[storageKey]
 
 
-    gc.Settings::save = () ->
-        @_save
-            showNotification: @showNotification
-            showNotificationForMiliseconds: @showNotificationForMiliseconds
-            prepareGrooveshark: @prepareGrooveshark
-            prepareGroovesharkMode: @prepareGroovesharkMode
+    # Save.
 
-    gc.Settings::saveDefaults = () ->
-        @_save @_defaultAttrs
 
-    gc.Settings::_save = (attributes) ->
-        for name, value of attributes
-            localStorage[name] = value
+    STGS::save = () ->
+        for attributeId in @_getAttributeIds()
+            console.log 'save', attributeId, @[attributeId]
+            localStorage[attributeId] = @[attributeId]
+
+    STGS::saveDefaults = () ->
+        for attributeId, value of @_defaultAttrs
+            console.log 'set', attributeId, value
+            @[attributeId] = value
+        @save()
 
 
 

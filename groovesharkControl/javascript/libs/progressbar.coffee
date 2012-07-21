@@ -12,7 +12,9 @@ gc.Progressbar = ->
 
 
 goog.scope ->
-    gc.Progressbar::init = (elementId, listener) ->
+    `var PB = gc.Progressbar`
+
+    PB::init = (elementId, listener) ->
         @progressbarElm = goog.dom.getElement elementId
         @slider = new goog.ui.Slider
         @slider.setStep 0.1
@@ -20,10 +22,10 @@ goog.scope ->
         @slider.decorate @progressbarElm
         @slider.addEventListener goog.ui.Component.EventType.CHANGE, listener
 
-    gc.Progressbar::getValue = () ->
+    PB::getValue = () ->
         @slider.getValue()
 
-    gc.Progressbar::setValue = (value) ->
+    PB::setValue = (value) ->
         goog.style.setStyle goog.dom.getElementByClass('elapsed', @progressbarElm), 'width': value + '%'
 
         @slider.rangeModel.setMute true

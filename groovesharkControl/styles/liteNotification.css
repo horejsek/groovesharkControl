@@ -1,4 +1,6 @@
 
+@import url("progressbar.css");
+
 body {
     color: #CCC;
     background: url('../images/background_nowPlaying.png') repeat-x -50px;
@@ -74,45 +76,8 @@ div.scrollingtext{
 
 /* PROGRESS BAR */
 
-.progressbar {
-    background: url('../images/progressBar/background.png') repeat-x;
-    height: 9px;
-    width: 200px; /* 285 */
+#progressbar {
+    width: 200px; /* 285px */
     position: absolute;
     bottom: 7px;
-}
-
-.progressbar .left {
-    background: url('../images/progressBar/left.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    left: 0px;
-    top: 0px;
-}
-
-.progressbar .right {
-    background: url('../images/progressBar/right.png') no-repeat;
-    height: 9px;
-    width: 4px;
-    position: absolute;
-    z-index: 1;
-    right: 0px;
-    top: 0px;
-}
-
-.progressbar .elapsed {
-    background: url('../images/progressBar/foreground.png') repeat-x;
-    width: 0%;
-    height: 9px;
-}
-
-.progressbar .goog-slider-thumb {
-    background: url('../images/progressBar/scrubber.png') no-repeat !important;
-    width: 15px !important;
-    height: 16px !important;
-    cursor: pointer !important;
-    position: absolute !important;
-    top: -3px !important;
 }

@@ -36,12 +36,12 @@ compile: compile-jsons
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)libs/closure-i18n.js \
 	    --input $(CHROME_EXT_JS_DIR)libs/progressbar.js \
+	    --input $(CHROME_EXT_JS_DIR)options/settings.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/groovesharkControl.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/viewUpdater.js \
 	    --input $(CHROME_EXT_JS_DIR)background/background.js \
 	    --input $(CHROME_EXT_JS_DIR)popup/popup.js \
 	    --input $(CHROME_EXT_JS_DIR)notification/notification.js \
-	    --input $(CHROME_EXT_JS_DIR)options/settings.js \
 	    --input $(CHROME_EXT_JS_DIR)options/options.js \
 	    --output_mode compiled \
 	    > $(CHROME_EXT_JS_DIR)groovesharkControl.min.js;
@@ -58,7 +58,7 @@ compile-jsons:
 	for f in `find $(CHROME_EXT_LOCALES_DIR) -name *.js`; do mv $$f $$f'on'; done
 	sed -i "s/^(//;s/);$$//" groovesharkControl/*.json $(CHROME_EXT_LOCALES_DIR)*/*.json
 
-test:
+test: start-selenium-server
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --dep $(CLOSURE_LIBRARY) \
@@ -92,7 +92,8 @@ install-libs:
 	pip-2.7 install -U selenium
 
 get-selenium-server:
-	wget http://selenium.googlecode.com/files/selenium-server-standalone-2.18.0.jar -O $(SELENIUM_SERVER)
+	wget http://selenium.googlecode.com/files/selenium-server-standalone-2.24.1.jar -O $(SELENIUM_SERVER)
 
 start-selenium-server:
-	java -jar $(SELENIUM_SERVER)
+	java -jar $(SELENIUM_SERVER) &
+	sleep 1
