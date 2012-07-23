@@ -41,6 +41,8 @@
 
 "radio":
     "message":        "Rádio"
+"radioOn":
+    "message":        "Zapnuto"
 "radioOff":
     "message":        "Vypnuto"
 

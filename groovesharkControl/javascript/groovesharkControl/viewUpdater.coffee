@@ -135,6 +135,14 @@ goog.scope ->
         -> gc.sendCommandToGrooveshark 'playSongInQueue', queueSongId: queueSongId
 
 
+    # Autoplay.
+
+
+    VU::updateAutoplay = (autoplay) ->
+        autoplayTitle = chrome.i18n.getMessage if autoplay.enabled then 'radioOn' else 'radioOff'
+        goog.dom.getElement('radioTitle').textContent = autoplayTitle
+
+
     # Misc.
 
 

@@ -41,6 +41,8 @@
 
 "radio":
     "message":        "Radio"
+"radioOn":
+    "message":        "On"
 "radioOff":
     "message":        "Off"
 

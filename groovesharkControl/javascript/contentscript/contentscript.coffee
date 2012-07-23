@@ -31,6 +31,7 @@ goog.require 'goog.dom.query'
             playback: getPlaybackStatus()
             currentSong: getCurrentSongInformation()
             queue: getQueueInformation()
+            autoplay: getAutoplayInformation()
         console.log 'send request', data
         chrome.extension.sendRequest data, sendData_onRequest
 
@@ -117,6 +118,10 @@ goog.require 'goog.dom.query'
         activeSongId: if GS.player.queue.activeSong then GS.player.queue.activeSong.queueSongID else false
 
 
+    getAutoplayInformation = ->
+        enabled: GS.player.getCurrentQueue().autoplayEnabled
+
+
     ###
     Controller.
     ###
@@ -156,6 +161,8 @@ goog.require 'goog.dom.query'
 
             when 'seekTo' then seekTo(args.seekTo)
             when 'playSongInQueue' then playSongInQueue(args.queueSongId)
+
+            when 'toggleAutoplay' then toggleAutoplay()
 
 
     playSong = -> GS.player.playSong()
@@ -202,6 +209,8 @@ goog.require 'goog.dom.query'
 
     seekTo = (seekTo) -> GS.player.seekTo (GS.player.getPlaybackStatus().duration) / 100 * seekTo
     playSongInQueue = (queueSongId) -> GS.player.playSong queueSongId
+
+    toggleAutoplay = -> GS.player.setAutoplay !GS.player.getCurrentQueue().autoplayEnabled
 
 
     ###
