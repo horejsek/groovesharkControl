@@ -22,6 +22,13 @@ http://chrome.google.com/webstore/detail/jjhlhcmfkkhnikmehakaceciakbppoij/
 How to develop
 ==============
 
-Just extract it (if source is in archive), in Chrome (or Chromium) go to
-Extensions and check checkbox on top right corner 'Developer mode' and load
-it with clicking on the button 'Load unpacked extension'.
+Extract it (if source is in archive), then run `make localdev` for preparing
+development environment.
+
+By command `make compile` you compile Grooveshark Control and Closure library into
+JavaScript. Then you can in Chrome (or Chromium) go to Extension and check
+checkbox on top right corner 'Developer mode' and load it with clicking
+on the button 'Load unpacked extension'.
+
+Command `make test` is running before every commit. If tests not pass, commit
+will not be finished.

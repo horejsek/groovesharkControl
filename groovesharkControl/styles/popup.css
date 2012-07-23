@@ -1,0 +1,245 @@
+
+@import url("progressbar.css");
+
+body {
+    color: #CCC;
+    background: #252525;
+    width: 320px;
+    font-family: verdana, arial, sans-serif;
+    font-size: 0.8em;
+    cursor: default;
+}
+
+/* PLAYER OPTIONS */
+
+#player {
+    text-align: center;
+    background: url('../images/background_player.png') repeat-x;
+    height: 40px;
+    margin: -6px -6px;
+}
+
+#player button {
+    width: 35px;
+    height: 35px;
+    background: url('../images/controls.png') no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+#pin {
+    background: url('../images/pin.png') no-repeat !important;
+    width: 16px !important;
+    height: 16px !important;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+}
+
+#playpause.play { background-position: -40px 0px !important; }
+#playpause.pause { background-position: -40px -40px !important; }
+#previous { background-position: -40px -80px !important; }
+#next { background-position: -40px -120px !important; }
+
+#loop.none { background-position: -40px -200px !important; }
+#loop.all { background-position: -160px -200px !important; }
+#loop.one { background-position: -280px -200px !important; }
+
+#shuffle.false { background-position: -40px -160px !important; }
+#shuffle.true { background-position: -160px -160px !important; }
+
+#crossfade.false { background-position: -40px -240px !important; }
+#crossfade.true { background-position: -160px -240px !important; }
+
+#playpause:hover,
+#previous:hover,
+#next:hover {
+    background-position-x: -120px !important;
+}
+
+#loop.none:hover,
+#shuffle.false:hover,
+#crossfade.false:hover {
+    background-position-x: -80px !important;
+}
+
+#loop.all:hover,
+#shuffle.true:hover,
+#crossfade.true:hover {
+    background-position-x: -200px !important;
+}
+
+#loop.one:hover {
+    background-position-x: -320px !important;
+}
+
+#gotogrooveshark {
+    background: url('../images/icon_30.png') no-repeat 5px !important;
+}
+
+/* NOW PLAYING */
+
+#nowPlaying {
+    background: url('../images/background_nowPlaying.png') repeat-x;
+    height: 110px;
+    margin: 5px -6px 0px -6px;
+    padding: 5px;
+    position: relative;
+}
+
+#nowPlaying .artist,
+#nowPlaying .album,
+#nowPlaying .image {
+    cursor: pointer;
+}
+
+#nowPlaying .song,
+#nowPlaying .artist,
+#nowPlaying .album {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 220px;
+}
+
+#nowPlaying .song {
+    color: #FFF;
+    font-size: 1.4em;
+}
+
+#nowPlaying .image {
+    float: right;
+    width: 90px;
+    height: 90px;
+    background: url(http://images.grooveshark.com/static/albums/90_album.png) no-repeat;
+}
+
+#nowPlaying .time {
+    font: 0.5em;
+    position: absolute;
+    bottom: 25px;
+}
+
+#nowPlaying .position {
+    font: 0.5em;
+    position: absolute;
+    bottom: 25px;
+    right: 112px;
+}
+
+#nowPlaying .library,
+#nowPlaying .favorite {
+    width: 19px;
+    height: 18px;
+    position: absolute;
+    bottom: 25px;
+    cursor: pointer;
+}
+
+#nowPlaying .library {
+    background: url('../images/library.png');
+    right: 76px;
+}
+#nowPlaying .library.disable {
+    background: url('../images/library-off.png');
+}
+
+#nowPlaying .favorite {
+    background: url('../images/favorite.png');
+    right: 57px;
+}
+#nowPlaying .favorite.disable {
+    background: url('../images/favorite-off.png');
+}
+
+#nowPlaying .library.disable,
+#nowPlaying .favorite.disable {
+    opacity: .75;
+}
+
+#nowPlaying .library:hover,
+#nowPlaying .favorite:hover {
+    opacity: 1;
+}
+
+#nowPlaying .smile,
+#nowPlaying .frown {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    bottom: 25px;
+    cursor: pointer;
+    background: url('../images/smile_frown.png');
+    opacity: .5;
+}
+
+#nowPlaying .smile.active:hover,
+#nowPlaying .frown.active:hover {
+    opacity: 0.75;
+}
+
+#nowPlaying .smile.active,
+#nowPlaying .frown.active,
+#nowPlaying .smile:hover,
+#nowPlaying .frown:hover {
+    opacity: 1;
+}
+
+#nowPlaying .smile { background-position: 0px 0px !important; right: 20px; }
+#nowPlaying .smile.active { background-position: 0px -14px !important; }
+#nowPlaying .frown { background-position: -14px 0px !important; right: 6px; }
+#nowPlaying .frown.active { background-position: -14px -14px !important; }
+
+#nowPlaying .smile.disable,
+#nowPlaying .frown.disable {
+    display: none;
+}
+
+#progressbar {
+    width: 320px;
+    position: absolute;
+    bottom: 10px;
+}
+
+/* PLAYLIST */
+
+#playlist {
+    height: 300px;
+    overflow: auto;
+    margin: 0px -6px;
+    background: #FFFFFF;
+    color: #000000;
+}
+
+#playlist .item {
+    margin: 2px;
+    padding: 2px;
+    cursor: pointer;
+
+}
+
+#playlist .item.odd {
+    background: #F3F7FB;
+}
+
+#playlist .item.active,
+#playlist .item.active:hover {
+    background: #E1F7BD;
+    color: #415C15;
+}
+
+#playlist .item:hover {
+    background: #BDCEE0;
+}
+
+/* RADIO */
+
+#radio {
+    margin: 0px -6px -6px -6px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#radio.active {
+    font-weight: bold;
+}
