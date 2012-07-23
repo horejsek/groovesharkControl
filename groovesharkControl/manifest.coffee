@@ -35,3 +35,6 @@
     "default_icon": "images/backgroundIcons/disabled.png"
     "default_title": "Grooveshark Control"
     "default_popup": "views/popup.html"
+
+"omnibox":
+    "keyword" : "gc"

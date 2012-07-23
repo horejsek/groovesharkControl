@@ -37,6 +37,9 @@ goog.scope ->
             gc.callIfGroovesharkTabIsNotOpen ->
                 that.reset()
 
+        chrome.omnibox.onInputEntered.addListener (text) ->
+            gc.search text
+
     BG::reset = ->
         @resetIcon()
         @resetTitle()
