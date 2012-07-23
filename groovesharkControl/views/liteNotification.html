@@ -7,15 +7,14 @@
     <body onload="notification.init();" onmouseover="notification.cancelCountDownOfWindowClose();">
         <div class="nowPlaying">
             <div id="liteLine">
-                <div class="scrollingtext">
+                <div class="scrollingtext"><marquee behavior="scroll" direction="left" scrollamount=1 scrolldelay=20 truespeed=1>
                     <span class="song"></span> <span i18n-text="liteBy"></span> <span class="artist"></span>, <span class="album"></span>
-                    (<span class="timeDuration"></span>,
                     <span class="position">
-                        <span class="queuePosition"></span>
+                        (<span class="queuePosition"></span>
                         <span i18n-text="ofSong"></span>
                         <span class="queueCountSongs"></span>)
                     </span>
-                </div>
+                </marquee></div>
             </div>
             <div id="progressbar" class="progressbar">
                 <div class="left"></div>

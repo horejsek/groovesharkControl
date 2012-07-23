@@ -69,10 +69,7 @@ body {
     font-size: 1.1em;
 }
 
-div.scrollingtext{
-    position: absolute;
-    white-space: nowrap;
-}
+
 
 /* PROGRESS BAR */
 
