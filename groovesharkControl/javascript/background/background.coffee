@@ -9,6 +9,8 @@ gc.Background = ->
     @lastSongIndex = undefined
     @contextMenu = new gc.ContextMenu
 
+    return
+
 
 
 goog.scope ->

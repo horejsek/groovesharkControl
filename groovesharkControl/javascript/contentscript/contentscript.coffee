@@ -164,6 +164,8 @@ goog.require 'goog.dom.query'
 
             when 'toggleAutoplay' then toggleAutoplay()
 
+            when 'shareCurrentSong' then shareCurrentSong()
+
 
     playSong = -> GS.player.playSong()
     pauseSong = -> GS.player.pauseSong()
@@ -211,6 +213,12 @@ goog.require 'goog.dom.query'
     playSongInQueue = (queueSongId) -> GS.player.playSong queueSongId
 
     toggleAutoplay = -> GS.player.setAutoplay !GS.player.getCurrentQueue().autoplayEnabled
+
+    shareCurrentSong = ->
+        for contextItem in GS.player.currentSong.getContextMenu()
+            if contextItem.customClass.indexOf('share') != -1
+                contextItem.action.callback()
+                break
 
 
     ###

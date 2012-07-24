@@ -114,6 +114,16 @@ body {
     background: url(http://images.grooveshark.com/static/albums/90_album.png) no-repeat;
 }
 
+#nowPlaying .share {
+    position: absolute;
+    right: 95px;
+    bottom: 25px;
+    width: 15px;
+    height: 15px;
+    background: url('../images/share.png') no-repeat;
+    cursor: pointer;
+}
+
 #nowPlaying .time {
     font: 0.5em;
     position: absolute;
@@ -124,7 +134,7 @@ body {
     font: 0.5em;
     position: absolute;
     bottom: 25px;
-    right: 112px;
+    right: 130px;
 }
 
 #nowPlaying .library,
