@@ -69,10 +69,13 @@ goog.scope ->
         chrome.browserAction.setIcon path: BG.ICONS.disabled
 
     BG::setIconByPlayback = (playback) ->
-        p19 = Math.round(playback.percentage / (100 / 19))
+        p19 = @_calculatePercentageForBackgroundProgressbar playback.percentage
         image = if playback.status is 'PLAYING' then BG.playImage else BG.pauseImage
         chrome.browserAction.setIcon
             imageData: @createIcon image, p19
+
+    BG::_calculatePercentageForBackgroundProgressbar = (percentage) ->
+        Math.round(percentage / (100 / 19))
 
     BG::createIcon = (backgroundImage, percent) ->
         canvas = goog.dom.getElement 'canvas'

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test of closure-i18n</title>
+    </head>
+    <body>
+        <script src="../../../libs/closure-library/closure/goog/base.js"></script>
+        <script src="../test_deps.js"></script>
+        <script src="closure-i18n_test.js"></script>
+        <script src="closure-i18n.js"></script>
+
+        <div id="text" i18n-text='some text'></div>
+        <div id="textWithChilds" i18n-text='some text'><span>xx</span></div>
+
+        <div id="html" i18n-html='some text'></div>
+        <div id="htmlWithChilds" i18n-html='some text'><span>xx</span></div>
+        <div id="htmlWithChildsAndContents" i18n-html='some %contents text'><span>xx</span></div>
+    </body>
+</html>

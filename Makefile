@@ -16,8 +16,9 @@ CHROME_EXT_COFFEE_LOCALES=$(CHROME_EXT_LOCALES_DIR)*/*.coffee
 all:
 	@echo "make build - Create zip archive for Chrome"
 	@echo "make compile - Compile Chrome Extension"
-	@echo "make localdev - Init submodules, git-hooks, ..."
+	@echo "make test - Test Chrome Extension"
 	@echo "make clean - Clean directory from compiled and building files"
+	@echo "make localdev - Init submodules, git-hooks, ..."
 	@echo "make install-libs - Install libs for develop"
 
 build: clean compile
@@ -59,15 +60,18 @@ compile-jsons:
 	for f in `find $(CHROME_EXT_LOCALES_DIR) -name *.js`; do mv $$f $$f'on'; done
 	sed -i "s/^(//;s/);$$//" groovesharkControl/*.json $(CHROME_EXT_LOCALES_DIR)*/*.json
 
-test: start-selenium-server
+test: start-selenium-server test-compile
+	#chromium-browser --temp-profile --allow-file-access-from-files $(CHROME_EXT_JS_DIR)alltests.html
+	$(PYTHON) $(CHROME_EXT_JS_DIR)alltests.py
+
+test-compile:
+	coffee -cb $(CHROME_EXT_JS_DIR)
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --dep $(CLOSURE_LIBRARY) \
 	    --path $(CHROME_EXT_JS_DIR) \
 	    --output_mode deps \
 	    > $(CHROME_EXT_JS_DIR)test_deps.js;
-	#chromium-browser --temp-profile --allow-file-access-from-files $(CHROME_EXT_JS_DIR)alltests.html
-	$(PYTHON) $(CHROME_EXT_JS_DIR)alltests.py
 
 clean:
 	rm -rf /tmp/$(CHROME_EXT_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)

@@ -28,6 +28,9 @@ class GroovesharkControlTest(unittest.TestCase):
     urlPrefix = 'file://%s/groovesharkControl/javascript/' % os.getcwd()
     urlsToTest = {
         'background': 'background/background_test.html',
+        'contextMenu': 'background/contextMenu_test.html',
+        'viewUpdater': 'groovesharkControl/viewUpdater_test.html',
+        'closure_i18n': 'libs/closure-i18n_test.html',
     }
 
     @classmethod

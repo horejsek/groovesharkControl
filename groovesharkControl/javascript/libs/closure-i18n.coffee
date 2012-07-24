@@ -24,8 +24,12 @@ goog.events.listen window, 'load', (e) ->
             firstElm = goog.dom.createTextNode texts[0]
             lastElm = goog.dom.createTextNode texts[1] || ''
 
-            goog.dom.insertSiblingBefore firstElm, element.childNodes[0]
-            goog.dom.insertSiblingAfter lastElm, element.childNodes[element.childNodes.length-1]
+            if element.childNodes.length
+                goog.dom.insertSiblingBefore firstElm, element.childNodes[0]
+                goog.dom.insertSiblingAfter lastElm, element.childNodes[element.childNodes.length-1]
+            else
+                goog.dom.appendChild element, firstElm
+                goog.dom.appendChild element, lastElm
 
     translateByKey = (key) ->
         chrome.i18n.getMessage(key)
