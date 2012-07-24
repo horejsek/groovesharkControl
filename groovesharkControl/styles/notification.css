@@ -83,13 +83,12 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 110px;
+    width: 200px;
 }
 
 .nowPlaying .song {
     color: #FFF;
     font-size: 1.3em;
-    width: 200px;
 }
 
 .nowPlaying .image {
