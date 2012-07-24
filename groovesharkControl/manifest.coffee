@@ -16,6 +16,7 @@
 
 "permissions": [
     "tabs"
+    "contextMenus"
     "notifications"
     "http://grooveshark.com/*"
     "http://preview.grooveshark.com/*"

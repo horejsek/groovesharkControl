@@ -51,6 +51,19 @@
     "description":    "Ukázka: MusicName [od] Artist..."
 
 
+# Search.
+
+
+"search":
+    "message":        "Hledat"
+"searchSong":
+    "message":        "Hledat skladbu"
+"searchArtist":
+    "message":        "Hledat umělce"
+"searchAlbum":
+    "message":        "Hledat album"
+
+
 # Options page.
 
 

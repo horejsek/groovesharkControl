@@ -1,10 +1,13 @@
 
 goog.provide 'gc.Background'
 
+goog.require 'gc.ContextMenu'
+
 
 
 gc.Background = ->
     @lastSongIndex = undefined
+    @contextMenu = new gc.ContextMenu
 
 
 
@@ -23,6 +26,7 @@ goog.scope ->
 
 
     BG::init = ->
+        @contextMenu.init()
         gc.injectGrooveshark()
         @reset()
         @initListeners()

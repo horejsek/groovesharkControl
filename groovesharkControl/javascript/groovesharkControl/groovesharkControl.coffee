@@ -55,8 +55,17 @@ goog.require 'gc.Settings'
     gc.goToPageWithAlbum = (albumId) ->
         goToPage 'http://grooveshark.com/#!/album//' + albumId
 
-    gc.search = (query) ->
-        goToPage 'http://grooveshark.com/#!/search?q=' + encodeURI(query)
+    gc.search = (query, type='') ->
+        goToPage 'http://grooveshark.com/#!/search/' + type + '?q=' + encodeURI(query)
+
+    gc.searchSong = (query) ->
+        gc.search query, 'song'
+
+    gc.searchArtist = (query) ->
+        gc.search query, 'artist'
+
+    gc.searchAlbum = (query) ->
+        gc.search query, 'album'
 
     goToPage = (url) ->
         gc.goToGroovesharkTab()

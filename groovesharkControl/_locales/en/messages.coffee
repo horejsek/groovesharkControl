@@ -51,6 +51,19 @@
     "description":    "Example: MusicName [by] Artist..."
 
 
+# Search.
+
+
+"search":
+    "message":        "Search"
+"searchSong":
+    "message":        "Search song"
+"searchArtist":
+    "message":        "Search artist"
+"searchAlbum":
+    "message":        "Search album"
+
+
 # Options page.
 
 
