@@ -41,10 +41,9 @@
                 <div class="right"></div>
                 <div class="goog-slider-thumb"></div>
             </div>
-            <div id="volume" class="volume0" onmouseover="gc.sendCommandToGrooveshark('refresh');">
-                <div id="volumeSlider">
-                    <div class="goog-slider-thumb"></div>
-                </div>
+            <div id="volume" class="volume0" onmouseover="gc.sendCommandToGrooveshark('refresh');" onclick="gc.sendCommandToGrooveshark('toggleMute');"></div>
+            <div id="volumeSlider">
+                <div class="goog-slider-thumb"></div>
             </div>
         </div>
         <div id="playlist" class="playlist"></div>

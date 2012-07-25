@@ -55,7 +55,8 @@ goog.require 'goog.dom.query'
         loop: playerLoop
         shuffle: GS.player.getShuffle()
         crossfade: GS.player.getCrossfadeEnabled()
-        volume: GS.player.getVolume()
+        volume: if GS.player.getIsMuted() then 0 else GS.player.getVolume()
+        isMute: GS.player.getIsMuted()
 
 
     getPlaybackStatus = ->
@@ -140,30 +141,31 @@ goog.require 'goog.dom.query'
             when 'previousSong' then previousSong()
             when 'nextSong' then nextSong()
 
-            when 'setSuffle' then setSuffle(args.shuffle)
+            when 'setSuffle' then setSuffle args.shuffle
             when 'toggleShuffle' then toggleShuffle()
 
-            when 'setCrossfade' then setCrossfade(args.crossfade)
+            when 'setCrossfade' then setCrossfade args.crossfade
             when 'toggleCrossfade' then toggleCrossfade()
 
-            when 'setLoop' then setLoop(args.loop)
+            when 'setLoop' then setLoop args.loop
             when 'toggleLoop' then toggleLoop()
 
-            when 'setVolume' then setVolume(args.volume)
+            when 'toggleMute' then toggleMute()
+            when 'setVolume' then setVolume args.volume
 
-            when 'addToLibrary' then addToLibrary(args.songId)
-            when 'removeFromLibrary' then removeFromLibrary(args.songId)
+            when 'addToLibrary' then addToLibrary args.songId
+            when 'removeFromLibrary' then removeFromLibrary args.songId
             when 'toggleLibrary' then toggleLibrary()
 
-            when 'addToFavorites' then addToFavorites(args.songId)
-            when 'removeFromFavorites' then removeFromFavorites(args.songId)
+            when 'addToFavorites' then addToFavorites args.songId
+            when 'removeFromFavorites' then removeFromFavorites args.songId
             when 'toggleFavorite' then toggleFavorite()
 
             when 'toggleSmile' then toggleSmile()
             when 'toggleFrown' then toggleFrown()
 
-            when 'seekTo' then seekTo(args.seekTo)
-            when 'playSongInQueue' then playSongInQueue(args.queueSongId)
+            when 'seekTo' then seekTo args.seekTo
+            when 'playSongInQueue' then playSongInQueue args.queueSongId
 
             when 'toggleAutoplay' then toggleAutoplay()
 
@@ -193,7 +195,10 @@ goog.require 'goog.dom.query'
     setLoop = (loopMode) -> GS.player.setRepeat(loopMode)
     toggleLoop = -> goog.dom.getElement('player_loop').click()
 
-    setVolume = (volume) -> GS.player.setVolume(volume)
+    toggleMute = () -> GS.player.setIsMuted !GS.player.getIsMuted()
+    setVolume = (volume) ->
+        GS.player.setIsMuted false if GS.player.getIsMuted()
+        GS.player.setVolume volume
 
     addToLibrary = (songId) -> GS.user.addToLibrary songId
     removeFromLibrary = (songId) -> GS.user.removeFromLibrary songId

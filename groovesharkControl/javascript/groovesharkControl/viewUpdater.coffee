@@ -61,8 +61,11 @@ goog.scope ->
         @volumeSlider.setValue player.volume
 
         elm = goog.dom.getElement 'volume'
-        classesToRemove = ['volume0', 'volume20', 'volume40', 'volume60', 'volume80', 'volume100']
-        volumeClass = 'volume' + Math.round(player.volume / (100 / 5)) * 20
+        classesToRemove = ['mute', 'volume0', 'volume20', 'volume40', 'volume60', 'volume80', 'volume100']
+        if player.isMute
+            volumeClass = 'mute'
+        else
+            volumeClass = 'volume' + Math.round(player.volume / (100 / 5)) * 20
         goog.dom.classes.addRemove elm, classesToRemove, volumeClass
 
 
