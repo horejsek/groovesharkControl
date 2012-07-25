@@ -4,6 +4,7 @@ goog.provide 'gc.ViewUpdater'
 goog.require 'goog.dom'
 goog.require 'goog.events'
 goog.require 'gc'
+goog.require 'gc.Slider'
 
 
 
@@ -18,7 +19,7 @@ goog.scope ->
 
 
     VU::initListeners = () ->
-        that = this
+        that = @
 
         chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
             that.update request
@@ -31,19 +32,38 @@ goog.scope ->
 
 
     VU::initProgressbar = () ->
-        that = this
-        @progressbar = new gc.Progressbar()
-        @progressbar.init 'progressbar', () ->
+        that = @
+        @progressbar = new gc.Slider 'progressbar'
+        @progressbar.init () ->
             gc.sendCommandToGrooveshark 'seekTo', seekTo: that.progressbar.getValue()
+
+
+    VU::initVolumeSlider = () ->
+        that = @
+        @volumeSlider = new gc.Slider 'volumeSlider', true
+        @volumeSlider.init () ->
+            gc.sendCommandToGrooveshark 'setVolume', volume: that.volumeSlider.getValue()
 
 
     # Player options.
 
 
+    VU::updatePlayer = (player) ->
+        @updatePlayerOptions player
+        @updatePlayerVolume player
+
     VU::updatePlayerOptions = (player) ->
         goog.dom.classes.set goog.dom.getElement('shuffle'), player.shuffle
         goog.dom.classes.set goog.dom.getElement('loop'), player.loop
         goog.dom.classes.set goog.dom.getElement('crossfade'), player.crossfade
+
+    VU::updatePlayerVolume = (player) ->
+        @volumeSlider.setValue player.volume
+
+        elm = goog.dom.getElement 'volume'
+        classesToRemove = ['volume0', 'volume20', 'volume40', 'volume60', 'volume80', 'volume100']
+        volumeClass = 'volume' + Math.round(player.volume / (100 / 5)) * 20
+        goog.dom.classes.addRemove elm, classesToRemove, volumeClass
 
 
     # Current song.
@@ -101,6 +121,10 @@ goog.scope ->
 
     VU::updatePlaybackProgressbar = (playback) ->
         @progressbar.setValue playback.percentage
+
+        progressbarElm = goog.dom.getElement 'progressbar'
+        elapsedElm = goog.dom.getElementByClass 'elapsed', progressbarElm
+        goog.style.setStyle elapsedElm, 'width': playback.percentage + '%'
 
     VU::updatePlaybackOptions = (playback) ->
         goog.dom.classes.set goog.dom.getElement('playpause'), if playback.status is 'PLAYING' then 'pause' else 'play'

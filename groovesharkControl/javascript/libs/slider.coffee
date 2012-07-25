@@ -1,5 +1,5 @@
 
-goog.provide 'gc.Progressbar'
+goog.provide 'gc.Slider'
 
 goog.require 'goog.dom'
 goog.require 'goog.ui.Component'
@@ -7,27 +7,28 @@ goog.require 'goog.ui.Slider'
 
 
 
-gc.Progressbar = ->
+gc.Slider = (elementId, vertical=false) ->
+    @elementId = elementId
+    @vertical = vertical
 
 
 
 goog.scope ->
-    `var PB = gc.Progressbar`
+    `var SL = gc.Slider`
 
-    PB::init = (elementId, listener) ->
-        @progressbarElm = goog.dom.getElement elementId
+    SL::init = (listener) ->
+        elm = goog.dom.getElement @elementId
         @slider = new goog.ui.Slider
+        @slider.setOrientation goog.ui.Slider.Orientation.VERTICAL if @vertical
         @slider.setStep 0.1
         @slider.setMoveToPointEnabled true
-        @slider.decorate @progressbarElm
+        @slider.decorate elm
         @slider.addEventListener goog.ui.Component.EventType.CHANGE, listener
 
-    PB::getValue = () ->
+    SL::getValue = () ->
         @slider.getValue()
 
-    PB::setValue = (value) ->
-        goog.style.setStyle goog.dom.getElementByClass('elapsed', @progressbarElm), 'width': value + '%'
-
+    SL::setValue = (value) ->
         @slider.rangeModel.setMute true
         @slider.rangeModel.setValue value
         @slider.rangeModel.setMute false

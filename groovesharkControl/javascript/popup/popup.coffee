@@ -20,6 +20,7 @@ goog.scope ->
     PU::init = ->
         @initListeners()
         @initProgressbar()
+        @initVolumeSlider()
 
         if gc.isShowedNotification()
             @hidePin()
@@ -35,7 +36,7 @@ goog.scope ->
             window.close()
             return
 
-        @updatePlayerOptions request.player
+        @updatePlayer request.player
         @updateCurrentSong request.currentSong
         @updatePlayback request.playback
         @updateQueue request.queue

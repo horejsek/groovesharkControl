@@ -36,7 +36,7 @@ compile: compile-jsons
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)libs/closure-i18n.js \
-	    --input $(CHROME_EXT_JS_DIR)libs/progressbar.js \
+	    --input $(CHROME_EXT_JS_DIR)libs/slider.js \
 	    --input $(CHROME_EXT_JS_DIR)options/settings.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/groovesharkControl.js \
 	    --input $(CHROME_EXT_JS_DIR)groovesharkControl/viewUpdater.js \

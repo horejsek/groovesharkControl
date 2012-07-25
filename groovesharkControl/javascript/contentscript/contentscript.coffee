@@ -55,6 +55,7 @@ goog.require 'goog.dom.query'
         loop: playerLoop
         shuffle: GS.player.getShuffle()
         crossfade: GS.player.getCrossfadeEnabled()
+        volume: GS.player.getVolume()
 
 
     getPlaybackStatus = ->
@@ -148,6 +149,8 @@ goog.require 'goog.dom.query'
             when 'setLoop' then setLoop(args.loop)
             when 'toggleLoop' then toggleLoop()
 
+            when 'setVolume' then setVolume(args.volume)
+
             when 'addToLibrary' then addToLibrary(args.songId)
             when 'removeFromLibrary' then removeFromLibrary(args.songId)
             when 'toggleLibrary' then toggleLibrary()
@@ -189,6 +192,8 @@ goog.require 'goog.dom.query'
 
     setLoop = (loopMode) -> GS.player.setRepeat(loopMode)
     toggleLoop = -> goog.dom.getElement('player_loop').click()
+
+    setVolume = (volume) -> GS.player.setVolume(volume)
 
     addToLibrary = (songId) -> GS.user.addToLibrary songId
     removeFromLibrary = (songId) -> GS.user.removeFromLibrary songId

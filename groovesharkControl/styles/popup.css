@@ -206,9 +206,57 @@ body {
 }
 
 #progressbar {
-    width: 320px;
+    width: 280px;
     position: absolute;
     bottom: 10px;
+}
+
+#volume {
+    width: 30px;
+    height: 30px;
+    background: url('../images/icons.png');
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    cursor: pointer;
+}
+#volume.volume100 {
+    background-position: -335px -153px;
+}
+#volume.volume80 {
+    background-position: -295px -153px;
+}
+#volume.volume60 {
+    background-position: -255px -153px;
+}
+#volume.volume40 {
+    background-position: -215px -153px;
+}
+#volume.volume20 {
+    background-position: -175px -153px;
+}
+#volume.volume0 {
+    background-position: -135px -153px;
+}
+#volume:hover > #volumeSlider {
+    display: block;
+}
+#volume #volumeSlider {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: -80px;
+    height: 80px;
+    width: 20px;
+    background: #000;
+}
+#volumeSlider .goog-slider-thumb {
+    background: url('../images/progressBar/scrubber.png') no-repeat;
+    width: 15px;
+    height: 16px;
+    cursor: pointer;
+    position: absolute;
+    left: 3px;
 }
 
 /* PLAYLIST */
