@@ -78,31 +78,27 @@ goog.scope ->
         @updateCurrentSongOptions song
 
     VU::updateCurrentSongInformation = (song) ->
-        nowPlayingElm = goog.dom.getElement 'nowPlaying'
-
-        elm = goog.dom.getElementByClass 'song', nowPlayingElm
+        elm = goog.dom.getElement 'songName'
         goog.dom.setProperties elm, textContent: song.songName, title: song.songName
 
-        elm = goog.dom.getElementByClass 'artist', nowPlayingElm
+        elm = goog.dom.getElement 'artistName'
         goog.dom.setProperties elm, textContent: song.artistName, title: song.artistName
         @_addLink elm, () -> gc.goToPageWithArtist song.artistId
 
-        elm = goog.dom.getElementByClass('album', nowPlayingElm)
+        elm = goog.dom.getElement 'albumName'
         goog.dom.setProperties elm, textContent: song.albumName, title: song.albumName
         @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongImage = (song) ->
-        nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        elm = goog.dom.getElementByClass 'image', nowPlayingElm
+        elm = goog.dom.getElement 'albumArt'
         elm.src = song.albumImage
         @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongOptions = (song) ->
-        nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.classes.enable goog.dom.getElementByClass('library', nowPlayingElm), 'disable', !song.fromLibrary
-        goog.dom.classes.enable goog.dom.getElementByClass('favorite', nowPlayingElm), 'disable', !song.isFavorite
-        goog.dom.classes.enable goog.dom.getElementByClass('smile', nowPlayingElm), 'active', song.isSmile
-        goog.dom.classes.enable goog.dom.getElementByClass('frown', nowPlayingElm), 'active', song.isFrown
+        goog.dom.classes.enable goog.dom.getElement('library'), 'disable', !song.fromLibrary
+        goog.dom.classes.enable goog.dom.getElement('favorite'), 'disable', !song.isFavorite
+        goog.dom.classes.enable goog.dom.getElement('smile'), 'active', song.isSmile
+        goog.dom.classes.enable goog.dom.getElement('frown'), 'active', song.isFrown
 
     VU::_addLink = (elm, callback) ->
         goog.events.removeAll elm
@@ -118,9 +114,8 @@ goog.scope ->
         @updatePlaybackOptions playback
 
     VU::updatePlaybackTimes = (playback) ->
-        nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.getElementByClass('timeElapsed', nowPlayingElm).textContent = @msToHumanTime playback.position
-        goog.dom.getElementByClass('timeDuration', nowPlayingElm).textContent = @msToHumanTime playback.duration
+        goog.dom.getElement('timeElapsed').textContent = @msToHumanTime playback.position
+        goog.dom.getElement('timeDuration').textContent = @msToHumanTime playback.duration
 
     VU::updatePlaybackProgressbar = (playback) ->
         @progressbar.setValue playback.percentage
@@ -141,9 +136,8 @@ goog.scope ->
         @updateQueueSongs queue
 
     VU::updateQueueInformation = (queue) ->
-        nowPlayingElm = goog.dom.getElement 'nowPlaying'
-        goog.dom.getElementByClass('queuePosition', nowPlayingElm).textContent = queue.activeSongIndex + 1
-        goog.dom.getElementByClass('queueCountSongs', nowPlayingElm).textContent = queue.songs.length
+        goog.dom.getElement('queuePosition').textContent = queue.activeSongIndex + 1
+        goog.dom.getElement('queueCountSongs').textContent = queue.songs.length
 
     VU::updateQueueSongs = (queue) ->
         playlistElm = goog.dom.getElement('playlist')

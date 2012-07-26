@@ -12,6 +12,7 @@ CHROME_EXT_JS_DIR=groovesharkControl/javascript/
 CHROME_EXT_COFFEE_SOURCES=$(CHROME_EXT_JS_DIR)*/*.coffee
 CHROME_EXT_LOCALES_DIR=groovesharkControl/_locales/
 CHROME_EXT_COFFEE_LOCALES=$(CHROME_EXT_LOCALES_DIR)*/*.coffee
+CHROME_EXT_SCSS_SOURCES=groovesharkControl/styles/*.scss groovesharkControl/styles/*/*.scss
 
 all:
 	@echo "make build - Create zip archive for Chrome"
@@ -29,7 +30,7 @@ build: clean compile
 	mv /tmp/$(CHROME_EXT_ZIP_ARCHIVE_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)
 	rm -rf /tmp/$(CHROME_EXT_NAME)
 
-compile: compile-jsons
+compile: compile-jsons compile-css
 	coffee -cb $(CHROME_EXT_COFFEE_SOURCES)
 
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
@@ -59,6 +60,9 @@ compile-jsons:
 	coffee -cb $(CHROME_EXT_COFFEE_LOCALES)
 	for f in `find $(CHROME_EXT_LOCALES_DIR) -name *.js`; do mv $$f $$f'on'; done
 	sed -i "s/^(//;s/);$$//" groovesharkControl/*.json $(CHROME_EXT_LOCALES_DIR)*/*.json
+
+compile-css:
+	sass --update $(CHROME_EXT_SCSS_SOURCES)
 
 test: start-selenium-server test-compile
 	#chromium-browser --temp-profile --allow-file-access-from-files $(CHROME_EXT_JS_DIR)alltests.html
@@ -90,7 +94,7 @@ init-submodules:
 	git submodule update
 
 install-libs:
-	apt-get install nodejs coffeescript python2.7 chromium-browser
+	apt-get install nodejs coffeescript python2.7 libhaml-ruby1.8 chromium-browser
 	wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 	python2.7 get-pip.py
 	rm get-pip.py

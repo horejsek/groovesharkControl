@@ -4,9 +4,9 @@
 "description": "__MSG_extDescription__"
 
 "icons":
-    "16": "images/icon_16.png"
-    "48": "images/icon_48.png"
-    "128": "images/icon_128.png"
+    "16": "images/icons/16.png"
+    "48": "images/icons/48.png"
+    "128": "images/icons/128.png"
 
 
 "default_locale": "en"
@@ -33,7 +33,7 @@
 ]
 
 "browser_action":
-    "default_icon": "images/backgroundIcons/disabled.png"
+    "default_icon": "images/background/disabled.png"
     "default_title": "Grooveshark Control"
     "default_popup": "views/popup.html"
 

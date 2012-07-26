@@ -17,9 +17,9 @@ goog.scope ->
     `var BG = gc.Background`
 
     BG.ICONS =
-        disabled: '../images/backgroundIcons/disabled.png'
-        playing: '../images/backgroundIcons/playing.png'
-        pause: '../images/backgroundIcons/pause.png'
+        disabled: '../images/background/disabled.png'
+        playing: '../images/background/playing.png'
+        pause: '../images/background/pause.png'
 
     BG.playImage = new Image()
     BG.playImage.src = BG.ICONS.playing

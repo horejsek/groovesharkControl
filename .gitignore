@@ -3,3 +3,5 @@ libs/selenium-server.jar
 *.zip
 *.js
 *.json
+*.css
+.sass-cache
