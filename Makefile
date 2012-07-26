@@ -94,7 +94,7 @@ init-submodules:
 	git submodule update
 
 install-libs:
-	apt-get install nodejs coffeescript python2.7 libhaml-ruby1.8 chromium-browser
+	apt-get install nodejs coffeescript python2.7 libhaml-ruby1.8 chromium-browser openjdk-7-jre
 	wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 	python2.7 get-pip.py
 	rm get-pip.py
