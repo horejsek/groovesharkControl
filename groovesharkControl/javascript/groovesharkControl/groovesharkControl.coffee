@@ -19,10 +19,10 @@ goog.require 'gc.Settings'
     # Create & pin & go to tab.
 
 
-    gc.createGroovesharkTab = ->
+    gc.createGroovesharkTab = (url) ->
         settings = new gc.Settings()
         chrome.tabs.create
-            url: groovesharkUrl
+            url: url || groovesharkUrl
             index: 0 if settings.prepareGrooveshark
             pinned: true if settings.prepareGrooveshark
 
@@ -31,8 +31,11 @@ goog.require 'gc.Settings'
 
     gc.goToGroovesharkTab = ->
         callWithGroovesharkTab (tab) ->
-            chrome.windows.update tab.windowId, focused: true
-            chrome.tabs.update tab.id, selected: true
+            activateTab tab
+
+    activateTab = (tab) ->
+        chrome.windows.update tab.windowId, focused: true
+        chrome.tabs.update tab.id, selected: true
 
     gc.pinGroovesharkTab = () ->
         settings = new gc.Settings()
@@ -68,10 +71,12 @@ goog.require 'gc.Settings'
         gc.search query, 'album'
 
     goToPage = (url) ->
-        gc.goToGroovesharkTab()
-        callWithGroovesharkTab (tab) ->
+        fcUpdate = (tab) ->
+            activateTab tab
             if tab.url isnt url
                 chrome.tabs.update tab.id, url: url
+        fcCreate = () -> gc.createGroovesharkTab url
+        callWithGroovesharkTab fcUpdate, fcCreate
 
 
     # Commands.
