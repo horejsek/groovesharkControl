@@ -27,17 +27,12 @@
 "songCrossfade":
     "message":        "Prolnutí mezi skladbami"
 
-"playerPin":
-    "message":        "Připnout"
-"playerSite":
-    "message":        "Jdi na Grooveshark"
-
 "ofTime":
-    "message":        "z"
-    "description":    "Ukázka: 1:17 z 3:40."
+    "message":        "/"
+    "description":    "Ukázka: 1:17 / 3:40."
 "ofSong":
-    "message":        "z"
-    "description":    "Ukázka: 5 z 6."
+    "message":        "/"
+    "description":    "Ukázka: 5 / 6."
 
 "radio":
     "message":        "Rádio"
@@ -49,6 +44,21 @@
 "liteBy":
     "message":        "od"
     "description":    "Ukázka: MusicName [od] Artist..."
+
+
+# Other.
+
+
+"playerPin":
+    "message":        "Připnout"
+"playerSite":
+    "message":        "Jdi na Grooveshark"
+
+"nowPlaying":
+    "message":        "Nyní hraje"
+
+"share":
+    "message":        "Sdílet"
 
 
 # Search.

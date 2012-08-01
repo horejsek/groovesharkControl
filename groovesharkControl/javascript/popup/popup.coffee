@@ -39,7 +39,7 @@ goog.scope ->
         @updatePlayer request.player
         @updateCurrentSong request.currentSong
         @updatePlayback request.playback
-        @updateQueue request.queue
+        @updateQueueSongs request.queue, request.playback
         @scrollToActiveSongInQueue request.queue.activeSongIndex
         @updateAutoplay request.autoplay
         @lastSongIndex = request.queue.activeSongIndex

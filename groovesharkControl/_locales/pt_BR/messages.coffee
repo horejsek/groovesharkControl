@@ -27,17 +27,12 @@
 "songCrossfade":
     "message":        "Usar crossfade entre as músicas"
 
-"playerPin":
-    "message":        "Fixar"
-"playerSite":
-    "message":        "Ir ao Grooveshark"
-
 "ofTime":
-    "message":        "de"
-    "description":    "Exemplo: 1:17 de 3:40."
+    "message":        "/"
+    "description":    "Exemplo: 1:17 / 3:40."
 "ofSong":
-    "message":        "de"
-    "description":    "Example: 5 de 6."
+    "message":        "/"
+    "description":    "Example: 5 / 6."
 
 "radio":
     "message":        "Radio"
@@ -49,6 +44,21 @@
 "liteBy":
     "message":        "por"
     "description":    "Exemplo: NomeMúsica [por] Artista..."
+
+
+# Other.
+
+
+"playerPin":
+    "message":        "Fixar"
+"playerSite":
+    "message":        "Ir ao Grooveshark"
+
+"nowPlaying":
+    "message":        "Now Playing"
+
+"share":
+    "message":        "Share"
 
 
 # Search.

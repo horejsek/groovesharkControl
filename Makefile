@@ -12,7 +12,8 @@ CHROME_EXT_JS_DIR=groovesharkControl/javascript/
 CHROME_EXT_COFFEE_SOURCES=$(CHROME_EXT_JS_DIR)*/*.coffee
 CHROME_EXT_LOCALES_DIR=groovesharkControl/_locales/
 CHROME_EXT_COFFEE_LOCALES=$(CHROME_EXT_LOCALES_DIR)*/*.coffee
-CHROME_EXT_SCSS_SOURCES=groovesharkControl/styles/*.scss groovesharkControl/styles/*/*.scss
+CHROME_EXT_STYLES_DIR=groovesharkControl/styles/
+CHROME_EXT_SCSS_SOURCES=$(CHROME_EXT_STYLES_DIR)*.scss $(CHROME_EXT_STYLES_DIR)*/*.scss
 
 all:
 	@echo "make build - Create zip archive for Chrome"
@@ -82,6 +83,7 @@ clean:
 	rm -f groovesharkControl/manifest.json
 	find $(CHROME_EXT_LOCALES_DIR) -type f -name *.json | xargs rm -f
 	find $(CHROME_EXT_JS_DIR) -type f -name *.js | xargs rm -f
+	find $(CHROME_EXT_STYLES_DIR) -type f -name *.css | xargs rm -f
 
 localdev: install-git-hooks init-submodules get-selenium-server install-libs
 

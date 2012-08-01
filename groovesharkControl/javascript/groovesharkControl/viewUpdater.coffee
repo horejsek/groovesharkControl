@@ -60,13 +60,13 @@ goog.scope ->
     VU::updatePlayerVolume = (player) ->
         @volumeSlider.setValue player.volume
 
-        elm = goog.dom.getElement 'volume'
+        volumeElm = goog.dom.getElement 'volume'
         classesToRemove = ['mute', 'volume0', 'volume20', 'volume40', 'volume60', 'volume80', 'volume100']
         if player.isMute
             volumeClass = 'mute'
         else
             volumeClass = 'volume' + Math.round(player.volume / (100 / 5)) * 20
-        goog.dom.classes.addRemove elm, classesToRemove, volumeClass
+        goog.dom.classes.addRemove volumeElm, classesToRemove, volumeClass
 
 
     # Current song.
@@ -120,10 +120,6 @@ goog.scope ->
     VU::updatePlaybackProgressbar = (playback) ->
         @progressbar.setValue playback.percentage
 
-        progressbarElm = goog.dom.getElement 'progressbar'
-        elapsedElm = goog.dom.getElementByClass 'elapsed', progressbarElm
-        goog.style.setStyle elapsedElm, 'width': playback.percentage + '%'
-
     VU::updatePlaybackOptions = (playback) ->
         goog.dom.classes.set goog.dom.getElement('playpause'), if playback.status is 'PLAYING' then 'pause' else 'play'
 
@@ -131,37 +127,64 @@ goog.scope ->
     # Queue.
 
 
-    VU::updateQueue = (queue) ->
+    VU::updateQueue = (queue, playback) ->
         @updateQueueInformation queue
-        @updateQueueSongs queue
+        @updateQueueSongs queue, playback
 
     VU::updateQueueInformation = (queue) ->
         goog.dom.getElement('queuePosition').textContent = queue.activeSongIndex + 1
         goog.dom.getElement('queueCountSongs').textContent = queue.songs.length
 
-    VU::updateQueueSongs = (queue) ->
-        playlistElm = goog.dom.getElement('playlist')
+    VU::updateQueueSongs = (queue, playback) ->
+        playlistElm = goog.dom.getElement('playlistItems')
         playlistElm.textContent = ''
 
         for song, index in queue.songs
-            itemElm = goog.dom.createDom 'div',
-                'class': 'item'
-                textContent: song.artistName + ' - ' + song.songName
-                onclick: @createOnclickActionForPlaylist song.queueSongId
+            itemElm = goog.dom.createDom 'div', 'class': 'item'
             goog.dom.classes.enable itemElm, 'odd', index % 2 is 0
             goog.dom.classes.enable itemElm, 'active', song.queueSongId is queue.activeSongId
+
+            if song.queueSongId is queue.activeSongId
+                buttonOnclick = -> gc.sendCommandToGrooveshark 'playPause'
+            else
+                buttonOnclick = @createOnclickActionForPlaylist_playSong song.queueSongId
+            buttonElm = goog.dom.createDom 'button',
+                'class': 'playPause ' + if playback.status is 'PLAYING' then 'pause' else 'play'
+                onclick: buttonOnclick
+            songElm = goog.dom.createDom 'div',
+                'class': 'song'
+                textContent: song.songName
+            artistElm = goog.dom.createDom 'div',
+                'class': 'artist'
+                textContent: song.artistName
+                onclick: @createOnclickActionForPlaylist_goToArtist song.artistId
+
+            goog.dom.appendChild itemElm, buttonElm
+            goog.dom.appendChild itemElm, songElm
+            goog.dom.appendChild itemElm, artistElm
             goog.dom.appendChild playlistElm, itemElm
 
-    VU::createOnclickActionForPlaylist = (queueSongId) ->
+    VU::createOnclickActionForPlaylist_playSong = (queueSongId) ->
         -> gc.sendCommandToGrooveshark 'playSongInQueue', queueSongId: queueSongId
+
+    VU::createOnclickActionForPlaylist_goToArtist = (artistId) ->
+        -> gc.goToPageWithArtist artistId
 
 
     # Autoplay.
 
 
     VU::updateAutoplay = (autoplay) ->
+        @updateAutoplay_autoplay autoplay
+        @updateAutoplay_songOptions autoplay
+
+    VU::updateAutoplay_autoplay = (autoplay) ->
         autoplayTitle = chrome.i18n.getMessage if autoplay.enabled then 'radioOn' else 'radioOff'
         goog.dom.getElement('radioTitle').textContent = autoplayTitle
+
+    VU::updateAutoplay_songOptions = (autoplay) ->
+        for elmId in ['smile', 'frown']
+            goog.dom.getElement(elmId).style.display = if autoplay.enabled then 'inline' else 'none'
 
 
     # Misc.
