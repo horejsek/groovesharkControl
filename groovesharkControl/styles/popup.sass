@@ -225,7 +225,7 @@ button
                 background-position-x: -295px
             &.volume100
                 background-position-x: -335px
-        #volumeSlider
+        #volumeSliderWrapper
             display: none
             position: absolute
             left: 10px
@@ -233,22 +233,27 @@ button
             width: 24px
             height: 98px
             background: url(../images/volume_slider.png) 0px -7px
-            .elapsed
-                position: absolute
-                left: 10px
-                bottom: 13px
-                width: 4px
-                height: 0%
-                background: #F77F00
-            .goog-slider-thumb
-                position: absolute
-                left: 5px
-                width: 12px
-                height: 7px
-                background: url(../images/volume_slider.png)
-                cursor: pointer
-        #volume:hover + #volumeSlider,
-        #volumeSlider:hover
+            #volumeSlider
+                position: relative
+                width: 100%
+                height: 75px
+                margin-top: 10px
+                .elapsed
+                    position: absolute
+                    left: 10px
+                    bottom: 0px
+                    width: 4px
+                    height: 0%
+                    background: #F77F00
+                .goog-slider-thumb
+                    position: absolute
+                    left: 5px
+                    width: 12px
+                    height: 7px
+                    background: url(../images/volume_slider.png)
+                    cursor: pointer
+        #volume:hover + #volumeSliderWrapper,
+        #volumeSliderWrapper:hover
             display: block
 
         #shuffle

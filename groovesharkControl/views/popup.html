@@ -35,9 +35,11 @@
             <div class="firstLine">
                 <div class="left">
                     <button id="volume" class="volume0" onmouseover="gc.sendCommandToGrooveshark('refresh');" onclick="gc.sendCommandToGrooveshark('toggleMute');"></button>
-                    <div id="volumeSlider">
-                        <div class="elapsed"></div>
-                        <div class="goog-slider-thumb"></div>
+                    <div id="volumeSliderWrapper">
+                        <div id="volumeSlider">
+                            <div class="elapsed"></div>
+                            <div class="goog-slider-thumb"></div>
+                        </div>
                     </div>
 
                     <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
