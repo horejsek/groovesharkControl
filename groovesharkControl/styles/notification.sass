@@ -1,0 +1,325 @@
+
+$width: 300px
+
+$songHeight: 100px
+$songOptionsWidth: 100px
+$songInfoWidth: $width - $songOptionsWidth
+
+$playerFirstLineHeight: 35px
+$playerSecondLineHeight: 25px
+$playerHeight: $playerFirstLineHeight + $playerSecondLineHeight
+
+$icon16: 16px
+$icon18: 18px
+
+
+
+@mixin icon16
+    width: $icon16
+    height: $icon16
+@mixin icon18
+    width: $icon18
+    height: $icon18
+
+@mixin playerOptionIcon
+    width: 30px
+    height: 30px
+    background: url(../images/icons_player.png)
+@mixin songOptionIcon
+    @include icon18
+    position: relative
+    z-index: 1
+    background: url(../images/icons_song.png)
+
+@mixin progressbar
+    position: absolute
+    height: 10px
+    background: url(../images/progressbar.png) 0 0
+
+
+
+*:focus
+    outline: none
+
+body
+    width: $width
+    margin: 0
+    color: #CCC
+    background: #252525
+    font-family: Arial, Helvetica, sans-serif
+    font-size: 0.8em
+    cursor: default
+
+button
+    margin: 0
+    padding: 0
+    border: none
+    cursor: pointer
+
+
+
+#song
+    position: relative
+    height: $songHeight
+    font-size: 1.2em
+
+    #songInfo
+        float: left
+        width: $songInfoWidth - 10
+        margin: 5px 0px 5px 10px
+
+        #songName, #artistName, #albumName
+            width: $songInfoWidth - 10
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+        #songName
+            color: #FFF
+            font-size: 1.4em
+
+        #artistName:hover,
+        #albumName:hover,
+        #albumArt:hover + #albumName
+            color: #FFF
+            cursor: pointer
+
+        #share
+            @include icon16
+            position: absolute
+            bottom: 10px
+            right: 105px
+            background: url(../images/icons_context.png) 0px -80px
+            border: none
+
+            &:hover
+                background-position-x: -16px
+
+    #songOptions
+        float: right
+        width: $songOptionsWidth - 10
+        height: $songHeight - 10
+        margin: 5px
+
+        #albumArt
+            width: 90px
+            height: 90px
+            border: none
+            cursor: pointer
+
+        .songOptions
+            position: relative
+            top: -18px
+            padding: 0px 3px
+
+            .background
+                position: absolute
+                top: 0
+                left: 0
+                z-index: 0
+                width: 100%
+                height: 18px
+                background: #000
+                opacity: 0.9
+        &:hover > div div
+            opacity: 1
+
+        #library
+            @include songOptionIcon
+            background-position: -54px -72px
+            &.disable
+                background-position: -54px -216px
+            &:hover
+                background-color: #7DB721
+                background-position: -36px -72px
+        #favorite
+            @include songOptionIcon
+            background-position: -54px -90px
+            &.disable
+                background-position: -54px -234px
+            &:hover
+                background-color: #FC0093
+                background-position: -36px -90px
+        #smile
+            @include songOptionIcon
+            background-position: -54px -108px
+            &.disable
+                background-position: -54px -252px
+            &:hover
+                background-color: #FFD700
+                background-position: -36px -108px
+        #frown
+            @include songOptionIcon
+            background-position: -54px -126px
+            &.disable
+                background-position: -54px -270px
+            &:hover
+                background-color: #4AB6F3
+                background-position: -36px -126px
+
+
+
+#player
+    .firstLine
+        position: relative
+        height: $playerFirstLineHeight
+        padding: 0px 5px
+        background: url(../images/backgrounds.png) 0 -145px
+
+        .left
+            float: left
+        .right
+            float: right
+
+        #volume
+            @include playerOptionIcon
+            background-position-y: -148px
+            &.mute
+                background-position-x: -95px
+            &.volume0
+                background-position-x: -135px
+            &.volume20
+                background-position-x: -175px
+            &.volume40
+                background-position-x: -215px
+            &.volume60
+                background-position-x: -255px
+            &.volume80
+                background-position-x: -295px
+            &.volume100
+                background-position-x: -335px
+        #volumeSlider
+            display: none
+            position: absolute
+            left: 10px
+            bottom: 30px
+            width: 24px
+            height: 98px
+            background: url(../images/volume_slider.png) 0px -7px
+            .elapsed
+                position: absolute
+                left: 10px
+                bottom: 13px
+                width: 4px
+                height: 0%
+                background: #F77F00
+            .goog-slider-thumb
+                position: absolute
+                left: 5px
+                width: 12px
+                height: 7px
+                background: url(../images/volume_slider.png)
+                cursor: pointer
+        #volume:hover + #volumeSlider,
+        #volumeSlider:hover
+            display: block
+
+        #shuffle
+            @include playerOptionIcon
+            background-position-y: -108px
+            &.true
+                background-position-x: -60px
+            &.false
+                background-position-x: 0px
+        #loop
+            @include playerOptionIcon
+            background-position-y: -108px
+            &.none
+                background-position-x: -120px
+            &.one
+                background-position-x: -180px
+            &.all
+                background-position-x: -270px
+        #crossfade
+            @include playerOptionIcon
+            background-position-y: -108px
+            &.true
+                background-position-x: -360px
+            &.false
+                background-position-x: -300px
+
+        #previous
+            @include playerOptionIcon
+            background-position: -240px -68px
+        #next
+            @include playerOptionIcon
+            background-position: -360px -68px
+        #playPause
+            @include playerOptionIcon
+            width: 40px
+            background-position-y: -68px
+            &.play
+                background-position-x: -0px
+            &.pause
+                background-position-x: -120px
+
+    .secondLine
+        height: $playerSecondLineHeight
+        background: #121212
+
+        #time
+            float: left
+            line-height: $playerSecondLineHeight
+            color: #999
+            text-align: center
+            font-weight: bold
+            #timeElapsed
+                color: #FFF
+
+        #progressBar
+            position: relative
+            float: left
+            height: 10px
+            width: 210px
+            margin: 8px 5px 7px 10px
+            background: url(../images/progressbar.png) 0 -40px
+
+            .left
+                @include progressbar
+                top: 0px
+                left: 0px
+                z-index: 1
+                width: 5px
+                background-position-y: -60px
+            .elapsed
+                @include progressbar
+                width: 0%
+                background-position-y: -70px
+            .right
+                @include progressbar
+                top: 0px
+                right: 0px
+                z-index: 1
+                width: 5px
+                background-position-y: -50px
+            .goog-slider-thumb
+                position: absolute
+                top: -5px
+                z-index: 2
+                width: 20px
+                height: 20px
+                background: url(../images/progressbar_scrubber.png) -10px -10px
+                cursor: pointer
+                &:hover
+                    background-position-x: -50px
+
+
+
+#countDown
+    position: absolute
+    bottom: 0px
+    width: 100%
+    height: 5px
+    margin: 0px -7px
+    background: #444
+
+#switchToLiteNotification
+    @include icon16
+    position: absolute
+    left: 0px
+    bottom: 0px
+    z-index: 10
+    background: url('../images/pin.png') no-repeat
+    background-position: -6px 6px
+    cursor: pointer
+    &:hover
+        background-position: -1px 1px

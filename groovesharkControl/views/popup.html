@@ -5,12 +5,13 @@
         <script type="text/javascript">var popup = new gc.Popup();</script>
     </head>
     <body onload="popup.init();">
-        <div id="mainBar">
+        <div id="topPanel">
             <button id="gotogrooveshark" onclick="gc.goToGroovesharkTab();" i18n-title="playerSite"></button>
             <button id="search" onclick="gc.goToSearch();" i18n-text="search"></button>
             <button id="nowPlaying" onclick="gc.goToNowPlaying();" i18n-text="nowPlaying"></button>
             <button id="pin" class="unpin" onclick="gc.showNotification(stay=true); popup.hidePin();" i18n-title="playerPin"></button>
         </div>
+
         <div id="song">
             <div id="songInfo">
                 <div id="songName">Song</div>
@@ -46,8 +47,8 @@
 
                 <div class="right">
                     <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
-                    <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
                     <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
+                    <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
                 </div>
             </div>
 

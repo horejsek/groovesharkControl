@@ -13,7 +13,7 @@ CHROME_EXT_COFFEE_SOURCES=$(CHROME_EXT_JS_DIR)*/*.coffee
 CHROME_EXT_LOCALES_DIR=groovesharkControl/_locales/
 CHROME_EXT_COFFEE_LOCALES=$(CHROME_EXT_LOCALES_DIR)*/*.coffee
 CHROME_EXT_STYLES_DIR=groovesharkControl/styles/
-CHROME_EXT_SCSS_SOURCES=$(CHROME_EXT_STYLES_DIR)*.scss $(CHROME_EXT_STYLES_DIR)*/*.scss
+CHROME_EXT_SCSS_SOURCES=$(CHROME_EXT_STYLES_DIR)*.sass $(CHROME_EXT_STYLES_DIR)*/*.sass
 
 all:
 	@echo "make build - Create zip archive for Chrome"

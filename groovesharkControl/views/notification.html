@@ -5,39 +5,62 @@
         <script type="text/javascript">var notification = new gc.Notification();</script>
     </head>
     <body onload="notification.init();" onmouseover="notification.cancelCountDownOfWindowClose();">
-        <div class="nowPlaying">
-            <img class="image" />
-            <div class="song"></div>
-            <div class="artist"></div>
-            <div class="album"></div>
-            <div class="time">
-                <span class="timeElapsed"></span>
-                <span i18n-text="ofTime"></span>
-                <span class="timeDuration"></span>
+        <div id="song">
+            <div id="songInfo">
+                <div id="songName">Song</div>
+                <div id="artistName">Artist</div>
+                <div id="albumName">Album</div>
+                <button id="share" onclick="gc.goToGroovesharkTab(); gc.sendCommandToGrooveshark('shareCurrentSong');" i18n-title="share"></button>
             </div>
-            <div class="position">
-                <span class="queuePosition"></span>
-                <span i18n-text="ofSong"></span>
-                <span class="queueCountSongs"></span>
-            </div>
-            <div class="library" onclick="gc.sendCommandToGrooveshark('toggleLibrary');"></div>
-            <div class="favorite" onclick="gc.sendCommandToGrooveshark('toggleFavorite');"></div>
-            <div class="smile disable" onclick="gc.sendCommandToGrooveshark('toggleSmile');"></div>
-            <div class="frown disable" onclick="gc.sendCommandToGrooveshark('toggleFrown');"></div>
-            <div id="progressbar" class="progressbar">
-                <div class="left"></div>
-                <div class="elapsed"></div>
-                <div class="right"></div>
-                <div class="goog-slider-thumb"></div>
+            <div id="songOptions">
+                <img id="albumArt" src="http://images.grooveshark.com/static/albums/90_album.png" />
+                <div class="songOptions">
+                    <div class="background"></div>
+                    <button id="library" class="disable" onclick="gc.sendCommandToGrooveshark('toggleLibrary');" i18n-title="toggleLibrary"></button>
+                    <button id="favorite" class="disable" onclick="gc.sendCommandToGrooveshark('toggleFavorite');" i18n-title="toggleFavorite"></button>
+                    <button id="smile" class="disable" onclick="gc.sendCommandToGrooveshark('toggleSmile');" i18n-title="toggleSmile"></button>
+                    <button id="frown" class="disable" onclick="gc.sendCommandToGrooveshark('toggleFrown');" i18n-title="toggleFrown"></button>
+                </div>
             </div>
         </div>
-        <div class="player">
-            <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
-            <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
-            <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
-        </div>
-        <div id="countDown"></div>
 
+        <div id="player">
+            <div class="firstLine">
+                <div class="left">
+                    <button id="volume" class="volume0" onmouseover="gc.sendCommandToGrooveshark('refresh');" onclick="gc.sendCommandToGrooveshark('toggleMute');"></button>
+                    <div id="volumeSlider">
+                        <div class="elapsed"></div>
+                        <div class="goog-slider-thumb"></div>
+                    </div>
+
+                    <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
+                    <button id="loop" class="none" onclick="gc.sendCommandToGrooveshark('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
+                    <button id="crossfade" class="false" onclick="gc.sendCommandToGrooveshark('toggleCrossfade');" i18n-title="songCrossfade"></button>
+                </div>
+
+                <div class="right">
+                    <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
+                    <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
+                    <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
+                </div>
+            </div>
+
+            <div class="secondLine">
+                <div id="progressbar">
+                    <div class="left"></div>
+                    <div class="elapsed"></div>
+                    <div class="right"></div>
+                    <div class="goog-slider-thumb"></div>
+                </div>
+                <div id="time">
+                    <span id="timeElapsed"></span>
+                    <span i18n-text="ofTime"></span>
+                    <span id="timeDuration"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="countDown"></div>
         <div id="switchToLiteNotification" onclick="gc.showLiteNotification(true, 100); window.close();"></div>
     </body>
 </html>

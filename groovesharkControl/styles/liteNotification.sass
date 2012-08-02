@@ -1,0 +1,139 @@
+
+$width: 300px
+$playerHeight: 35px
+
+$icon16: 16px
+$icon18: 18px
+
+
+
+@mixin icon16
+    width: $icon16
+    height: $icon16
+@mixin icon18
+    width: $icon18
+    height: $icon18
+
+@mixin playerOptionIcon
+    width: 30px
+    height: 30px
+    background: url(../images/icons_player.png)
+@mixin songOptionIcon
+    @include icon18
+    position: relative
+    z-index: 1
+    background: url(../images/icons_song.png)
+
+@mixin progressbar
+    position: absolute
+    height: 10px
+    background: url(../images/progressbar.png) 0 0
+
+
+
+*:focus
+    outline: none
+
+body
+    width: $width
+    margin: 0
+    color: #CCC
+    background: #252525
+    font-family: Arial, Helvetica, sans-serif
+    font-size: 0.8em
+    cursor: default
+
+button
+    margin: 0
+    padding: 0
+    border: none
+    cursor: pointer
+
+
+
+#song
+    line-height: 2em
+
+    #songName
+        color: #FFF
+        font-weight: bold
+        font-size: 1.1em
+
+    #artistName:hover,
+    #albumName:hover
+        color: #FFF
+        cursor: pointer
+
+
+
+#player
+    position: relative
+    height: $playerHeight
+    padding: 0px 5px
+    background: url(../images/backgrounds.png) 0 -145px
+
+    #progressBar
+        position: relative
+        float: left
+        height: 10px
+        width: 165px
+        margin: 15px 5px 10px 10px
+        background: url(../images/progressbar.png) 0 -40px
+
+        .left
+            @include progressbar
+            top: 0px
+            left: 0px
+            z-index: 1
+            width: 5px
+            background-position-y: -60px
+        .elapsed
+            @include progressbar
+            width: 0%
+            background-position-y: -70px
+        .right
+            @include progressbar
+            top: 0px
+            right: 0px
+            z-index: 1
+            width: 5px
+            background-position-y: -50px
+        .goog-slider-thumb
+            position: absolute
+            top: -5px
+            z-index: 2
+            width: 20px
+            height: 20px
+            background: url(../images/progressbar_scrubber.png) -10px -10px
+            cursor: pointer
+            &:hover
+                background-position-x: -50px
+
+    #previous
+        @include playerOptionIcon
+        background-position: -240px -68px
+    #next
+        @include playerOptionIcon
+        background-position: -360px -68px
+    #playPause
+        @include playerOptionIcon
+        width: 40px
+        background-position-y: -68px
+        &.play
+            background-position-x: -0px
+        &.pause
+            background-position-x: -120px
+
+
+
+#switchToFullNotification
+    @include icon16
+    position: absolute
+    left: 0px
+    bottom: 0px
+    z-index: 10
+    background: url('../images/pin.png') no-repeat
+    background-position: -6px 6px
+    cursor: pointer
+    &:hover
+        background-position: -1px 1px

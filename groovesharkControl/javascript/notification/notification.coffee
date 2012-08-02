@@ -19,6 +19,7 @@ goog.scope ->
     NTF::init = () ->
         @initListeners()
         @initProgressbar()
+        @initVolumeSlider() if !@isLite
         @startCountDown()
 
 
@@ -46,6 +47,7 @@ goog.scope ->
             window.close()
             return
 
+        @updatePlayer request.player if !@isLite
         @updateCurrentSongInformation request.currentSong
         @updateCurrentSongImage request.currentSong if !@isLite
         @updateCurrentSongOptions request.currentSong if !@isLite
