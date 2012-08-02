@@ -175,14 +175,14 @@ goog.scope ->
 
 
     VU::updateAutoplay = (autoplay) ->
-        @updateAutoplay_autoplay autoplay
-        @updateAutoplay_songOptions autoplay
+        @updateAutoplayAutoplay autoplay
+        @updateAutoplaySongOptions autoplay
 
-    VU::updateAutoplay_autoplay = (autoplay) ->
+    VU::updateAutoplayAutoplay = (autoplay) ->
         autoplayTitle = chrome.i18n.getMessage if autoplay.enabled then 'radioOn' else 'radioOff'
         goog.dom.getElement('radioTitle').textContent = autoplayTitle
 
-    VU::updateAutoplay_songOptions = (autoplay) ->
+    VU::updateAutoplaySongOptions = (autoplay) ->
         for elmId in ['smile', 'frown']
             goog.dom.getElement(elmId).style.display = if autoplay.enabled then 'inline' else 'none'
 
