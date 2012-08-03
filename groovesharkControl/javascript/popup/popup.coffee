@@ -33,7 +33,7 @@ goog.scope ->
         # If now isn't playing any song, go to Grooveshark tab and close popup.
         if request.currentSong is undefined
             gc.goToGroovesharkTab()
-            window.close()
+            setTimeout window.close, 20
             return
 
         @updatePlayer request.player
