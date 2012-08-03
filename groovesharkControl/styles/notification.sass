@@ -189,13 +189,15 @@ button
             &.volume100
                 background-position-x: -335px
         #volumeSliderWrapper
-            display: none
+            visibility: hidden
+            opacity: 0
             position: absolute
             left: 10px
             bottom: 30px
             width: 24px
             height: 98px
             background: url(../images/volume_slider.png) 0px -7px
+            -webkit-transition: opacity .25s ease-in-out
             #volumeSlider
                 position: relative
                 width: 100%
@@ -217,7 +219,8 @@ button
                     cursor: pointer
         #volume:hover + #volumeSliderWrapper,
         #volumeSliderWrapper:hover
-            display: block
+            visibility: visible
+            opacity: 1
 
         #shuffle
             @include playerOptionIcon
