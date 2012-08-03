@@ -77,7 +77,7 @@ goog.require 'goog.dom.query'
 
 
     getCurrentSongInformation = ->
-        if typeof GS.player.currentSong is 'undefined'
+        if typeof GS.player.currentSong is 'undefined' || GS.player.queue.songs.length == 0
             return
 
         currentSong = GS.player.currentSong
@@ -95,10 +95,14 @@ goog.require 'goog.dom.query'
         isFrown: isFrown()
 
     isSmile = ->
-        goog.dom.classes.has goog.dom.query('#queue_list li.queue-item-active div.radio_options a.smile')[0], 'active'
+        elm = goog.dom.query('#queue_list li.queue-item-active div.radio_options a.smile')[0]
+        return goog.dom.classes.has elm, 'active' if elm
+        false
 
     isFrown = ->
-        goog.dom.classes.has goog.dom.query('#queue_list li.queue-item-active div.radio_options a.frown')[0], 'active'
+        elm = goog.dom.query('#queue_list li.queue-item-active div.radio_options a.frown')[0]
+        return goog.dom.classes.has elm, 'active' if elm
+        false
 
 
     getQueueInformation = ->
