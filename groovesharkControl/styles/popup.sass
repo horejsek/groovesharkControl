@@ -99,6 +99,7 @@ button
 #song
     position: relative
     height: $songHeight
+    background: #111
     font-size: 1.2em
 
     #songInfo
@@ -263,11 +264,15 @@ button
                 background-position-x: -60px
             &.false
                 background-position-x: 0px
+                &:hover
+                    background-position-x: -30px
         #loop
             @include playerOptionIcon
             background-position-y: -108px
             &.none
                 background-position-x: -120px
+                &:hover
+                    background-position-x: -150px
             &.one
                 background-position-x: -180px
             &.all
@@ -279,6 +284,8 @@ button
                 background-position-x: -360px
             &.false
                 background-position-x: -300px
+                &:hover
+                    background-position-x: -330px
 
         #previous
             @include playerOptionIcon

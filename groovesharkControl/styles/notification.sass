@@ -61,12 +61,13 @@ button
 #song
     position: relative
     height: $songHeight
+    background: #111
     font-size: 1.2em
 
     #songInfo
         float: left
         width: $songInfoWidth - 10
-        margin: 5px 0px 5px 10px
+        margin: 10px 0px 5px 10px
 
         #songName, #artistName, #albumName
             width: $songInfoWidth - 10
@@ -101,8 +102,8 @@ button
         margin: 5px
 
         #albumArt
-            width: 90px
-            height: 90px
+            width: $songOptionsWidth - 10
+            height: $songOptionsWidth - 10
             border: none
             cursor: pointer
 
@@ -225,11 +226,15 @@ button
                 background-position-x: -60px
             &.false
                 background-position-x: 0px
+                &:hover
+                    background-position-x: -30px
         #loop
             @include playerOptionIcon
             background-position-y: -108px
             &.none
                 background-position-x: -120px
+                &:hover
+                    background-position-x: -150px
             &.one
                 background-position-x: -180px
             &.all
@@ -241,6 +246,8 @@ button
                 background-position-x: -360px
             &.false
                 background-position-x: -300px
+                &:hover
+                    background-position-x: -330px
 
         #previous
             @include playerOptionIcon
