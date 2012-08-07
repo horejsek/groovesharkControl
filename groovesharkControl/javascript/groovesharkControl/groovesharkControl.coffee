@@ -54,6 +54,9 @@ goog.require 'gc.Settings'
     # Links.
 
 
+    gc.goToPageWithSong = (songName, token) ->
+        goToPage 'http://grooveshark.com/#!/s/' + songName + '/' + token
+
     gc.goToPageWithArtist = (artistId) ->
         goToPage 'http://grooveshark.com/#!/artist//' + artistId
 

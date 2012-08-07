@@ -93,6 +93,7 @@ goog.require 'goog.dom.query'
         isFavorite: currentSong.isFavorite
         isSmile: isSmile()
         isFrown: isFrown()
+        token: currentSong._token
 
     isSmile = ->
         elm = goog.dom.query('#queue_list li.queue-item-active div.radio_options a.smile')[0]
