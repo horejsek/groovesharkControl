@@ -10,6 +10,8 @@ goog.require 'gc.Settings'
     groovesharkUrl = 'http://grooveshark.com/'
     groovesharkPreviewUrl = 'http://preview.grooveshark.com/'
 
+    commandsHandledInGsTab = ['shareCurrentSong']
+
 
     gc.injectGrooveshark = ->
         callWithGroovesharkTabIfIsOpened (tab) ->
@@ -78,9 +80,9 @@ goog.require 'gc.Settings'
 
     goToPage = (url) ->
         fcUpdate = (tab) ->
-            activateTab tab
             if tab.url isnt url
                 chrome.tabs.update tab.id, url: url
+            activateTab tab
         fcCreate = () -> gc.createGroovesharkTab url
         callWithGroovesharkTab fcUpdate, fcCreate
 
@@ -96,6 +98,7 @@ goog.require 'gc.Settings'
     sendRequestToGrooveshark = (request) ->
         callWithGroovesharkTab (tab) ->
             chrome.tabs.sendRequest tab.id, request
+            activateTab tab if request.command in commandsHandledInGsTab
 
 
     # Find & use tab with Grooveshark.
