@@ -167,4 +167,12 @@ goog.require 'gc.Settings'
     gc.isShowedNotification = () ->
         chrome.extension.getViews(type: 'notification').length > 0
 
+
+    # Options.
+
+
+    gc.openOptionsPage = () ->
+        chrome.tabs.create
+            url: 'views/options.html'
+
 )()
