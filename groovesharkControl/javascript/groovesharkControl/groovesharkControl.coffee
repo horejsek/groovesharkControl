@@ -89,6 +89,12 @@ goog.require 'gc.Settings'
         fcCreate = () -> gc.createGroovesharkTab url
         callWithGroovesharkTab fcUpdate, fcCreate
 
+    gc.searchLyrics = (songName, artistName) ->
+        query = songName + '+' + artistName + '+lyrics'
+        imFeelingLuckyUrl = 'http://www.google.com/search?hl=en&q=' + query + '&btnI=I'
+        chrome.tabs.create
+            url: imFeelingLuckyUrl
+
 
     # Commands.
 

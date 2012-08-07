@@ -101,6 +101,9 @@ goog.scope ->
         goog.dom.classes.enable goog.dom.getElement('smile'), 'active', song.isSmile
         goog.dom.classes.enable goog.dom.getElement('frown'), 'active', song.isFrown
 
+        elm = goog.dom.getElement 'lyrics'
+        @_addLink elm, () -> gc.searchLyrics song.songName, song.artistName
+
     VU::_addLink = (elm, callback) ->
         goog.events.removeAll elm
         goog.events.listen elm, goog.events.EventType.CLICK, callback

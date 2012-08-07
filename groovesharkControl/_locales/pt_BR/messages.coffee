@@ -45,6 +45,9 @@
     "message":        "por"
     "description":    "Exemplo: NomeMúsica [por] Artista..."
 
+"searchLyrics":
+    "message":        "Use Google to search lyrics"
+
 
 # Other.
 
@@ -76,6 +79,9 @@
 
 # Options page.
 
+
+"options":
+    "message":        "Opções"
 
 "optionsTitle":
     "message":        "Opções de Grooveshark Control"

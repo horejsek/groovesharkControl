@@ -45,6 +45,9 @@
     "message":        "od"
     "description":    "Ukázka: MusicName [od] Artist..."
 
+"searchLyrics":
+    "message":        "Najdi text písně pomocí Google"
+
 
 # Other.
 
@@ -76,6 +79,9 @@
 
 # Options page.
 
+
+"options":
+    "message":        "Nastavení"
 
 "optionsTitle":
     "message":        "Grooveshark Control Nastavení"
