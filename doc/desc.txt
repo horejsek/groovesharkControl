@@ -1,0 +1,15 @@
+With Grooveshark Control you can control Grooveshark from everywhere. Almost from everywhere. :)
+
+If you have some issue or you want some new feature, please feel free to let me know on GitHub. Thanks. https://github.com/horejsek/groovesharkControl
+
+This extension is not official extension from Grooveshark developers.
+
+ * Player control
+ * Volume control
+ * Song control
+ * Now playing song
+ * Now playing queue
+ * Radio
+ * Icon status
+ * Notification
+ * And a lot of more
