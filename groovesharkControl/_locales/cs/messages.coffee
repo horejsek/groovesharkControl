@@ -48,6 +48,15 @@
 "searchLyrics":
     "message":        "Najdi text písně pomocí Google"
 
+"toggleLibrary":
+    "message":        "Přidej nebo odeber z knihovny"
+"toggleFavorite":
+    "message":        "Přidej nebo odeber z oblíbených"
+"toggleSmile":
+    "message":        "Více tohodle!"
+"toggleFrown":
+    "message":        "Néé, přeskoč."
+
 
 # Other.
 

@@ -48,6 +48,15 @@
 "searchLyrics":
     "message":        "Use Google to search lyrics"
 
+"toggleLibrary":
+    "message":        "Add or remove from library"
+"toggleFavorite":
+    "message":        "Add or remove from favorite"
+"toggleSmile":
+    "message":        "More of this!"
+"toggleFrown":
+    "message":        "Nah, skip it."
+
 
 # Other.
 
