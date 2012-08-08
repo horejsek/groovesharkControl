@@ -98,8 +98,8 @@ goog.scope ->
     VU::updateCurrentSongOptions = (song) ->
         goog.dom.classes.enable goog.dom.getElement('library'), 'disable', !song.fromLibrary
         goog.dom.classes.enable goog.dom.getElement('favorite'), 'disable', !song.isFavorite
-        goog.dom.classes.enable goog.dom.getElement('smile'), 'active', song.isSmile
-        goog.dom.classes.enable goog.dom.getElement('frown'), 'active', song.isFrown
+        goog.dom.classes.enable goog.dom.getElement('smile'), 'disable', !song.isSmile
+        goog.dom.classes.enable goog.dom.getElement('frown'), 'disable', !song.isFrown
 
         elm = goog.dom.getElement 'lyrics'
         @_addLink elm, () -> gc.searchLyrics song.songName, song.artistName

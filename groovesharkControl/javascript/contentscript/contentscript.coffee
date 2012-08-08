@@ -222,8 +222,8 @@ goog.require 'goog.dom.query'
         else
             GS.user.addToSongFavorites GS.player.currentSong.SongID
 
-    toggleSmile = -> GS.player.voteSong GS.player.currentSong.queueSongID, isSmile() ? 0 : 1
-    toggleFrown = -> GS.player.voteSong GS.player.currentSong.queueSongID, isFrown() ? 0 : -1
+    toggleSmile = -> GS.player.voteSong GS.player.currentSong.queueSongID, if isSmile() then 0 else 1
+    toggleFrown = -> GS.player.voteSong GS.player.currentSong.queueSongID, if isFrown() then 0 else -1
 
     seekTo = (seekTo) -> GS.player.seekTo (GS.player.getPlaybackStatus().duration) / 100 * seekTo
     playSongInQueue = (queueSongId) -> GS.player.playSong queueSongId
