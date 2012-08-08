@@ -27,6 +27,9 @@ build: clean compile
 	mkdir /tmp/$(CHROME_EXT_NAME)
 	cp -r groovesharkControl/* /tmp/$(CHROME_EXT_NAME)/
 	find /tmp/$(CHROME_EXT_NAME)/javascript/* -not -name *.min.js | xargs rm -rf
+	find /tmp/$(CHROME_EXT_NAME)/styles/* -not -name *.css | xargs rm -rf
+	find /tmp/$(CHROME_EXT_NAME)/_locales/*/* -name *.coffee | xargs rm -rf
+	rm /tmp/$(CHROME_EXT_NAME)/manifest.coffee
 	cd /tmp; zip -r -q -9 $(CHROME_EXT_ZIP_ARCHIVE_NAME) $(CHROME_EXT_NAME)
 	mv /tmp/$(CHROME_EXT_ZIP_ARCHIVE_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)
 	rm -rf /tmp/$(CHROME_EXT_NAME)
