@@ -12,4 +12,6 @@ This extension is not official extension from Grooveshark developers.
  * Radio
  * Icon status
  * Notification
+ * Search in address bar (type GC)
+ * Search in context menu
  * And a lot of more
