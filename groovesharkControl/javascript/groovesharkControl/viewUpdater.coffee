@@ -92,7 +92,7 @@ goog.scope ->
 
     VU::updateCurrentSongImage = (song) ->
         elm = goog.dom.getElement 'albumArt'
-        elm.src = song.albumImage
+        elm.src = song.albumImage70
         @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongOptions = (song) ->

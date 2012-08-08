@@ -3,8 +3,8 @@ $width: 320px
 
 $topPanelHeight: 40px
 
-$songHeight: 100px
-$songOptionsWidth: 100px
+$songHeight: 92px
+$songOptionsWidth: 92px
 $songInfoWidth: $width - $songOptionsWidth
 
 $playerFirstLineHeight: 38px
@@ -33,6 +33,7 @@ $icon18: 18px
     @include icon18
     position: relative
     z-index: 1
+    margin: -2px
     background: url(../images/icons_song.png)
 
 @mixin progressbar
@@ -112,22 +113,20 @@ button
             overflow: hidden
             text-overflow: ellipsis
             white-space: nowrap
+            &:hover
+                color: #FFF
+                cursor: pointer
         #songName
-            color: #DDD
-            font-size: 1.4em
-
-        #songName:hover,
-        #artistName:hover,
-        #albumName:hover,
-        #albumArt:hover + #albumName
-            color: #FFF
-            cursor: pointer
+            color: #F67600
+            font-size: 1.3em
+            &:hover
+                color: #FCA258
 
         #lyrics
             @include icon16
             position: absolute
             bottom: 5px
-            right: 120px
+            right: $songOptionsWidth + 20
             background: url(../images/icons_context.png) 0px -272px
             border: none
             &:hover
@@ -136,7 +135,7 @@ button
             @include icon16
             position: absolute
             bottom: 5px
-            right: 100px
+            right: $songOptionsWidth
             background: url(../images/icons_context.png) 0px -80px
             border: none
             &:hover
@@ -147,17 +146,21 @@ button
         width: $songOptionsWidth - 10
         height: $songHeight - 10
         margin: 5px 5px
+        background: url(../images/albumartborder.png) no-repeat
 
         #albumArt
-            width: 90px
-            height: 90px
+            position: relative
+            top: 6px
+            left: 6px
+            width: 70px
+            height: 70px
             border: none
             cursor: pointer
 
         .songOptions
             position: relative
-            top: -18px
-            padding: 0px 3px
+            top: -11px
+            margin: 0px 6px
 
             .background
                 position: absolute
@@ -177,32 +180,28 @@ button
             &.disable
                 background-position: -54px -216px
             &:hover
-                background-color: #7DB721
-                background-position: -36px -72px
+                opacity: 0.7
         #favorite
             @include songOptionIcon
             background-position: -54px -90px
             &.disable
                 background-position: -54px -234px
             &:hover
-                background-color: #FC0093
-                background-position: -36px -90px
+                opacity: 0.7
         #smile
             @include songOptionIcon
             background-position: -54px -108px
             &.disable
                 background-position: -54px -252px
             &:hover
-                background-color: #FFD700
-                background-position: -36px -108px
+                opacity: 0.7
         #frown
             @include songOptionIcon
             background-position: -54px -126px
             &.disable
                 background-position: -54px -270px
             &:hover
-                background-color: #4AB6F3
-                background-position: -36px -126px
+                opacity: 0.7
 
 
 
