@@ -39,6 +39,7 @@ goog.scope ->
     NTF::cancelCountDownOfWindowClose = () ->
         clearInterval @timer if @timer isnt false
         goog.style.setStyle goog.dom.getElement('countDown'), 'display': 'none'
+        goog.style.setStyle goog.dom.getElement('clicableCover'), 'display': 'none'
 
 
     NTF::update = (request) ->

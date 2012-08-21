@@ -12,6 +12,8 @@ $playerHeight: $playerFirstLineHeight + $playerSecondLineHeight
 $icon16: 16px
 $icon18: 18px
 
+$height: $songHeight + $playerFirstLineHeight + $playerSecondLineHeight
+
 
 
 @mixin icon16
@@ -332,8 +334,15 @@ button
 
 
 
+#clicableCover
+    position: absolute
+    z-index: 100
+    width: $width
+    height: $height
+
 #countDown
     position: absolute
+    z-index: 100
     bottom: 0px
     width: 100%
     height: 5px
