@@ -1,17 +1,25 @@
 Grooveshark control
 ===================
 
-Chrome extension. With Grooveshark Control you can control Grooveshark
-on every page. Desktop notification of Grooveshark Control let you
-control Grooveshark everywhere on computer!
+With Grooveshark Control you can control Grooveshark from everywhere. Almost
+from everywhere. :)
+
+If you have some issue or you want some new feature, please feel free to let
+me know on GitHub. Thanks.
+
+This extension is not official extension from Grooveshark developers.
 
  * Player control
- * Now playing
- * Playlist
+ * Volume control
+ * Song control
+ * Now playing song
+ * Now playing queue
  * Radio
  * Icon status
  * Notification
- * Options page
+ * Search in address bar (type GC)
+ * Search in context menu
+ * And a lot of more
 
 How to install
 ==============
@@ -32,3 +40,22 @@ on the button 'Load unpacked extension'.
 
 Command `make test` is running before every commit. If tests not pass, commit
 will not be finished.
+
+Dependencies
+------------
+
+If you want to develop, you have to install these packages:
+
+ * Closure library (and Java)
+ * CoffeeScript (and Nodejs)
+ * SASS (and Ruby)
+
+For testing these packages:
+
+ * Python 2.7
+ * Chromium
+ * Selenium
+
+You can prepare environment easily by command `make localdev` on Debian based
+Linux. If you use other system, please, find out workaround for your system and
+write out script or step-by-step manual, thanks.
