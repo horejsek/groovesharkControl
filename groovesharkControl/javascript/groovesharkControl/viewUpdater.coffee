@@ -158,9 +158,11 @@ goog.scope ->
             songElm = goog.dom.createDom 'div',
                 'class': 'song'
                 textContent: song.songName
+                title: song.songName
             artistElm = goog.dom.createDom 'div',
                 'class': 'artist'
                 textContent: song.artistName
+                title: song.artistName
                 onclick: @createOnclickActionForPlaylist_goToArtist song.artistId
 
             goog.dom.appendChild itemElm, buttonElm
