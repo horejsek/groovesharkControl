@@ -1,6 +1,6 @@
 
 "name": "__MSG_extName__"
-"version": "2.1.2"
+"version": "2.2.0"
 "description": "__MSG_extDescription__"
 
 "icons":
