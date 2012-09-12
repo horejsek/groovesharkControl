@@ -43,6 +43,9 @@ goog.scope ->
 
 
     NTF::update = (request) ->
+        if request.type isnt 'update'
+            return
+
         # If now isn't playing any song, close notification.
         if request.currentSong is undefined
             window.close()

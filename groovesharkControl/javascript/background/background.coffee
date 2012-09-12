@@ -55,6 +55,12 @@ goog.scope ->
     BG::update = (request) ->
         console.log request
 
+        if request.type is 'command'
+            gc.sendCommandToGrooveshark request.command, request.args
+
+        if request.type isnt 'update'
+            return
+
         gc.pinGroovesharkTab()
         if request.playback.status is 'UNAVAILABLE'
             @reset()

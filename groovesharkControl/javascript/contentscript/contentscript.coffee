@@ -27,6 +27,7 @@ goog.require 'goog.dom.query'
 
     sendData = ->
         data =
+            type: 'update'
             player: getPlayerOptions()
             playback: getPlaybackStatus()
             currentSong: getCurrentSongInformation()

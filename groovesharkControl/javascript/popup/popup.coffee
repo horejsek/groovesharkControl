@@ -30,6 +30,9 @@ goog.scope ->
 
 
     PU::update = (request) ->
+        if request.type isnt 'update'
+            return
+
         # If now isn't playing any song, go to Grooveshark tab and close popup.
         if request.currentSong is undefined
             gc.goToGroovesharkTab()

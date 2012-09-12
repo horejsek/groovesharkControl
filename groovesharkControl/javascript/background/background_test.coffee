@@ -10,7 +10,9 @@ goog.require 'gc.test.mocks'
 testResetInUpdate = ->
     bg = new gc.Background
     bg.lastSongIndex = 1
-    bg.update playback: status: 'UNAVAILABLE'
+    bg.update
+        type: 'update'
+        playback: status: 'UNAVAILABLE'
     assertEquals undefined, bg.lastSongIndex
 
 
@@ -22,6 +24,7 @@ testUpdate = ->
     stubs.replace bg, 'notification', createMock()
 
     bg.update
+        type: 'update'
         playback: status: 'PLAYING'
         currentSong: {}
         queue: activeSongIndex: 42

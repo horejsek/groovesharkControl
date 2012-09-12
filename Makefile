@@ -58,6 +58,12 @@ compile: compile-jsons compile-css
 	    --input $(CHROME_EXT_JS_DIR)contentscript/contentscript.js \
 	    --output_mode compiled \
 	    > $(CHROME_EXT_JS_DIR)contentscript.min.js;
+	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
+	    --path $(CLOSURE_LIBRARY) \
+	    --compiler_jar $(CLOSURE_COMPILER) \
+	    --input $(CHROME_EXT_JS_DIR)contentscript/shortcut.js \
+	    --output_mode compiled \
+	    > $(CHROME_EXT_JS_DIR)shortcut.min.js;
 
 compile-jsons:
 	coffee -pb groovesharkControl/manifest.coffee > groovesharkControl/manifest.json

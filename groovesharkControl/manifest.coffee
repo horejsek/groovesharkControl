@@ -30,6 +30,13 @@
         "http://grooveshark.com/*"
         "http://preview.grooveshark.com/*"
     ]
+,
+    "js": [
+        "javascript/shortcut.min.js"
+    ]
+    "matches": [
+        "<all_urls>"
+    ]
 ]
 
 "browser_action":
