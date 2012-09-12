@@ -248,7 +248,6 @@ goog.require 'goog.dom.query'
     listener = (request, sender, sendResponse) ->
         if typeof request.command is 'undefined'
             return
-        console.log 'on request', request
         doCommand request.command, request.args
         #  I need immediately send data back to the other pieces of extension,
         #+ because some state (playing, current song, etc.) can be changed and
