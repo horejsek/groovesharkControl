@@ -16,3 +16,10 @@ This extension is not official extension from Grooveshark developers.
  * Search in context menu
  * Shortcut (press pause/break)
  * And a lot of more
+
+Explanations of needed rights:
+ * tabs: Extension need to communicate with Grooveshark page and extension close notification when you close tab with Grooveshark.
+ * context menu: Well, that's obvious. On every page you have possibility to search selected text in Grooveshark by clicking in context menu.
+ * notification: That's obivous as well.
+ * access to grooveshark.com: Extension needs to communicate with Grooveshark page, so it needs permission to add some code to the page.
+ * access to every page: Extension supports shortcuts (only Pause/break for play/pause for now) and for that it needs add code which listen when you press some shortcut to every page.
