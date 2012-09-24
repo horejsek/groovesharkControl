@@ -1,6 +1,6 @@
 
 "name": "__MSG_extName__"
-"version": "2.2.0"
+"version": "2.2.1"
 "description": "__MSG_extDescription__"
 
 "icons":
@@ -25,17 +25,11 @@
 "content_scripts": [
     "js": [
         "javascript/contentscript.min.js"
+        "javascript/shortcut.min.js"
     ]
     "matches": [
         "http://grooveshark.com/*"
         "http://preview.grooveshark.com/*"
-    ]
-,
-    "js": [
-        "javascript/shortcut.min.js"
-    ]
-    "matches": [
-        "<all_urls>"
     ]
 ]
 
