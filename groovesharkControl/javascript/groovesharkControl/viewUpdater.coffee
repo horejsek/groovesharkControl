@@ -120,6 +120,7 @@ goog.scope ->
     VU::updatePlaybackTimes = (playback) ->
         goog.dom.getElement('timeElapsed').textContent = @msToHumanTime playback.position
         goog.dom.getElement('timeDuration').textContent = @msToHumanTime playback.duration
+        goog.dom.classes.enable goog.dom.getElement('time'), 'timeSmaller', playback.duration > 599000
 
     VU::updatePlaybackProgressbar = (playback) ->
         @progressbar.setValue playback.percentage
