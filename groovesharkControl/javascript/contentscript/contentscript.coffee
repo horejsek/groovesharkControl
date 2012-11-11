@@ -6,14 +6,20 @@ goog.require 'goog.dom.query'
 
 (->
 
-    # Get the GS object from unsafeWindow. https://gist.github.com/1143845
-    unsafeWindow = (->
-        el = goog.dom.createElement 'p'
-        el.setAttribute 'onclick', 'return window;'
-        el.onclick()
-    )()
+    GS = undefined
 
-    GS = unsafeWindow.Grooveshark
+    # Get the GS object from unsafeWindow. https://gist.github.com/1143845
+    getGS = ->
+        if GS
+            return GS
+        unsafeWindow = (->
+            el = goog.dom.createElement 'p'
+            el.setAttribute 'onclick', 'return window;'
+            el.onclick()
+        )()
+        GS = unsafeWindow.Grooveshark
+        return GS
+
     delayInMiliseconds = 1000
 
 
@@ -48,20 +54,22 @@ goog.require 'goog.dom.query'
 
 
     getPlayerOptions = ->
-        #switch GS.player.getRepeat()
-        #    when 1 then playerLoop = 'one'
-        #    when 2 then playerLoop = 'all'
-        #    else playerLoop = 'none'
+        loopElm = goog.dom.getElement 'repeat'
+        playerLoop = 'none'
+        playerLoop = 'one' if goog.dom.classes.has loopElm, 'one'
+        playerLoop = 'all' if goog.dom.classes.has loopElm, 'active'
+        shuffleElm = goog.dom.getElement 'shuffle'
+        crossfadeElm = goog.dom.getElement 'crossfade'
 
-        #loop: playerLoop
-        #shuffle: GS.player.getShuffle()
-        #crossfade: GS.player.getCrossfadeEnabled()
-        volume: if GS.getIsMuted() then 0 else GS.getVolume()
-        isMute: GS.getIsMuted()
+        loop: playerLoop
+        shuffle: goog.dom.classes.has shuffleElm, 'active'
+        crossfade: goog.dom.classes.has crossfadeElm, 'active'
+        volume: if getGS().getIsMuted() then 0 else getGS().getVolume()
+        isMute: getGS().getIsMuted()
 
 
     getPlaybackStatus = ->
-        playbackStatus = GS.getCurrentSongStatus()
+        playbackStatus = getGS().getCurrentSongStatus()
         if playbackStatus.status is 'none'
             status: 'UNAVAILABLE'
             percentage: null
@@ -78,10 +86,10 @@ goog.require 'goog.dom.query'
 
 
     getCurrentSongInformation = ->
-        if GS.getCurrentSongStatus().status is 'none'
+        if getGS().getCurrentSongStatus().status is 'none'
             return
 
-        currentSong = GS.getCurrentSongStatus().song
+        currentSong = getGS().getCurrentSongStatus().song
         filenameExtension = currentSong.artURL.split('.').slice(-1)[0]
 
         songId: currentSong.songID
@@ -99,10 +107,10 @@ goog.require 'goog.dom.query'
         #token: currentSong._token
 
     isSmile = ->
-        GS.getCurrentSongStatus().song.vote is 1
+        getGS().getCurrentSongStatus().song.vote is 1
 
     isFrown = ->
-        GS.getCurrentSongStatus().song.vote is -1
+        getGS().getCurrentSongStatus().song.vote is -1
 
 
     getQueueInformation = ->
@@ -179,32 +187,21 @@ goog.require 'goog.dom.query'
             when 'shareCurrentSong' then shareCurrentSong()
 
 
-    playSong = -> GS.play()
-    pauseSong = -> GS.pause()
-    playPause = -> GS.togglePlayPause()
+    playSong = -> getGS().play()
+    pauseSong = -> getGS().pause()
+    playPause = -> getGS().togglePlayPause()
 
-    previousSong = -> GS.previous()
-    nextSong = -> GS.next()
+    previousSong = -> getGS().previous()
+    nextSong = -> getGS().next()
 
-    setSuffle = (suffleEnabled) ->
-    toggleShuffle = ->
-    #setSuffle = (suffleEnabled) -> GS.player.setShuffle(shuffleEnabled)
-    #toggleShuffle = -> goog.dom.getElement('player_shuffle').click()
+    toggleShuffle = -> goog.dom.getElement('shuffle').click()
+    toggleCrossfade = -> goog.dom.getElement('crossfade').click()
+    toggleLoop = -> goog.dom.getElement('repeat').click()
 
-    setCrossfade = (crossfadeEnabled) ->
-    toggleCrossfade = ->
-    #setCrossfade = (crossfadeEnabled) -> GS.player.setCrossfadeEnabled(crossfadeEnabled)
-    #toggleCrossfade = -> goog.dom.getElement('player_crossfade').click()
-
-    setLoop = (loopMode) ->
-    toggleLoop = ->
-    #setLoop = (loopMode) -> GS.player.setRepeat(loopMode)
-    #toggleLoop = -> goog.dom.getElement('player_loop').click()
-
-    toggleMute = () -> GS.setIsMuted !GS.getIsMuted()
+    toggleMute = () -> getGS().setIsMuted !getGS().getIsMuted()
     setVolume = (volume) ->
-        GS.setIsMuted false if GS.getIsMuted()
-        GS.setVolume volume
+        getGS().setIsMuted false if getGS().getIsMuted()
+        getGS().setVolume volume
 
     addToLibrary = (songId) ->
     removeFromLibrary = (songId) ->
@@ -228,10 +225,10 @@ goog.require 'goog.dom.query'
     #    else
     #        GS.user.addToSongFavorites GS.player.currentSong.SongID
 
-    toggleSmile = -> GS.voteCurrentSong if isSmile() then 0 else 1
-    toggleFrown = -> GS.voteCurrentSong if isFrown() then 0 else -1
+    toggleSmile = -> getGS().voteCurrentSong if isSmile() then 0 else 1
+    toggleFrown = -> getGS().voteCurrentSong if isFrown() then 0 else -1
 
-    seekTo = (seekTo) -> GS.seekToPosition (GS.player.getPlaybackStatus().duration) / 100 * seekTo
+    seekTo = (seekTo) -> getGS().seekToPosition (getGS().getCurrentSongStatus().song.estimateDuration) / 100 * seekTo
     playSongInQueue = (queueSongId) ->
     #playSongInQueue = (queueSongId) -> GS.player.playSong queueSongId
 
