@@ -6,9 +6,20 @@ goog.require 'goog.dom.query'
 
 (->
 
+    Grooveshark = undefined
     GS = undefined
 
     # Get the GS object from unsafeWindow. https://gist.github.com/1143845
+    getGrooveshark = ->
+        if Grooveshark
+            return Grooveshark
+        unsafeWindow = (->
+            el = goog.dom.createElement 'p'
+            el.setAttribute 'onclick', 'return window;'
+            el.onclick()
+        )()
+        Grooveshark = unsafeWindow.Grooveshark
+        return Grooveshark
     getGS = ->
         if GS
             return GS
@@ -17,7 +28,7 @@ goog.require 'goog.dom.query'
             el.setAttribute 'onclick', 'return window;'
             el.onclick()
         )()
-        GS = unsafeWindow.Grooveshark
+        GS = unsafeWindow.GS
         return GS
 
     delayInMiliseconds = 1000
@@ -54,22 +65,20 @@ goog.require 'goog.dom.query'
 
 
     getPlayerOptions = ->
-        loopElm = goog.dom.getElement 'repeat'
-        playerLoop = 'none'
-        playerLoop = 'one' if goog.dom.classes.has loopElm, 'one'
-        playerLoop = 'all' if goog.dom.classes.has loopElm, 'active'
-        shuffleElm = goog.dom.getElement 'shuffle'
-        crossfadeElm = goog.dom.getElement 'crossfade'
+        switch getGS().Services.SWF.getCurrentQueue().repeatMode
+            when 1 then playerLoop = 'all'
+            when 2 then playerLoop = 'one'
+            else playerLoop = 'none'
 
         loop: playerLoop
-        shuffle: goog.dom.classes.has shuffleElm, 'active'
-        crossfade: goog.dom.classes.has crossfadeElm, 'active'
-        volume: if getGS().getIsMuted() then 0 else getGS().getVolume()
-        isMute: getGS().getIsMuted()
+        shuffle: getGS().Services.SWF.getShuffle()
+        crossfade: getGS().Services.SWF.getCrossfadeEnabled()
+        volume: if getGrooveshark().getIsMuted() then 0 else getGrooveshark().getVolume()
+        isMute: getGrooveshark().getIsMuted()
 
 
     getPlaybackStatus = ->
-        playbackStatus = getGS().getCurrentSongStatus()
+        playbackStatus = getGrooveshark().getCurrentSongStatus()
         if playbackStatus.status is 'none'
             status: 'UNAVAILABLE'
             percentage: null
@@ -79,17 +88,17 @@ goog.require 'goog.dom.query'
             status: if playbackStatus.status is 'playing' then 'PLAYING' else 'STOPPED'
             percentage: calculateCurrentPercantege playbackStatus.song
             position: playbackStatus.song.position
-            duration: playbackStatus.song.estimateDuration
+            duration: playbackStatus.song.calculatedDuration
 
     calculateCurrentPercantege = (playbackStatus) ->
-        100 * playbackStatus.position / playbackStatus.estimateDuration
+        100 * playbackStatus.position / playbackStatus.calculatedDuration
 
 
     getCurrentSongInformation = ->
-        if getGS().getCurrentSongStatus().status is 'none'
+        if getGrooveshark().getCurrentSongStatus().status is 'none'
             return
 
-        currentSong = getGS().getCurrentSongStatus().song
+        currentSong = getGrooveshark().getCurrentSongStatus().song
         filenameExtension = currentSong.artURL.split('.').slice(-1)[0]
 
         songId: currentSong.songID
@@ -107,15 +116,14 @@ goog.require 'goog.dom.query'
         #token: currentSong._token
 
     isSmile = ->
-        getGS().getCurrentSongStatus().song.vote is 1
+        getGrooveshark().getCurrentSongStatus().song.vote is 1
 
     isFrown = ->
-        getGS().getCurrentSongStatus().song.vote is -1
+        getGrooveshark().getCurrentSongStatus().song.vote is -1
 
 
     getQueueInformation = ->
-        ###
-        queue = GS.player.queue
+        queue = getGS().Services.SWF.getCurrentQueue()
 
         songs = new Array()
         for song in queue.songs
@@ -129,15 +137,12 @@ goog.require 'goog.dom.query'
                 queueSongId: song.queueSongID
 
         songs: songs
-        activeSongIndex: if GS.player.queue.activeSong then GS.player.queue.activeSong.index else false
-        activeSongId: if GS.player.queue.activeSong then GS.player.queue.activeSong.queueSongID else false
-        ###
+        activeSongIndex: if queue.activeSong then queue.activeSong.index else false
+        activeSongId: if queue.activeSong then queue.activeSong.queueSongID else false
 
 
     getAutoplayInformation = ->
-        ###
-        enabled: GS.player.getCurrentQueue().autoplayEnabled
-        ###
+        enabled: getGS().Services.SWF.getCurrentQueue().autoplayEnabled
 
 
     ###
@@ -187,21 +192,21 @@ goog.require 'goog.dom.query'
             when 'shareCurrentSong' then shareCurrentSong()
 
 
-    playSong = -> getGS().play()
-    pauseSong = -> getGS().pause()
-    playPause = -> getGS().togglePlayPause()
+    playSong = -> getGrooveshark().play()
+    pauseSong = -> getGrooveshark().pause()
+    playPause = -> getGrooveshark().togglePlayPause()
 
-    previousSong = -> getGS().previous()
-    nextSong = -> getGS().next()
+    previousSong = -> getGrooveshark().previous()
+    nextSong = -> getGrooveshark().next()
 
-    toggleShuffle = -> goog.dom.getElement('shuffle').click()
-    toggleCrossfade = -> goog.dom.getElement('crossfade').click()
-    toggleLoop = -> goog.dom.getElement('repeat').click()
+    toggleShuffle = -> getGS().Services.SWF.toggleShuffle()
+    toggleCrossfade = -> getGS().Services.SWF.toggleCrossfade()
+    toggleLoop = -> getGS().Services.SWF.toggleRepeat()
 
-    toggleMute = () -> getGS().setIsMuted !getGS().getIsMuted()
+    toggleMute = () -> getGrooveshark().setIsMuted !getGrooveshark().getIsMuted()
     setVolume = (volume) ->
-        getGS().setIsMuted false if getGS().getIsMuted()
-        getGS().setVolume volume
+        getGrooveshark().setIsMuted false if getGrooveshark().getIsMuted()
+        getGrooveshark().setVolume volume
 
     addToLibrary = (songId) ->
     removeFromLibrary = (songId) ->
@@ -225,12 +230,11 @@ goog.require 'goog.dom.query'
     #    else
     #        GS.user.addToSongFavorites GS.player.currentSong.SongID
 
-    toggleSmile = -> getGS().voteCurrentSong if isSmile() then 0 else 1
-    toggleFrown = -> getGS().voteCurrentSong if isFrown() then 0 else -1
+    toggleSmile = -> getGrooveshark().voteCurrentSong if isSmile() then 0 else 1
+    toggleFrown = -> getGrooveshark().voteCurrentSong if isFrown() then 0 else -1
 
-    seekTo = (seekTo) -> getGS().seekToPosition (getGS().getCurrentSongStatus().song.estimateDuration) / 100 * seekTo
-    playSongInQueue = (queueSongId) ->
-    #playSongInQueue = (queueSongId) -> GS.player.playSong queueSongId
+    seekTo = (seekTo) -> getGrooveshark().seekToPosition (getGrooveshark().getCurrentSongStatus().song.calculatedDuration) / 100 * seekTo
+    playSongInQueue = (queueSongId) -> getGS().Services.SWF.playSong queueSongId
 
     toggleAutoplay = ->
     #toggleAutoplay = -> GS.player.setAutoplay !GS.player.getCurrentQueue().autoplayEnabled
