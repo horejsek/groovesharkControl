@@ -80,7 +80,8 @@ goog.scope ->
     VU::updateCurrentSongInformation = (song) ->
         elm = goog.dom.getElement 'songName'
         goog.dom.setProperties elm, textContent: song.songName, title: song.songName
-        @_addLink elm, () -> gc.goToPageWithSong song.songName, song.token
+        # Grooveshark doesnt provide song's token, so I cant make link.
+        #@_addLink elm, () -> gc.goToPageWithSong song.songName, song.token
 
         elm = goog.dom.getElement 'artistName'
         goog.dom.setProperties elm, textContent: song.artistName, title: song.artistName
