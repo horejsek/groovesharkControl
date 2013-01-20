@@ -203,7 +203,7 @@ goog.require 'goog.dom.query'
     toggleCrossfade = -> getGS().Services.SWF.toggleCrossfade()
     toggleLoop = -> getGS().Services.SWF.toggleRepeat()
 
-    toggleMute = () -> getGrooveshark().setIsMuted !getGrooveshark().getIsMuted()
+    toggleMute = () -> getGS().Services.SWF.toggleVolumeMute()
     setVolume = (volume) ->
         getGrooveshark().setIsMuted false if getGrooveshark().getIsMuted()
         getGrooveshark().setVolume volume
@@ -236,8 +236,7 @@ goog.require 'goog.dom.query'
     seekTo = (seekTo) -> getGrooveshark().seekToPosition (getGrooveshark().getCurrentSongStatus().song.calculatedDuration) / 100 * seekTo
     playSongInQueue = (queueSongId) -> getGS().Services.SWF.playSong queueSongId
 
-    toggleAutoplay = ->
-    #toggleAutoplay = -> GS.player.setAutoplay !GS.player.getCurrentQueue().autoplayEnabled
+    toggleAutoplay = -> getGS().Services.SWF.toggleAutoplay()
 
     shareCurrentSong = ->
     #shareCurrentSong = ->
