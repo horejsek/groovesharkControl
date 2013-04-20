@@ -1,6 +1,7 @@
 
+"manifest_version": 1
 "name": "__MSG_extName__"
-"version": "2.3.2"
+"version": "2.3.3"
 "description": "__MSG_extDescription__"
 
 "icons":
