@@ -9,12 +9,11 @@ goog.require 'gc.test.mocks'
 
 testGenerateAttibutesForItem = ->
     cm = new gc.ContextMenu
-    fc = ->
 
     excpeted =
+        id: 'search'
         title: 'search'
         contexts: ['selection']
-        onclick: (info) -> fc info.selectionText
-    result = cm.generateAttibutesForItem 'search', fc
+    result = cm.generateAttibutesForItem 'search'
 
     assertObjectEquals excpeted, result

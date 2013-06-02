@@ -20,13 +20,18 @@ goog.scope ->
 
     CM::init = ->
         for title, fc of CM.items
-            chrome.contextMenus.create(@generateAttibutesForItem title, fc)
+            chrome.contextMenus.create @generateAttibutesForItem title
+        @initListener()
 
-    CM::generateAttibutesForItem = (title, fc) ->
+    CM::generateAttibutesForItem = (title) ->
+        id: title
         title: chrome.i18n.getMessage title
         contexts: ['selection']
-        onclick: (info) -> fc info.selectionText
 
+    CM::initListener = () ->
+        chrome.contextMenus.onClicked.addListener (info, tab) ->
+            fc = CM.items[info.menuItemId]
+            fc info.selectionText
 
 
     return
