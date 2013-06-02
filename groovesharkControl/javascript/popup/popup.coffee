@@ -19,11 +19,32 @@ goog.scope ->
 
     PU::init = ->
         @initListeners()
+        @initEvents()
+
         @initProgressbar()
         @initVolumeSlider()
 
         if gc.isShowedNotification()
             @hidePin()
+
+
+    PU::initEvents = () ->
+        @initPanelEvents()
+        @initSongEvents()
+        @initPlayerEvents()
+        @initRadioEvents()
+
+    PU::initPanelEvents = () ->
+        @initClickListenerById_ 'gotogrooveshark', () -> gc.goToGroovesharkTab()
+        @initClickListenerById_ 'search', () -> gc.goToSearch()
+        @initClickListenerById_ 'nowPlaying', () -> gc.goToNowPlaying()
+        @initClickListenerById_ 'pin', () ->
+            gc.showNotification stay=true
+            popup.hidePin()
+
+    PU::initRadioEvents = () ->
+        @initClickListenerById_ 'radio', () -> gc.sendCommandToGrooveshark 'toggleAutoplay'
+
 
     PU::hidePin = () ->
         goog.dom.getElement('pin').style.display = 'none'

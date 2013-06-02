@@ -31,6 +31,29 @@ goog.scope ->
                 window.close()
 
 
+    VU::initSongEvents = () ->
+        @initClickListenerById_ 'share', () -> gc.sendCommandToGrooveshark 'shareCurrentSong'
+        @initClickListenerById_ 'library', () -> gc.sendCommandToGrooveshark 'toggleLibrary'
+        @initClickListenerById_ 'favorite', () -> gc.sendCommandToGrooveshark 'toggleFavorite'
+        @initClickListenerById_ 'smile', () -> gc.sendCommandToGrooveshark 'toggleSmile'
+        @initClickListenerById_ 'frown', () -> gc.sendCommandToGrooveshark 'toggleFrown'
+
+    VU::initPlayerEvents = () ->
+        goog.events.listen goog.dom.getElement('volume'), goog.events.EventType.MOUSEOVER, () -> gc.sendCommandToGrooveshark 'refresh'
+        @initClickListenerById_ 'volume', () -> gc.sendCommandToGrooveshark 'toggleMute'
+        @initClickListenerById_ 'options', () -> gc.openOptionsPage()
+        @initClickListenerById_ 'shuffle', () -> gc.sendCommandToGrooveshark 'toggleShuffle'
+        @initClickListenerById_ 'loop', () -> gc.sendCommandToGrooveshark 'toggleLoop'
+        @initClickListenerById_ 'crossfade', () -> gc.sendCommandToGrooveshark 'toggleCrossfade'
+        @initClickListenerById_ 'previous', () -> gc.sendCommandToGrooveshark 'previousSong'
+        @initClickListenerById_ 'playpause', () -> gc.sendCommandToGrooveshark 'playPause'
+        @initClickListenerById_ 'next', () -> gc.sendCommandToGrooveshark 'nextSong'
+
+    VU::initClickListenerById_ = (elmId, callback) ->
+        elm = goog.dom.getElement elmId
+        goog.events.listen elm, goog.events.EventType.CLICK, callback
+
+
     VU::initProgressbar = () ->
         that = @
         @progressbar = new gc.Slider 'progressbar'

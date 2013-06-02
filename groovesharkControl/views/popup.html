@@ -2,14 +2,14 @@
     <head>
         <link rel="stylesheet" href="../styles/popup.css" type="text/css">
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
-        <script type="text/javascript">var popup = new gc.Popup();</script>
+        <script src="../javascript/popup.min.js" charset="utf-8"></script>
     </head>
-    <body onload="popup.init();">
+    <body>
         <div id="topPanel">
-            <button id="gotogrooveshark" onclick="gc.goToGroovesharkTab();" i18n-title="playerSite"></button>
-            <button id="search" onclick="gc.goToSearch();" i18n-text="search"></button>
-            <button id="nowPlaying" onclick="gc.goToNowPlaying();" i18n-text="nowPlaying"></button>
-            <button id="pin" class="unpin" onclick="gc.showNotification(stay=true); popup.hidePin();" i18n-title="playerPin"></button>
+            <button id="gotogrooveshark" i18n-title="playerSite"></button>
+            <button id="search" i18n-text="search"></button>
+            <button id="nowPlaying" i18n-text="nowPlaying"></button>
+            <button id="pin" class="unpin" i18n-title="playerPin"></button>
         </div>
 
         <div id="song">
@@ -18,16 +18,16 @@
                 <div id="artistName">Artist</div>
                 <div id="albumName">Album</div>
                 <button id="lyrics" i18n-title="searchLyrics"></button>
-                <button id="share" onclick="gc.sendCommandToGrooveshark('shareCurrentSong');" i18n-title="share"></button>
+                <button id="share" i18n-title="share"></button>
             </div>
             <div id="songOptions">
                 <img id="albumArt" src="http://images.grooveshark.com/static/albums/70_album.png" />
                 <div class="songOptions">
                     <div class="background"></div>
-                    <button id="library" class="disable" onclick="gc.sendCommandToGrooveshark('toggleLibrary');" i18n-title="toggleLibrary"></button>
-                    <button id="favorite" class="disable" onclick="gc.sendCommandToGrooveshark('toggleFavorite');" i18n-title="toggleFavorite"></button>
-                    <button id="smile" class="disable" onclick="gc.sendCommandToGrooveshark('toggleSmile');" i18n-title="toggleSmile"></button>
-                    <button id="frown" class="disable" onclick="gc.sendCommandToGrooveshark('toggleFrown');" i18n-title="toggleFrown"></button>
+                    <button id="library" class="disable" i18n-title="toggleLibrary"></button>
+                    <button id="favorite" class="disable" i18n-title="toggleFavorite"></button>
+                    <button id="smile" class="disable" i18n-title="toggleSmile"></button>
+                    <button id="frown" class="disable" i18n-title="toggleFrown"></button>
                 </div>
             </div>
         </div>
@@ -35,24 +35,24 @@
         <div id="player">
             <div class="firstLine">
                 <div class="left">
-                    <button id="volume" class="volume0" onmouseover="gc.sendCommandToGrooveshark('refresh');" onclick="gc.sendCommandToGrooveshark('toggleMute');"></button>
+                    <button id="volume" class="volume0"></button>
                     <div id="volumeSliderWrapper">
                         <div id="volumeSlider">
                             <div class="elapsed"></div>
                             <div class="goog-slider-thumb"></div>
                         </div>
                     </div>
-                    <button id="options" onclick="gc.openOptionsPage();" i18n-title="options"></button>
+                    <button id="options" i18n-title="options"></button>
 
-                    <button id="shuffle" class="false" onclick="gc.sendCommandToGrooveshark('toggleShuffle');" i18n-title="songShuffle"></button>
-                    <button id="loop" class="none" onclick="gc.sendCommandToGrooveshark('toggleLoop');" title="Loop songs" i18n-title="songLoop"></button>
-                    <button id="crossfade" class="false" onclick="gc.sendCommandToGrooveshark('toggleCrossfade');" i18n-title="songCrossfade"></button>
+                    <button id="shuffle" class="false" i18n-title="songShuffle"></button>
+                    <button id="loop" class="none" title="Loop songs" i18n-title="songLoop"></button>
+                    <button id="crossfade" class="false" i18n-title="songCrossfade"></button>
                 </div>
 
                 <div class="right">
-                    <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
-                    <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
-                    <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
+                    <button id="previous" i18n-title="songPrevious"></button>
+                    <button id="playpause" class="play" i18n-title="songPlayPause"></button>
+                    <button id="next" i18n-title="songNext"></button>
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
             <div id="playlistItems"></div>
         </div>
 
-        <div id="radio" onclick="gc.sendCommandToGrooveshark('toggleAutoplay');">
+        <div id="radio">
             <span i18n-text="radio"></span>:
             <span id="radioTitle"></span>
         </div>
