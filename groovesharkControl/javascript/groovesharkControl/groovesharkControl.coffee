@@ -15,7 +15,7 @@ goog.require 'gc.Settings'
 
     gc.injectGrooveshark = ->
         callWithGroovesharkTabIfIsOpened (tab) ->
-            chrome.tabs.executeScript tab.id, file: 'javascript/contentscript.min.js'
+            chrome.tabs.executeScript tab.id, file: 'javascript/compiled/contentscript.min.js'
 
 
     # Create & pin & go to tab.

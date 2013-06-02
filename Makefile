@@ -63,7 +63,7 @@ compile-mainjs:
 	    --input $(CHROME_EXT_JS_DIR)notification/notification.js \
 	    --input $(CHROME_EXT_JS_DIR)options/options.js \
 	    --output_mode compiled \
-	    > $(CHROME_EXT_JS_DIR)groovesharkControl.min.js;
+	    > $(CHROME_EXT_JS_DIR)compiled/groovesharkControl.min.js;
 
 compile-contentscript:
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
@@ -71,13 +71,13 @@ compile-contentscript:
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)contentscript/contentscript.js \
 	    --output_mode compiled \
-	    > $(CHROME_EXT_JS_DIR)contentscript.min.js;
+	    > $(CHROME_EXT_JS_DIR)compiled/contentscript.min.js;
 	$(PYTHON) $(CLOSURE_LIBRARY)closure/bin/calcdeps.py \
 	    --path $(CLOSURE_LIBRARY) \
 	    --compiler_jar $(CLOSURE_COMPILER) \
 	    --input $(CHROME_EXT_JS_DIR)contentscript/shortcut.js \
 	    --output_mode compiled \
-	    > $(CHROME_EXT_JS_DIR)shortcut.min.js;
+	    > $(CHROME_EXT_JS_DIR)compiled/shortcut.min.js;
 
 test: start-selenium-server test-compile
 	#chromium-browser --temp-profile --allow-file-access-from-files $(CHROME_EXT_JS_DIR)alltests.html
