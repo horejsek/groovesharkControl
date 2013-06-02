@@ -23,6 +23,10 @@ chromeMock =
         setIcon: () ->
         setTitle: () ->
 
+    contextMenus:
+        onClicked:
+            addListener: () ->
+
 
 
 createMock = ->
