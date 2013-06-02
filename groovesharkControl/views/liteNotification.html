@@ -2,9 +2,9 @@
     <head>
         <link rel="stylesheet" href="../styles/liteNotification.css" type="text/css">
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
-        <script type="text/javascript">var notification = new gc.Notification(true);</script>
+        <script src="../javascript/notification-lite.min.js" charset="utf-8"></script>
     </head>
-    <body onload="notification.init();" onclick="notification.cancelCountDownOfWindowClose();">
+    <body id="body">
         <div id="song">
             <marquee behavior="scroll" direction="left" scrollamount=1 scrolldelay=20 truespeed=1>
                 <span id="songName"></span> <span i18n-text="liteBy"></span> <span id="artistName"></span>, <span id="albumName"></span>
@@ -24,12 +24,12 @@
                 <div class="goog-slider-thumb"></div>
             </div>
 
-            <button id="previous" onclick="gc.sendCommandToGrooveshark('previousSong');" i18n-title="songPrevious"></button>
-            <button id="playpause" class="play" onclick="gc.sendCommandToGrooveshark('playPause');" i18n-title="songPlayPause"></button>
-            <button id="next" onclick="gc.sendCommandToGrooveshark('nextSong');" i18n-title="songNext"></button>
+            <button id="previous" i18n-title="songPrevious"></button>
+            <button id="playpause" class="play" i18n-title="songPlayPause"></button>
+            <button id="next" i18n-title="songNext"></button>
         </div>
 
         <div id="countDown"></div>
-        <div id="switchToFullNotification" onclick="gc.showNotification(true, 100); window.close();"></div>
+        <div id="switchToFullNotification"></div>
     </body>
 </html>

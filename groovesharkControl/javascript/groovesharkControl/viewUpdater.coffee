@@ -45,13 +45,16 @@ goog.scope ->
         @initClickListenerById_ 'shuffle', () -> gc.sendCommandToGrooveshark 'toggleShuffle'
         @initClickListenerById_ 'loop', () -> gc.sendCommandToGrooveshark 'toggleLoop'
         @initClickListenerById_ 'crossfade', () -> gc.sendCommandToGrooveshark 'toggleCrossfade'
+        @initBasePlayerEvents()
+
+    VU::initBasePlayerEvents = () ->
         @initClickListenerById_ 'previous', () -> gc.sendCommandToGrooveshark 'previousSong'
         @initClickListenerById_ 'playpause', () -> gc.sendCommandToGrooveshark 'playPause'
         @initClickListenerById_ 'next', () -> gc.sendCommandToGrooveshark 'nextSong'
 
     VU::initClickListenerById_ = (elmId, callback) ->
         elm = goog.dom.getElement elmId
-        goog.events.listen elm, goog.events.EventType.CLICK, callback
+        goog.events.listen elm, goog.events.EventType.CLICK, callback if elm
 
 
     VU::initProgressbar = () ->

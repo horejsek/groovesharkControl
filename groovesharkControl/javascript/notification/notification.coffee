@@ -18,9 +18,31 @@ goog.scope ->
 
     NTF::init = () ->
         @initListeners()
+        @initEvents()
+
         @initProgressbar()
         @initVolumeSlider() if !@isLite
         @startCountDown()
+
+
+    NTF::initEvents = () ->
+        @initSongEvents()
+        if @isLite
+            @initBasePlayerEvents()
+        else
+            @initPlayerEvents()
+        @initNotificationEvent()
+
+    NTF::initNotificationEvent = () ->
+        that = @
+        @initClickListenerById_ 'body', () -> that.cancelCountDownOfWindowClose()
+
+        @initClickListenerById_ 'switchToLiteNotification', () ->
+            gc.showLiteNotification true, 100
+            window.close()
+        @initClickListenerById_ 'switchToFullNotification', () ->
+            gc.showNotification true, 100
+            window.close()
 
 
     NTF::startCountDown = () ->
