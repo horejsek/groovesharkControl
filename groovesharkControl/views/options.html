@@ -4,9 +4,9 @@
         <link rel="stylesheet" href="../styles/options.css" type="text/css" />
         <link rel="stylesheet" href="../styles/chrome/chrome.css" type="text/css" />
         <script src="../javascript/groovesharkControl.min.js" charset="utf-8"></script>
-        <script type="text/javascript">var options = new gc.Options();</script>
+        <script src="../javascript/options.min.js" charset="utf-8"></script>
     </head>
-    <body onload="options.init();">
+    <body>
         <h2 id="title" i18n-html="optionsTitle">
         </h2>
 
@@ -40,8 +40,8 @@
                 <!-- Save options -->
                 <tr>
                     <td colspan="3" class="save">
-                        <button onclick="options.save();" id="save" i18n-text="optionsSaveButton"></button>
-                        <button onclick="options.saveDefaults();" id="save-default" i18n-text="optionsRestoreDefaultButton"></button>
+                        <button id="save" i18n-text="optionsSaveButton"></button>
+                        <button id="save-default" i18n-text="optionsRestoreDefaultButton"></button>
                         <span id="savePendings" i18n-text="optionsSavePendings"></span>
                     </td>
                 </tr>

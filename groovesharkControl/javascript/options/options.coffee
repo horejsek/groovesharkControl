@@ -37,6 +37,9 @@ goog.scope ->
             elm = goog.dom.getElement attributeId
             goog.events.listen elm, goog.events.EventType.CHANGE, goog.bind(@_mainCheckboxChangeEvent, this)
 
+        goog.events.listen goog.dom.getElement('save'), goog.events.EventType.CLICK, () -> that.save()
+        goog.events.listen goog.dom.getElement('save-default'), goog.events.EventType.CLICK, () -> that.saveDefaults()
+
     OPT::_mainCheckboxChangeEvent = (e) ->
         tr = e.target.parentElement.parentElement
         goog.dom.classes.enable tr, 'enabled', e.target.checked
