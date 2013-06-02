@@ -1,7 +1,7 @@
 
-"manifest_version": 1
+"manifest_version": 2
 "name": "__MSG_extName__"
-"version": "2.3.3"
+"version": "2.4.0"
 "description": "__MSG_extDescription__"
 
 "icons":
@@ -12,7 +12,8 @@
 
 "default_locale": "en"
 
-"background_page": "views/background.html"
+"background":
+    "page": "views/background.html"
 "options_page": "views/options.html"
 
 "permissions": [
@@ -22,11 +23,12 @@
     "http://grooveshark.com/*"
     "http://preview.grooveshark.com/*"
 ]
+"content_security_policy": "script-src 'self'; object-src 'self'"
 
 "content_scripts": [
     "js": [
-        "javascript/contentscript.min.js"
-        "javascript/shortcut.min.js"
+        "javascript/compiled/contentscript.min.js"
+        "javascript/compiled/shortcut.min.js"
     ]
     "matches": [
         "http://grooveshark.com/*"
