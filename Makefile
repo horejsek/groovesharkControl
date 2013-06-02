@@ -26,7 +26,7 @@ all:
 build: clean compile
 	mkdir /tmp/$(CHROME_EXT_NAME)
 	cp -r groovesharkControl/* /tmp/$(CHROME_EXT_NAME)/
-	find /tmp/$(CHROME_EXT_NAME)/javascript/* -not -name *.min.js | xargs rm -rf
+	find /tmp/$(CHROME_EXT_NAME)/javascript/* -not -name *.min.js -not -name compiled | xargs rm -rf
 	find /tmp/$(CHROME_EXT_NAME)/styles/* -not -name *.css | xargs rm -rf
 	find /tmp/$(CHROME_EXT_NAME)/_locales/*/* -name *.coffee | xargs rm -rf
 	rm /tmp/$(CHROME_EXT_NAME)/manifest.coffee
@@ -96,7 +96,7 @@ clean:
 	rm -rf /tmp/$(CHROME_EXT_NAME) $(CHROME_EXT_ZIP_ARCHIVE_NAME)
 	rm -f groovesharkControl/manifest.json
 	find $(CHROME_EXT_LOCALES_DIR) -type f -name *.json | xargs rm -f
-	find $(CHROME_EXT_JS_DIR) -type f -name *.js | xargs rm -f
+	find $(CHROME_EXT_JS_DIR) -type f -name *.js -not path compiled/ | xargs rm -f
 	find $(CHROME_EXT_STYLES_DIR) -type f -name *.css | xargs rm -f
 
 localdev: install-git-hooks init-submodules get-selenium-server install-libs
