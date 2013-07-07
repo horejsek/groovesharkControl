@@ -81,7 +81,6 @@ goog.scope ->
         @updatePlaybackProgressbar request.playback
         @updatePlaybackOptions request.playback
         @updateQueueInformation request.queue
-        @updateAutoplaySongOptions request.autoplay if !@isLite
 
 
 

@@ -32,7 +32,6 @@ goog.scope ->
         @initPanelEvents()
         @initSongEvents()
         @initPlayerEvents()
-        @initRadioEvents()
 
     PU::initPanelEvents = () ->
         @initClickListenerById_ 'gotogrooveshark', () -> gc.goToGroovesharkTab()
@@ -41,10 +40,6 @@ goog.scope ->
         @initClickListenerById_ 'pin', () ->
             gc.showNotification stay=true
             popup.hidePin()
-
-    PU::initRadioEvents = () ->
-        @initClickListenerById_ 'radio', () -> gc.sendCommandToGrooveshark 'toggleAutoplay'
-
 
     PU::hidePin = () ->
         goog.dom.getElement('pin').style.display = 'none'
@@ -65,7 +60,6 @@ goog.scope ->
         @updatePlayback request.playback
         @updateQueueSongs request.queue, request.playback
         @scrollToActiveSongInQueue request.queue.activeSongIndex
-        @updateAutoplay request.autoplay
         @lastSongIndex = request.queue.activeSongIndex
 
 

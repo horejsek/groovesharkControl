@@ -111,16 +111,16 @@ goog.scope ->
 
         elm = goog.dom.getElement 'artistName'
         goog.dom.setProperties elm, textContent: song.artistName, title: song.artistName
-        @_addLink elm, () -> gc.goToPageWithArtist song.artistId
+        #@_addLink elm, () -> gc.goToPageWithArtist song.artistId
 
         elm = goog.dom.getElement 'albumName'
         goog.dom.setProperties elm, textContent: song.albumName, title: song.albumName
-        @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
+        #@_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongImage = (song) ->
         elm = goog.dom.getElement 'albumArt'
         elm.src = song.albumImage70
-        @_addLink elm, () -> gc.goToPageWithAlbum song.albumId
+        #@_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
     VU::updateCurrentSongOptions = (song) ->
         goog.dom.classes.enable goog.dom.getElement('library'), 'disable', !song.fromLibrary
@@ -145,8 +145,8 @@ goog.scope ->
         @updatePlaybackOptions playback
 
     VU::updatePlaybackTimes = (playback) ->
-        goog.dom.getElement('timeElapsed').textContent = @msToHumanTime playback.position
-        goog.dom.getElement('timeDuration').textContent = @msToHumanTime playback.duration
+        goog.dom.getElement('timeElapsed').textContent = playback.position
+        goog.dom.getElement('timeDuration').textContent = playback.duration
         goog.dom.classes.enable goog.dom.getElement('time'), 'timeSmaller', playback.duration > 599000
 
     VU::updatePlaybackProgressbar = (playback) ->
@@ -191,7 +191,7 @@ goog.scope ->
                 'class': 'artist'
                 textContent: song.artistName
                 title: song.artistName
-                onclick: @createOnclickActionForPlaylist_goToArtist song.artistId
+                #onclick: @createOnclickActionForPlaylist_goToArtist song.artistId
 
             goog.dom.appendChild itemElm, buttonElm
             goog.dom.appendChild itemElm, songElm
@@ -203,22 +203,6 @@ goog.scope ->
 
     VU::createOnclickActionForPlaylist_goToArtist = (artistId) ->
         -> gc.goToPageWithArtist artistId
-
-
-    # Autoplay.
-
-
-    VU::updateAutoplay = (autoplay) ->
-        @updateAutoplayAutoplay autoplay
-        @updateAutoplaySongOptions autoplay
-
-    VU::updateAutoplayAutoplay = (autoplay) ->
-        autoplayTitle = chrome.i18n.getMessage if autoplay.enabled then 'radioOn' else 'radioOff'
-        goog.dom.getElement('radioTitle').textContent = autoplayTitle
-
-    VU::updateAutoplaySongOptions = (autoplay) ->
-        for elmId in ['smile', 'frown']
-            goog.dom.getElement(elmId).style.display = if autoplay.enabled then 'inline' else 'none'
 
 
     # Misc.

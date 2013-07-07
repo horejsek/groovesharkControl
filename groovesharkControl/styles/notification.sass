@@ -77,14 +77,14 @@ button
             overflow: hidden
             text-overflow: ellipsis
             white-space: nowrap
-            &:hover
-                color: #FFF
-                cursor: pointer
+            //&:hover
+            //    color: #FFF
+            //    cursor: pointer
         #songName
             color: #F67600
             font-size: 1.3em
-            &:hover
-                color: #FCA258
+            //&:hover
+            //    color: #FCA258
 
         #position
             position: absolute
@@ -102,7 +102,6 @@ button
                 background-position-x: -16px
         #share
             @include icon16
-            display: none
             position: absolute
             bottom: 5px
             right: $songOptionsWidth
@@ -148,7 +147,6 @@ button
 
         #library
             @include songOptionIcon
-            display: none
             background-position: -54px -72px
             &.disable
                 background-position: -54px -216px
@@ -156,7 +154,6 @@ button
                 opacity: 0.7
         #favorite
             @include songOptionIcon
-            display: none
             background-position: -54px -90px
             &.disable
                 background-position: -54px -234px

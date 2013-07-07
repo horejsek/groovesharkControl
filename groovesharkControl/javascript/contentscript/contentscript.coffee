@@ -1,35 +1,9 @@
 
 goog.require 'goog.dom'
-goog.require 'goog.dom.query'
 
 
 
 (->
-
-    Grooveshark = undefined
-    GS = undefined
-
-    # Get the GS object from unsafeWindow. https://gist.github.com/1143845
-    getGrooveshark = ->
-        if Grooveshark
-            return Grooveshark
-        unsafeWindow = (->
-            el = goog.dom.createElement 'p'
-            el.setAttribute 'onclick', 'return window;'
-            el.onclick()
-        )()
-        Grooveshark = unsafeWindow.Grooveshark
-        return Grooveshark
-    getGS = ->
-        if GS
-            return GS
-        unsafeWindow = (->
-            el = goog.dom.createElement 'p'
-            el.setAttribute 'onclick', 'return window;'
-            el.onclick()
-        )()
-        GS = unsafeWindow.GS
-        return GS
 
     delayInMiliseconds = 1000
 
@@ -50,7 +24,6 @@ goog.require 'goog.dom.query'
             currentSong: getCurrentSongInformation()
             queue: getQueueInformation()
             autoplay: getAutoplayInformation()
-        console.log 'send request', data
         chrome.extension.sendRequest data, sendData_onRequest
 
     sendData_onRequest = (request) ->
@@ -65,85 +38,105 @@ goog.require 'goog.dom.query'
 
 
     getPlayerOptions = ->
-        switch getGS().Services.SWF.getCurrentQueue().repeatMode
-            when 1 then playerLoop = 'all'
-            when 2 then playerLoop = 'one'
-            else playerLoop = 'none'
+        if _hasClass '#repeat', 'one'
+            playerLoop = 'one'
+        else if _hasClass '#repeat', 'active'
+            playerLoop = 'all'
+        else
+            playerLoop = 'none'
+
+        isMute = _hasClass '#volume', 'mute'
+        if isMute
+            volume = 0
+        else
+            volume = parseInt document.querySelector('#volume-slider .ui-slider-range').style.height
 
         loop: playerLoop
-        shuffle: getGS().Services.SWF.getShuffle()
-        crossfade: getGS().Services.SWF.getCrossfadeEnabled()
-        volume: if getGrooveshark().getIsMuted() then 0 else getGrooveshark().getVolume()
-        isMute: getGrooveshark().getIsMuted()
+        shuffle: _hasClass '#shuffle', 'active'
+        crossfade: _hasClass '#crossfade', 'active'
+        volume: volume
+        isMute: isMute
 
 
     getPlaybackStatus = ->
-        playbackStatus = getGrooveshark().getCurrentSongStatus()
-        if playbackStatus.status is 'none'
+        if _hasClass('#play-pause', 'disabled')
             status: 'UNAVAILABLE'
             percentage: null
             position: null
             duration: null
         else
-            status: if playbackStatus.status is 'playing' then 'PLAYING' else 'STOPPED'
-            percentage: calculateCurrentPercantege playbackStatus.song
-            position: playbackStatus.song.position
-            duration: playbackStatus.song.calculatedDuration
-
-    calculateCurrentPercantege = (playbackStatus) ->
-        100 * playbackStatus.position / playbackStatus.calculatedDuration
+            status: if _hasClass('#play-pause', 'playing') then 'PLAYING' else 'STOPPED'
+            percentage: parseFloat document.querySelector('#progress-bar #scrubber').style.left
+            position: document.querySelector('#time-elapsed').textContent
+            duration: document.querySelector('#time-total').textContent
 
 
     getCurrentSongInformation = ->
-        if getGrooveshark().getCurrentSongStatus().status is 'none'
+        if _hasClass('#play-pause', 'disabled')
             return
 
-        currentSong = getGrooveshark().getCurrentSongStatus().song
-        filenameExtension = currentSong.artURL.split('.').slice(-1)[0]
+        image = _getAttr '#now-playing-image', 'src'
+        if image
+            image70 = image.replace '40_', '70_'
+            image90 = image.replace '40_', '90_'
+        else
+            image70 = image90 = undefined
 
-        songId: currentSong.songID
-        songName: currentSong.songName
-        artistId: currentSong.artistID
-        artistName: currentSong.artistName
-        albumId: currentSong.albumID
-        albumName: currentSong.albumName
-        albumImage70: "http://images.grooveshark.com/static/albums/70_" + currentSong.albumID + "." + filenameExtension
-        albumImage90: "http://images.grooveshark.com/static/albums/90_" + currentSong.albumID + "." + filenameExtension
-        #fromLibrary: currentSong.fromLibrary
-        #isFavorite: currentSong.isFavorite
-        isSmile: isSmile()
-        isFrown: isFrown()
-        #token: currentSong._token
-
-    isSmile = ->
-        getGrooveshark().getCurrentSongStatus().song.vote is 1
-
-    isFrown = ->
-        getGrooveshark().getCurrentSongStatus().song.vote is -1
+        songId: _getAttr '#now-playing-metadata .song', 'data-song-id'
+        songName: _getAttr '#now-playing-metadata .song', 'title'
+        artistId: undefined
+        artistName: _getAttr '#now-playing-metadata .artist', 'title'
+        albumId: undefined
+        albumName: ''
+        albumImage70: image70
+        albumImage90: image90
+        fromLibrary: _hasClass '#now-playing #np-add', 'active'
+        isFavorite: _hasClass '#now-playing #np-fav', 'active'
+        isSmile: _hasClass '#queue-list .queue-item-active .smile', 'active'
+        isFrown: _hasClass '#queue-list .queue-item-active .frown', 'active'
+        token: undefined
 
 
     getQueueInformation = ->
-        queue = getGS().Services.SWF.getCurrentQueue()
+        queueItems = document.querySelectorAll '.queue-item'
 
         songs = new Array()
-        for song in queue.songs
+        index = 0
+        activeSongIndex = undefined
+        activeSongId = undefined
+        for queueItem in queueItems
+            continue if queueItem.style.display isnt 'block'
             songs.push
-                songId: song.SongID
-                songName: song.SongName
-                artistId: song.ArtistID
-                artistName: song.ArtistName
-                albumId: song.AlbumID
-                albumName: song.AlbumName
-                queueSongId: song.queueSongID
+                songId: _getAttr '.queue-song-name', 'data-song-id', queueItem
+                songName: _getAttr '.queue-song-name', 'title', queueItem
+                artistId: undefined
+                artistName: _getAttr '.queue-song-artist', 'title', queueItem
+                albumId: undefined
+                albumName: undefined
+                queueSongId: index + 1
+            if goog.dom.classes.has queueItem, 'queue-item-active'
+                activeSongIndex = index
+                activeSongId = index + 1
+            index++
 
         songs: songs
-        activeSongIndex: if queue.activeSong then queue.activeSong.index else false
-        activeSongId: if queue.activeSong then queue.activeSong.queueSongID else false
+        activeSongIndex: activeSongIndex
+        activeSongId: activeSongId
 
 
     getAutoplayInformation = ->
-        enabled: getGS().Services.SWF.getCurrentQueue().autoplayEnabled
+        enabled: undefined
 
+
+    _hasClass = (elmSelector, className, doc) ->
+        doc = doc || document
+        elm = doc.querySelector elmSelector
+        goog.dom.classes.has elm, className
+
+    _getAttr = (elmSelector, attributeName, doc) ->
+        doc = doc || document
+        elm = doc.querySelector elmSelector
+        elm.getAttribute attributeName
 
     ###
     Controller.
@@ -192,58 +185,47 @@ goog.require 'goog.dom.query'
             when 'shareCurrentSong' then shareCurrentSong()
 
 
-    playSong = -> getGrooveshark().play()
-    pauseSong = -> getGrooveshark().pause()
-    playPause = -> getGrooveshark().togglePlayPause()
+    playSong = -> _click '#play-pause'
+    pauseSong = -> _click '#play-pause'
+    playPause = -> _click '#play-pause'
 
-    previousSong = -> getGrooveshark().previous()
-    nextSong = -> getGrooveshark().next()
+    previousSong = -> _click '#play-prev'
+    nextSong = -> _click '#play-next'
 
-    toggleShuffle = -> getGS().Services.SWF.toggleShuffle()
-    toggleCrossfade = -> getGS().Services.SWF.toggleCrossfade()
-    toggleLoop = -> getGS().Services.SWF.toggleRepeat()
+    toggleShuffle = -> _click '#shuffle'
+    toggleCrossfade = -> _click '#crossfade'
+    toggleLoop = -> _click '#repeat'
 
-    toggleMute = () -> getGS().Services.SWF.toggleVolumeMute()
+    toggleMute = () -> _click '#volume'
     setVolume = (volume) ->
-        getGrooveshark().setIsMuted false if getGrooveshark().getIsMuted()
-        getGrooveshark().setVolume volume
+    #    getGrooveshark().setIsMuted false if getGrooveshark().getIsMuted()
+    #    getGrooveshark().setVolume volume
 
     addToLibrary = (songId) ->
     removeFromLibrary = (songId) ->
-    toggleLibrary = ->
-    #addToLibrary = (songId) -> GS.user.addToLibrary songId
-    #removeFromLibrary = (songId) -> GS.user.removeFromLibrary songId
-    #toggleLibrary = ->
-    #    if GS.player.currentSong.fromLibrary
-    #        GS.user.removeFromLibrary GS.player.currentSong.SongID
-    #    else
-    #        GS.user.addToLibrary GS.player.currentSong.SongID
+    toggleLibrary = -> _click '#np-add'
 
     addToFavorites = (songId) ->
     removeFromFavorites = (songId) ->
-    toggleFavorite = ->
-    #addToFavorites = (songId) -> GS.user.addToSongFavorites songId
-    #removeFromFavorites = (songId) -> GS.user.removeFromSongFavorites songId
-    #toggleFavorite = ->
-    #    if GS.player.currentSong.isFavorite
-    #        GS.user.removeFromSongFavorites GS.player.currentSong.SongID
-    #    else
-    #        GS.user.addToSongFavorites GS.player.currentSong.SongID
+    toggleFavorite = -> _click '#np-fav'
 
-    toggleSmile = -> getGrooveshark().voteCurrentSong if isSmile() then 0 else 1
-    toggleFrown = -> getGrooveshark().voteCurrentSong if isFrown() then 0 else -1
+    toggleSmile = -> _click '#queue-list .queue-item-active .smile'
+    toggleFrown = -> _click '#queue-list .queue-item-active .frown'
 
     seekTo = (seekTo) -> getGrooveshark().seekToPosition (getGrooveshark().getCurrentSongStatus().song.calculatedDuration) / 100 * seekTo
-    playSongInQueue = (queueSongId) -> getGS().Services.SWF.playSong queueSongId
+    playSongInQueue = (queueSongId) ->
+        elms = document.querySelectorAll '.queue-song .play'
+        elms[queueSongId - 1].click()
 
-    toggleAutoplay = -> getGS().Services.SWF.toggleAutoplay()
+    toggleAutoplay = ->
 
-    shareCurrentSong = ->
-    #shareCurrentSong = ->
-    #    for contextItem in GS.player.currentSong.getContextMenu()
-    #        if contextItem.customClass.indexOf('share') != -1
-    #            contextItem.action.callback()
-    #            break
+    shareCurrentSong = -> _click '#np-share'
+
+
+    _click = (elmSelector, doc) ->
+        doc = doc || document
+        elm = doc.querySelector elmSelector
+        elm.click()
 
 
     ###
