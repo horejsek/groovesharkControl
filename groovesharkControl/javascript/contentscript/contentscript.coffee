@@ -66,7 +66,7 @@ goog.require 'goog.dom'
             duration: null
         else
             status: if _hasClass('#play-pause', 'playing') then 'PLAYING' else 'STOPPED'
-            percentage: parseFloat document.querySelector('#progress-bar #scrubber').style.left
+            percentage: parseFloat document.querySelector('#progress-bar #elapsed').style.width
             position: document.querySelector('#time-elapsed').textContent
             duration: document.querySelector('#time-total').textContent
 
