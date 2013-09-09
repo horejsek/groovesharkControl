@@ -105,7 +105,7 @@ goog.require 'goog.dom'
         activeSongIndex = undefined
         activeSongId = undefined
         for queueItem in queueItems
-            continue if queueItem.style.display isnt 'block'
+            continue if queueItem.style.display is 'none'
             songs.push
                 songId: _getAttr '.queue-song-name', 'data-song-id', queueItem
                 songName: _getAttr '.queue-song-name', 'title', queueItem
