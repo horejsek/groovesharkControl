@@ -56,7 +56,7 @@ goog.scope ->
             return
 
         @updatePlayer request.player
-        @updateCurrentSong request.currentSong
+        @updateCurrentSong request.currentSong, request.autoplay
         @updatePlayback request.playback
         @updateQueueSongs request.queue, request.playback
         @scrollToActiveSongInQueue request.queue.activeSongIndex

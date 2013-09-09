@@ -76,7 +76,7 @@ goog.scope ->
         @updatePlayer request.player if !@isLite
         @updateCurrentSongInformation request.currentSong
         @updateCurrentSongImage request.currentSong if !@isLite
-        @updateCurrentSongOptions request.currentSong if !@isLite
+        @updateCurrentSongOptions request.currentSong, request.autoplay if !@isLite
         @updatePlaybackTimes request.playback if !@isLite
         @updatePlaybackProgressbar request.playback
         @updatePlaybackOptions request.playback

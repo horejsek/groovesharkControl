@@ -125,7 +125,7 @@ goog.require 'goog.dom'
 
 
     getAutoplayInformation = ->
-        enabled: undefined
+        enabled: _hasClass '.queue-radio-options', 'active', document.querySelector '.queue-item'
 
 
     _hasClass = (elmSelector, className, doc) ->

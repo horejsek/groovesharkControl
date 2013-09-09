@@ -98,10 +98,10 @@ goog.scope ->
     # Current song.
 
 
-    VU::updateCurrentSong = (song) ->
+    VU::updateCurrentSong = (song, autoplay) ->
         @updateCurrentSongInformation song
         @updateCurrentSongImage song
-        @updateCurrentSongOptions song
+        @updateCurrentSongOptions song, autoplay
 
     VU::updateCurrentSongInformation = (song) ->
         elm = goog.dom.getElement 'songName'
@@ -122,10 +122,13 @@ goog.scope ->
         elm.src = song.albumImage70
         #@_addLink elm, () -> gc.goToPageWithAlbum song.albumId
 
-    VU::updateCurrentSongOptions = (song) ->
+    VU::updateCurrentSongOptions = (song, autoplay) ->
         goog.dom.classes.enable goog.dom.getElement('library'), 'disable', !song.fromLibrary
         goog.dom.classes.enable goog.dom.getElement('favorite'), 'disable', !song.isFavorite
+
+        goog.dom.classes.enable goog.dom.getElement('smile'), 'hide', !autoplay.enabled
         goog.dom.classes.enable goog.dom.getElement('smile'), 'disable', !song.isSmile
+        goog.dom.classes.enable goog.dom.getElement('frown'), 'hide', !autoplay.enabled
         goog.dom.classes.enable goog.dom.getElement('frown'), 'disable', !song.isFrown
 
         elm = goog.dom.getElement 'lyrics'
